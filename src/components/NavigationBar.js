@@ -3,7 +3,7 @@ import React from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 
 // Functions
-import { modalType } from './App';
+import { modalType } from '../exports/Functions';
 
 // CSS
 import '../styles/NavigationBar.css';

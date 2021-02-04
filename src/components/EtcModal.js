@@ -1,10 +1,21 @@
 // React
 import React from 'react';
+
+// React bootstrap
 import { Button, Modal } from 'react-bootstrap';
 
-// Functions
-import { modalType } from './App';
+// Exports
+import { modalType } from '../exports/Functions';
 
+// Styles
+import '../styles/EtcModal.css';
+
+/*
+@function EtcModal
+@description Sets up the EtcModal component that is used 
+  for navigation buttons and adding a new transaction.
+@params props The "type", "show", and "onHide" props.
+*/
 function EtcModal(props) {
   // Sets the modal title depending on the type
   function CustomModalTitle() {
@@ -19,6 +30,9 @@ function EtcModal(props) {
         break;
       case modalType.logout:
         title = 'Logout';
+        break;
+      case modalType.transaction:
+        title = 'Add New Transaction';
         break;
       default:
         title = 'Error';
@@ -53,6 +67,13 @@ function EtcModal(props) {
         body = (
           <>
             <p>Are you sure you want to logout?</p>
+          </>
+        );
+        break;
+      case modalType.transaction:
+        body = (
+          <>
+            <p>This is adding a new transaction.</p>
           </>
         );
         break;
@@ -110,6 +131,18 @@ function EtcModal(props) {
           </>
         );
         break;
+      case modalType.transaction:
+        footer = (
+          <>
+            <Button variant="secondary" onClick={props.onHide}>
+              Close
+            </Button>
+            <Button variant="success" onClick={props.onHide}>
+              Update
+            </Button>
+          </>
+        );
+        break;
       default:
         footer = (
           <>
@@ -126,6 +159,7 @@ function EtcModal(props) {
   return (
     <Modal
       {...props}
+      className="custom-modal"
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
