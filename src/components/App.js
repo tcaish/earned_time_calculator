@@ -10,7 +10,6 @@ import Transactions from './Transactions';
 
 // Exports
 import {
-  modalType,
   initialSummaryState,
   initialTransactionsState
 } from '../exports/Functions';
@@ -18,6 +17,11 @@ import {
 // CSS
 import '../styles/App.css';
 
+/*
+@function App
+@description Sets up the App component, which is the 
+  main component.
+*/
 function App() {
   // Props for modal component
   const [modalShow, setModalShow] = useState(false);
@@ -37,7 +41,11 @@ function App() {
             <Summary summary={summary} />
           </Col>
           <Col className="app-col">
-            <Transactions transactions={transactions} />
+            <Transactions
+              transactions={transactions}
+              setModalShow={setModalShow}
+              setModalType={setModalType}
+            />
           </Col>
         </Row>
       </Container>
@@ -52,4 +60,4 @@ function App() {
   );
 }
 
-export { App, modalType };
+export default App;

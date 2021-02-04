@@ -2,7 +2,8 @@
 export const modalType = {
   profile: 0,
   settings: 1,
-  logout: 2
+  logout: 2,
+  transaction: 3
 };
 
 // Initial summary state

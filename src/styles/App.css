@@ -5,11 +5,16 @@ body {
 .app-col {
   /*border: solid;*/
 }
+.container-col {
+  text-align: right;
+}
 
 .align-center {
   text-align: center;
 }
-
-.container-col {
+.align-right {
   text-align: right;
+}
+.align-middle {
+  vertical-align: middle;
 }
