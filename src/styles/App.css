@@ -1,0 +1,15 @@
+body {
+  color: white;
+}
+
+.app-col {
+  /*border: solid;*/
+}
+
+.align-center {
+  text-align: center;
+}
+
+.container-col {
+  text-align: right;
+}
