@@ -1,10 +1,17 @@
-body {
-  color: white;
+@font-face {
+  font-family: 'rockout';
+  src: url('../fonts/Rockout.ttf');
 }
 
-.app-col {
-  /*border: solid;*/
+body {
+  color: white;
+  font-family: rockout;
 }
+
+#app-container {
+  margin-top: 20px;
+}
+
 .container-col {
   text-align: right;
 }

@@ -1,13 +1,18 @@
-@font-face {
-  font-family: 'rockout';
-  src: url('../fonts/Rockout.ttf');
-}
-
 body {
   background-color: #343a40;
 }
 
-.logo {
+#logo {
   width: 350px;
   height: auto;
+}
+@media (max-width: 454px) {
+  #logo {
+    width: 300px;
+  }
+}
+@media (max-width: 404px) {
+  #logo {
+    width: 216px;
+  }
 }
