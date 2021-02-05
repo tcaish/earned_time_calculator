@@ -7,6 +7,7 @@ body {
   background-color: #343a40;
 }
 
-.rockout-font {
-  font-family: rockout;
+.logo {
+  width: 350px;
+  height: auto;
 }

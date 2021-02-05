@@ -1,12 +1,15 @@
 // React
 import React from 'react';
-import { Container, Nav, Navbar } from 'react-bootstrap';
+import { Container, Image, Nav, Navbar } from 'react-bootstrap';
 
 // Functions
 import { modalType } from '../exports/Functions';
 
 // CSS
 import '../styles/NavigationBar.css';
+
+// Images
+import logo from '../img/logo.png';
 
 // Navigation bar component
 function NavigationBar({ setModalShow, setModalType }) {
@@ -20,7 +23,8 @@ function NavigationBar({ setModalShow, setModalType }) {
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
         <Navbar.Brand>
-          <h2 className="rockout-font">Earned Time Calculator</h2>
+          {/* <h2 className="rockout-font">Earned Time Calculator</h2> */}
+          <Image className="logo" src={logo} fluid />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
