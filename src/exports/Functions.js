@@ -8,11 +8,11 @@ export const modalType = {
 
 // Initial summary state
 export const initialSummaryState = {
-  et_rate: 0.1,
-  et_end_of_year: 0.2,
-  et_hol_to_burn: 0.3,
-  total_vaca_weeks: 0.4,
-  total_vaca_days: 0.5
+  et_rate: 0.0,
+  et_end_of_year: 0.0,
+  et_hol_to_burn: 0.0,
+  total_vaca_weeks: 0.0,
+  total_vaca_days: 0.0
 };
 
 // Initial transactions state

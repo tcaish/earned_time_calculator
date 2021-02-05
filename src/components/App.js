@@ -35,14 +35,15 @@ function App() {
     <>
       <NavigationBar setModalShow={setModalShow} setModalType={setModalType} />
 
-      <Container>
+      <Container id="app-container">
         <Row>
-          <Col className="app-col">
+          <Col>
             <Summary summary={summary} />
           </Col>
           <Col className="app-col">
             <Transactions
               transactions={transactions}
+              summary={summary}
               setModalShow={setModalShow}
               setModalType={setModalType}
             />

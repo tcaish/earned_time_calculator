@@ -24,7 +24,7 @@ function NavigationBar({ setModalShow, setModalType }) {
       <Container>
         <Navbar.Brand>
           {/* <h2 className="rockout-font">Earned Time Calculator</h2> */}
-          <Image className="logo" src={logo} fluid />
+          <Image id="logo" src={logo} fluid />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
