@@ -1,0 +1,26 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-earnedtimecalculator-dev-160433-authRole",
+      "UnauthRoleArn": "arn:aws:iam::831304751625:role/amplify-earnedtimecalculator-dev-160433-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::831304751625:role/amplify-earnedtimecalculator-dev-160433-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-earnedtimecalculator-dev-160433-deployment",
+      "UnauthRoleName": "amplify-earnedtimecalculator-dev-160433-unauthRole",
+      "StackName": "amplify-earnedtimecalculator-dev-160433",
+      "StackId": "arn:aws:cloudformation:us-east-1:831304751625:stack/amplify-earnedtimecalculator-dev-160433/ea9b18c0-68be-11eb-b72a-0ed5ff3f81ab",
+      "AmplifyAppId": "d11iajmckk09l8"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d11iajmckk09l8",
+          "type": "cicd"
+        }
+      },
+      "auth": {
+        "earnedtimecalculator": {}
+      }
+    }
+  }
+}
