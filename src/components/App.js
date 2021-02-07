@@ -2,6 +2,9 @@
 import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 
+// Amplify
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+
 // Components
 import NavigationBar from './NavigationBar';
 import EtcModal from './EtcModal';
@@ -57,8 +60,10 @@ function App() {
         show={modalShow}
         onHide={() => setModalShow(false)}
       />
+
+      <AmplifySignOut />
     </>
   );
 }
 
-export default App;
+export default withAuthenticator(App);
