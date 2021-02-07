@@ -5,6 +5,7 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
+    "@aws-amplify/cli": "4.41.2",
     "@aws-amplify/ui-react": "^0.2.37",
     "aws-amplify": "^3.3.17",
     "bootstrap": "4.6.0",
