@@ -12,14 +12,14 @@
       "AmplifyAppId": "d11iajmckk09l8"
     },
     "categories": {
+      "auth": {
+        "earnedtimecalculator": {}
+      },
       "hosting": {
         "amplifyhosting": {
           "appId": "d11iajmckk09l8",
           "type": "cicd"
         }
-      },
-      "auth": {
-        "earnedtimecalculator": {}
       }
     }
   }
