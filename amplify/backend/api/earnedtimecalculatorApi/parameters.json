@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "earnedtimecalculatorApi",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authearnedtimecalculator",
+      "Outputs.UserPoolId"
+    ]
+  }
+}

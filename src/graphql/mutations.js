@@ -19,6 +19,7 @@ export const createEarnedTimeInfo = /* GraphQL */ `
       total_yearly_paychecks
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -40,6 +41,7 @@ export const updateEarnedTimeInfo = /* GraphQL */ `
       total_yearly_paychecks
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -61,6 +63,7 @@ export const deleteEarnedTimeInfo = /* GraphQL */ `
       total_yearly_paychecks
       createdAt
       updatedAt
+      owner
     }
   }
 `;

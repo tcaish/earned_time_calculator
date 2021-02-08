@@ -2,8 +2,8 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreateEarnedTimeInfo = /* GraphQL */ `
-  subscription OnCreateEarnedTimeInfo {
-    onCreateEarnedTimeInfo {
+  subscription OnCreateEarnedTimeInfo($owner: String!) {
+    onCreateEarnedTimeInfo(owner: $owner) {
       id
       userId
       carry_over_et
@@ -16,12 +16,13 @@ export const onCreateEarnedTimeInfo = /* GraphQL */ `
       total_yearly_paychecks
       createdAt
       updatedAt
+      owner
     }
   }
 `;
 export const onUpdateEarnedTimeInfo = /* GraphQL */ `
-  subscription OnUpdateEarnedTimeInfo {
-    onUpdateEarnedTimeInfo {
+  subscription OnUpdateEarnedTimeInfo($owner: String!) {
+    onUpdateEarnedTimeInfo(owner: $owner) {
       id
       userId
       carry_over_et
@@ -34,12 +35,13 @@ export const onUpdateEarnedTimeInfo = /* GraphQL */ `
       total_yearly_paychecks
       createdAt
       updatedAt
+      owner
     }
   }
 `;
 export const onDeleteEarnedTimeInfo = /* GraphQL */ `
-  subscription OnDeleteEarnedTimeInfo {
-    onDeleteEarnedTimeInfo {
+  subscription OnDeleteEarnedTimeInfo($owner: String!) {
+    onDeleteEarnedTimeInfo(owner: $owner) {
       id
       userId
       carry_over_et
@@ -52,6 +54,7 @@ export const onDeleteEarnedTimeInfo = /* GraphQL */ `
       total_yearly_paychecks
       createdAt
       updatedAt
+      owner
     }
   }
 `;

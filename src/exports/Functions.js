@@ -24,3 +24,15 @@ export const initialTransactionsState = [
     time_used: 1.25
   }
 ];
+
+// Initial profile state
+export const initialProfileState = {
+  carry_over_et: 0.0,
+  used_et: 0.0,
+  current_hol: 0.0,
+  hire_date_month: 0,
+  hire_date_day: 0,
+  hire_date_year: 0,
+  total_et_allowed: 0.0,
+  total_yearly_paychecks: 0
+};
