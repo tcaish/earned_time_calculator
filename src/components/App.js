@@ -5,7 +5,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { withAuthenticator, AmplifyAuthenticator } from '@aws-amplify/ui-react';
 import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
 // GraphQL
-import { listETInfo } from './graphql/queries';
+import { getEarnedTimeInfo } from '../graphql/queries';
 // Components
 import NavigationBar from './NavigationBar';
 import EtcModal from './EtcModal';
@@ -14,7 +14,8 @@ import Transactions from './Transactions';
 // Exports
 import {
   initialSummaryState,
-  initialTransactionsState
+  initialTransactionsState,
+  initialProfileState
 } from '../exports/Functions';
 
 // CSS
@@ -41,20 +42,39 @@ function App() {
   // Transactions state
   const [transactions, setTransactions] = useState(initialTransactionsState);
 
+  // Profile state
+  const [profile, setProfile] = useState(initialProfileState);
+
   useEffect(() => {
     onAuthUIStateChange((nextAuthState, authData) => {
       setAuthState(nextAuthState);
       setUser(authData);
+
+      fetchETInfo();
     });
   }, []);
 
-  useEffect(() => {
-    fetchETInfo();
-  }, []);
-
   async function fetchETInfo() {
-    const apiData = await API.graphql({ query: listETInfo });
-    console.log(apiData);
+    const apiData = await API.graphql({ query: getEarnedTimeInfo, variables: { id: '0' } });
+
+    const etInfo = apiData.data.getEarnedTimeInfo;
+
+    setProfile({
+      carry_over_et: etInfo.carry_over_et,
+      used_et: etInfo.used_et,
+      current_hol: etInfo.current_hol,
+      hire_date_month: etInfo.hire_date_month,
+      hire_date_day: etInfo.hire_date_day,
+      hire_date_year: etInfo.hire_date_year,
+      total_et_allowed: etInfo.total_et_allowed,
+      total_yearly_paychecks: etInfo.total_yearly_paychecks
+    });
+
+    calculateEtSummary(etInfo);
+  }
+
+  function calculateEtSummary(etInfo) {
+    console.log(etInfo);
   }
 
   return authState === AuthState.SignedIn && user ? (

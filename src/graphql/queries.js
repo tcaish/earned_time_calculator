@@ -2,8 +2,8 @@
 // this is an auto generated file. This will be overwritten
 
 export const getEarnedTimeInfo = /* GraphQL */ `
-  query GetEarnedTimeInfo($userId: String!) {
-    getEarnedTimeInfo(userId: $userId) {
+  query GetEarnedTimeInfo($id: ID!) {
+    getEarnedTimeInfo(id: $id) {
       id
       userId
       carry_over_et
@@ -16,6 +16,7 @@ export const getEarnedTimeInfo = /* GraphQL */ `
       total_yearly_paychecks
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -39,6 +40,7 @@ export const listEarnedTimeInfos = /* GraphQL */ `
         total_yearly_paychecks
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }

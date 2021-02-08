@@ -4,7 +4,7 @@
     "resourceNameTruncated": "earned01dcaaa0",
     "userPoolName": "earnedtimecalculator",
     "autoVerifiedAttributes": [
-        "phone_number"
+        "email"
     ],
     "mfaConfiguration": "OFF",
     "mfaTypes": [
@@ -55,11 +55,18 @@
         "email"
     ],
     "useDefault": "manual",
-    "userPoolGroups": false,
-    "userPoolGroupList": [],
+    "userPoolGroups": true,
+    "userPoolGroupList": [
+        "everyone"
+    ],
     "adminQueries": false,
     "thirdPartyAuth": false,
     "usernameCaseSensitive": false,
     "dependsOn": [],
-    "hostedUI": false
+    "hostedUI": false,
+    "triggers": "{}",
+    "parentStack": {
+        "Ref": "AWS::StackId"
+    },
+    "permissions": []
 }
