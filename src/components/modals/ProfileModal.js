@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 
 // React bootstrap
-import { Form, Row, Col, Button, Modal } from 'react-bootstrap';
+import { Alert, Form, Row, Col, Button, Modal } from 'react-bootstrap';
 
 // Styles
 import '../../styles/CustomModal.css';
@@ -14,11 +14,30 @@ import '../../styles/CustomModal.css';
 @params props The "type", "show", "onHide", and "updateprofile" props.
 */
 function ProfileModal(props) {
+  // Form state
   const [formData, setFormData] = useState({ ...props.profile });
+
+  // Alert state
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertText, setAlertText] = useState('');
 
   // Updates the profile information for the user
   function updateProfile(e) {
     e.preventDefault();
+
+    // If all fields aren't filled in
+    if (
+      !formData.carry_over_et ||
+      !formData.hire_date_month ||
+      !formData.hire_date_day ||
+      !formData.hire_date_year ||
+      !formData.total_et_allowed ||
+      !formData.total_yearly_paychecks
+    ) {
+      setAlertText('Please fill in the required fields!');
+      setShowAlert(true);
+      return;
+    }
 
     // Remove these properties because they'll cause the mutation to
     // error out
@@ -45,9 +64,19 @@ function ProfileModal(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          {showAlert && (
+            <Alert
+              className="align-center"
+              variant="warning"
+              onClose={() => setShowAlert(false)}
+              dismissible
+            >
+              {alertText}
+            </Alert>
+          )}
           <Form>
             <Form.Group controlId="formCarryOverEt">
-              <Form.Label>Carry Over ET</Form.Label>
+              <Form.Label>*Carry Over ET</Form.Label>
               <Form.Control
                 type="number"
                 placeholder="0.0"
@@ -88,7 +117,7 @@ function ProfileModal(props) {
             <Row>
               <Col>
                 <Form.Group controlId="formHireDateMonth">
-                  <Form.Label>Hire Date Month</Form.Label>
+                  <Form.Label>*Hire Date Month</Form.Label>
                   <Form.Control
                     as="select"
                     value={formData.hire_date_month}
@@ -107,7 +136,7 @@ function ProfileModal(props) {
               </Col>
               <Col>
                 <Form.Group controlId="formHireDateDay">
-                  <Form.Label>Hire Date Day</Form.Label>
+                  <Form.Label>*Hire Date Day</Form.Label>
                   <Form.Control
                     as="select"
                     value={formData.hire_date_day}
@@ -126,7 +155,7 @@ function ProfileModal(props) {
               </Col>
               <Col>
                 <Form.Group controlId="formHireDateYear">
-                  <Form.Label>Hire Date Year</Form.Label>
+                  <Form.Label>*Hire Date Year</Form.Label>
                   <Form.Control
                     as="select"
                     value={formData.hire_date_year}
@@ -150,7 +179,7 @@ function ProfileModal(props) {
             <Row>
               <Col>
                 <Form.Group controlId="formTotalEtAllowed">
-                  <Form.Label>Total ET Allowed</Form.Label>
+                  <Form.Label>*Total ET Allowed</Form.Label>
                   <Form.Control
                     type="number"
                     placeholder="0.0"
@@ -167,7 +196,7 @@ function ProfileModal(props) {
               </Col>
               <Col>
                 <Form.Group controlId="fromTotalYearlyPaychecks">
-                  <Form.Label>Total Yearly Paychecks</Form.Label>
+                  <Form.Label>*Total Yearly Paychecks</Form.Label>
                   <Form.Control
                     type="number"
                     placeholder="0"
