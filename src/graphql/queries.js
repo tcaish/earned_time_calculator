@@ -2,8 +2,8 @@
 // this is an auto generated file. This will be overwritten
 
 export const getEarnedTimeInfo = /* GraphQL */ `
-  query GetEarnedTimeInfo($id: ID!) {
-    getEarnedTimeInfo(id: $id) {
+  query GetEarnedTimeInfo($userId: String!) {
+    getEarnedTimeInfo(userId: $userId) {
       id
       userId
       carry_over_et
