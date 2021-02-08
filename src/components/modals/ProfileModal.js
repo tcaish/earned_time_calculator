@@ -16,11 +16,15 @@ import '../../styles/CustomModal.css';
 @params props The "type", "show", "onHide", and "updateprofile" props.
 */
 function ProfileModal(props) {
-  const [formData, setFormData] = useState({...props.profile});
+  const [formData, setFormData] = useState(props.profile);
 
+  useEffect(() => {
+    console.log(props.profile);
+  }, [formData]);
+
+  // Updates the profile information for the user
   function updateProfile(e) {
     e.preventDefault();
-
     console.log(props.profile);
     //props.updateprofile({...formData});
   }

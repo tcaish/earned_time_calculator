@@ -84,11 +84,11 @@ function App() {
     });
   }
 
-  async function updateEtInfo(formData) {
+  async function updateEtInfo(theFormData) {
     //if (!formData.name || !formData.description) return;
-    await API.graphql({ query: updateEarnedTimeInfoMutation, variables: { input: formData } });
+    await API.graphql({ query: updateEarnedTimeInfoMutation, variables: { input: theFormData } });
     //setNotes([ ...notes, formData ]);
-    setProfile({...formData});
+    setProfile({...theFormData});
   }
 
   // Returns the correct modal for the navigation button pressed
