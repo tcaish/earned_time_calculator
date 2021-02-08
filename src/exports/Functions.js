@@ -27,6 +27,7 @@ export const initialTransactionsState = [
 
 // Initial profile state
 export const initialProfileState = {
+  userId: "",
   carry_over_et: 0.0,
   used_et: 0.0,
   current_hol: 0.0,

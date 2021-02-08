@@ -8,6 +8,7 @@ import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
 
 // GraphQL
 import { getEarnedTimeInfo } from '../graphql/queries';
+import { updateEarnedTimeInfo as updateEarnedTimeInfoMutation } from '../graphql/mutations';
 
 // Components
 import NavigationBar from './NavigationBar';
@@ -68,8 +69,10 @@ function App() {
     const apiData = await API.graphql({ query: getEarnedTimeInfo, variables: { id: '0' } });
 
     const etInfo = apiData.data.getEarnedTimeInfo;
+    //console.log(etInfo);
 
     setProfile({
+      userId: etInfo.userId,
       carry_over_et: etInfo.carry_over_et,
       used_et: etInfo.used_et,
       current_hol: etInfo.current_hol,
@@ -79,17 +82,22 @@ function App() {
       total_et_allowed: etInfo.total_et_allowed,
       total_yearly_paychecks: etInfo.total_yearly_paychecks
     });
+  }
 
-    //calculateEtSummary(etInfo);
+  async function updateEtInfo(formData) {
+    //if (!formData.name || !formData.description) return;
+    await API.graphql({ query: updateEarnedTimeInfoMutation, variables: { input: formData } });
+    //setNotes([ ...notes, formData ]);
+    setProfile({...formData});
   }
 
   // Returns the correct modal for the navigation button pressed
-  function getModal() {
+  function getModal(theProfile) {
     let modal;
 
     switch (modalType) {
       case modalFuncType.profile:
-        modal = <ProfileModal profile={profile} show={modalShow} onHide={() => setModalShow(false)}/>;
+        modal = <ProfileModal profile={theProfile} updateprofile={updateEtInfo} show={modalShow} onHide={() => setModalShow(false)}/>;
         break;
       case modalFuncType.logout:
         modal = <LogoutModal show={modalShow} onHide={() => setModalShow(false)} />;
@@ -130,7 +138,7 @@ function App() {
 
       {/* Modals for settings, profile, and logout */}
       {
-        getModal()
+        getModal(profile)
       }
     </>
   ) : (
