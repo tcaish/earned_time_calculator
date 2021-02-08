@@ -74,7 +74,7 @@ function App() {
   }
 
   function calculateEtSummary(etInfo) {
-    console.log(etInfo);
+    //console.log(etInfo);
   }
 
   return authState === AuthState.SignedIn && user ? (
@@ -101,6 +101,7 @@ function App() {
       <EtcModal
         type={modalType}
         show={modalShow}
+        profile={profile}
         onHide={() => setModalShow(false)}
       />
     </>

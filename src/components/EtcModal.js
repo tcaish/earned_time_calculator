@@ -1,11 +1,13 @@
 // React
-import React from 'react';
+import React, { useState } from 'react';
+// React bootstrap
+import { Form } from 'react-bootstrap';
 // Amplify
 import { Auth } from 'aws-amplify';
 // React bootstrap
 import { Button, Modal } from 'react-bootstrap';
 // Exports
-import { modalType } from '../exports/Functions';
+import { modalType, initialProfileState } from '../exports/Functions';
 // Styles
 import '../styles/EtcModal.css';
 
@@ -16,6 +18,14 @@ import '../styles/EtcModal.css';
 @params props The "type", "show", and "onHide" props.
 */
 function EtcModal(props) {
+  const [formData, setFormData] = useState(initialProfileState);
+
+  function updateProfile(e) {
+    e.preventDefault();
+
+    console.log(formData);
+  }
+
   // Sign out the user
   async function signOut() {
     try {
@@ -58,10 +68,69 @@ function EtcModal(props) {
     switch (props.type) {
       case modalType.profile:
         body = (
-          <>
-            <h4>This is the profile body.</h4>
-            <p>Hello from profile!</p>
-          </>
+          <Form>
+            <Form.Group controlId="formCarryOverEt">
+              <Form.Label>Carry Over ET</Form.Label>
+              <Form.Control placeholder="0.0" value={formData.carry_over_et} onChange={(e) => setFormData({...formData, 'carry_over_et': e.target.value})} />
+            </Form.Group>
+
+            <Form.Group controlId="formUsedEt">
+              <Form.Label>Used ET</Form.Label>
+              <Form.Control placeholder="0.0" value={formData.used_et} onChange={(e) => setFormData({...formData, 'used_et': e.target.value})} />
+            </Form.Group>
+
+            <Form.Group controlId="formCurrentHol">
+              <Form.Label>Current Holiday</Form.Label>
+              <Form.Control placeholder="0.0" value={formData.current_hol} onChange={(e) => setFormData({...formData, 'current_hol': e.target.value})} />
+            </Form.Group>
+
+            <Form.Group controlId="formHireDateMonth">
+              <Form.Label>Hire Date Month</Form.Label>
+              <Form.Control as="select" value={formData.hire_date_month} onChange={(e) => setFormData({...formData, 'hire_date_month': e.target.value})} >
+                {
+                  [...Array(12).keys()].map((num) => (
+                    <option key={num}>{num + 1}</option>
+                  ))
+                }
+              </Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId="formHireDateDay">
+              <Form.Label>Hire Date Day</Form.Label>
+              <Form.Control as="select" value={formData.hire_date_day} onChange={(e) => setFormData({...formData, 'hire_date_day': e.target.value})} >
+                {
+                  [...Array(31).keys()].map((num) => (
+                    <option key={num}>{num + 1}</option>
+                  ))
+                }
+              </Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId="formHireDateYear">
+              <Form.Label>Hire Date Year</Form.Label>
+              <Form.Control as="select" value={formData.hire_date_year} onChange={(e) => setFormData({...formData, 'hire_date_year': e.target.value})} >
+                {
+                  [...Array((new Date().getFullYear() - 1939)).keys()].map((num) => (
+                    <option key={num}>{num + 1940}</option>
+                  ))
+                }
+              </Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId="formTotalEtAllowed">
+              <Form.Label>Total ET Allowed</Form.Label>
+              <Form.Control placeholder="0.0" value={formData.total_et_allowed} onChange={(e) => setFormData({...formData, 'total_et_allowed': e.target.value})} />
+            </Form.Group>
+
+            <Form.Group controlId="fromTotalYearlyPaychecks">
+              <Form.Label>Total Yearly Paychecks</Form.Label>
+              <Form.Control placeholder="0" value={formData.total_yearly_paychecks} onChange={(e) => setFormData({...formData, 'total_yearly_paychecks': e.target.value})} />
+            </Form.Group>
+
+            <Button variant="primary" type="submit" onClick={(e) => updateProfile(e) } block>
+              Update Profile
+            </Button>
+          </Form>
         );
         break;
       case modalType.settings:
@@ -109,9 +178,6 @@ function EtcModal(props) {
           <>
             <Button variant="secondary" onClick={props.onHide}>
               Close
-            </Button>
-            <Button variant="success" onClick={props.onHide}>
-              Update
             </Button>
           </>
         );
