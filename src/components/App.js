@@ -3,21 +3,26 @@ import React, { useState, useEffect } from 'react';
 import { Alert, Container, Row, Col } from 'react-bootstrap';
 
 // Amplify
+import { API } from 'aws-amplify';
 import { withAuthenticator, AmplifyAuthenticator } from '@aws-amplify/ui-react';
 import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
 
 // GraphQL
 import { getEarnedTimeInfo } from '../graphql/queries';
-import { updateEarnedTimeInfo as updateEarnedTimeInfoMutation } from '../graphql/mutations';
+import {
+  updateEarnedTimeInfo as updateEarnedTimeInfoMutation,
+  createEarnedTimeInfo as createEarnedTimeInfoMutation
+} from '../graphql/mutations';
 
 // Components
 import NavigationBar from './NavigationBar';
+import Summary from './Summary';
+import Transactions from './Transactions';
 import ProfileModal from './modals/ProfileModal';
 import LogoutModal from './modals/LogoutModal';
 import SettingsModal from './modals/SettingsModal';
+import TransactionsModal from './modals/TransactionsModal';
 import CustomModal from './modals/CustomModal';
-import Summary from './Summary';
-import Transactions from './Transactions';
 
 // Exports
 import {
@@ -29,8 +34,6 @@ import {
 
 // Styles
 import '../styles/App.css';
-import { API } from 'aws-amplify';
-import TransactionsModal from './modals/TransactionsModal';
 
 /*
 @function App
@@ -39,8 +42,8 @@ import TransactionsModal from './modals/TransactionsModal';
 */
 function App() {
   // Authentication state
-  const [authState, setAuthState] = React.useState();
-  const [user, setUser] = React.useState();
+  const [authState, setAuthState] = useState();
+  const [user, setUser] = useState();
 
   // Props for modal components
   const [modalShow, setModalShow] = useState(false);
@@ -66,23 +69,57 @@ function App() {
       setAuthState(nextAuthState);
       setUser(authData);
 
-      fetchEtInfo();
+      fetchEtInfo(authData.username);
     });
   }, []);
 
-  // Fetches all the earned time information for the current user
-  async function fetchEtInfo() {
-    const apiData = await API.graphql({
-      query: getEarnedTimeInfo,
-      variables: { id: '0' }
+  // Creates the initial earned time information for the user if
+  // nothing is there for them yet
+  async function createInitialEtInfo(theFormData) {
+    theFormData = { ...theFormData, userId: user.username };
+
+    await API.graphql({
+      query: createEarnedTimeInfoMutation,
+      variables: { input: theFormData }
     });
 
-    const etInfo = apiData.data.getEarnedTimeInfo;
-    setProfile({ ...etInfo });
+    setProfile({ ...theFormData });
+  }
+
+  // Fetches all the earned time information for the current user
+  async function fetchEtInfo(username) {
+    await API.graphql({
+      query: getEarnedTimeInfo,
+      variables: { userId: username }
+    })
+      .then(res => {
+        const etInfo = res.data.getEarnedTimeInfo;
+        console.log(etInfo);
+        setProfile({ ...etInfo });
+        return;
+      })
+      .catch(err => {
+        // console.log('error: ' + JSON.stringify(err));
+        // nothing to report here, just catching error
+        return;
+      });
   }
 
   // Updates the earned time information for the user in the database
   async function updateEtInfo(theFormData) {
+    // If certain form data isn't filled in, do it automatically
+    if (!theFormData.used_et) {
+      theFormData.used_et = 0;
+    }
+    if (!theFormData.current_hol) {
+      theFormData.current_hol = 0;
+    }
+
+    if (profile.userId === undefined) {
+      createInitialEtInfo(theFormData);
+      return;
+    }
+
     await API.graphql({
       query: updateEarnedTimeInfoMutation,
       variables: { input: theFormData }
@@ -183,7 +220,7 @@ function App() {
       </Container>
 
       {/* Modals for settings, profile, and logout */}
-      {profile.userId !== '' && getModal(profile)}
+      {getModal(profile)}
     </>
   ) : (
     <AmplifyAuthenticator />
