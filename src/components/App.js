@@ -1,9 +1,10 @@
 // React
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 
 // Amplify
-import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+import { withAuthenticator, AmplifyAuthenticator } from '@aws-amplify/ui-react';
+import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
 
 // Components
 import NavigationBar from './NavigationBar';
@@ -26,15 +27,28 @@ import '../styles/App.css';
   main component.
 */
 function App() {
+  // Authentication state
+  const [authState, setAuthState] = React.useState();
+  const [user, setUser] = React.useState();
+
   // Props for modal component
   const [modalShow, setModalShow] = useState(false);
   const [modalType, setModalType] = useState(0);
 
+  // Summary state
   const [summary, setSummary] = useState(initialSummaryState);
 
+  // Transactions state
   const [transactions, setTransactions] = useState(initialTransactionsState);
 
-  return (
+  useEffect(() => {
+    onAuthUIStateChange((nextAuthState, authData) => {
+      setAuthState(nextAuthState);
+      setUser(authData);
+    });
+  }, []);
+
+  return authState === AuthState.SignedIn && user ? (
     <>
       <NavigationBar setModalShow={setModalShow} setModalType={setModalType} />
 
@@ -60,9 +74,9 @@ function App() {
         show={modalShow}
         onHide={() => setModalShow(false)}
       />
-
-      <AmplifySignOut />
     </>
+  ) : (
+    <AmplifyAuthenticator />
   );
 }
 
