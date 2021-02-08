@@ -1,26 +1,35 @@
 // React
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+
 // Amplify
 import { withAuthenticator, AmplifyAuthenticator } from '@aws-amplify/ui-react';
 import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
+
 // GraphQL
 import { getEarnedTimeInfo } from '../graphql/queries';
+
 // Components
 import NavigationBar from './NavigationBar';
-import EtcModal from './EtcModal';
+import ProfileModal from './modals/ProfileModal';
+import LogoutModal from './modals/LogoutModal';
+import SettingsModal from './modals/SettingsModal';
+import CustomModal from './modals/CustomModal';
 import Summary from './Summary';
 import Transactions from './Transactions';
+
 // Exports
 import {
   initialSummaryState,
   initialTransactionsState,
-  initialProfileState
+  initialProfileState,
+  modalType as modalFuncType
 } from '../exports/Functions';
 
-// CSS
+// Styles
 import '../styles/App.css';
 import { API } from 'aws-amplify';
+import TransactionsModal from './modals/TransactionsModal';
 
 /*
 @function App
@@ -54,6 +63,7 @@ function App() {
     });
   }, []);
 
+  // Fetches all the earned time information for the current user
   async function fetchETInfo() {
     const apiData = await API.graphql({ query: getEarnedTimeInfo, variables: { id: '0' } });
 
@@ -70,11 +80,32 @@ function App() {
       total_yearly_paychecks: etInfo.total_yearly_paychecks
     });
 
-    calculateEtSummary(etInfo);
+    //calculateEtSummary(etInfo);
   }
 
-  function calculateEtSummary(etInfo) {
-    //console.log(etInfo);
+  // Returns the correct modal for the navigation button pressed
+  function getModal() {
+    let modal;
+
+    switch (modalType) {
+      case modalFuncType.profile:
+        modal = <ProfileModal profile={profile} show={modalShow} onHide={() => setModalShow(false)}/>;
+        break;
+      case modalFuncType.logout:
+        modal = <LogoutModal show={modalShow} onHide={() => setModalShow(false)} />;
+        break;
+      case modalFuncType.settings:
+        modal = <SettingsModal show={modalShow} onHide={() => setModalShow(false)} />;
+        break;
+      case modalFuncType.transactions:
+        modal = <TransactionsModal show={modalShow} onHide={() => setModalShow(false)} />;
+        break;
+      default:
+        modal = <CustomModal title="Error" body="There was an error executing your request!" show={modalShow} onHide={() => setModalShow(false)} />;
+        break;
+    }
+
+    return modal;
   }
 
   return authState === AuthState.SignedIn && user ? (
@@ -98,12 +129,9 @@ function App() {
       </Container>
 
       {/* Modals for settings, profile, and logout */}
-      <EtcModal
-        type={modalType}
-        show={modalShow}
-        profile={profile}
-        onHide={() => setModalShow(false)}
-      />
+      {
+        getModal()
+      }
     </>
   ) : (
     <AmplifyAuthenticator />
