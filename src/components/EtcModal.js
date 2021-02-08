@@ -1,12 +1,11 @@
 // React
 import React from 'react';
-
+// Amplify
+import { Auth } from 'aws-amplify';
 // React bootstrap
 import { Button, Modal } from 'react-bootstrap';
-
 // Exports
 import { modalType } from '../exports/Functions';
-
 // Styles
 import '../styles/EtcModal.css';
 
@@ -17,6 +16,16 @@ import '../styles/EtcModal.css';
 @params props The "type", "show", and "onHide" props.
 */
 function EtcModal(props) {
+  // Sign out the user
+  async function signOut() {
+    try {
+      await Auth.signOut();
+      props.onHide();
+    } catch (error) {
+      console.log('error signing out: ', error);
+    }
+  }
+
   // Sets the modal title depending on the type
   function CustomModalTitle() {
     let title;
@@ -125,7 +134,7 @@ function EtcModal(props) {
             <Button variant="secondary" onClick={props.onHide}>
               Close
             </Button>
-            <Button variant="danger" onClick={props.onHide}>
+            <Button variant="danger" onClick={signOut}>
               Logout
             </Button>
           </>
