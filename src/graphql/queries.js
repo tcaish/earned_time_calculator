@@ -7,13 +7,20 @@ export const getEarnedTimeInfo = /* GraphQL */ `
       id
       userId
       carry_over_et
-      used_et
       current_hol
       hire_date_month
       hire_date_day
       hire_date_year
       total_et_allowed
       total_yearly_paychecks
+      transactions {
+        id
+        date
+        time_used
+        createdAt
+        updatedAt
+        owner
+      }
       createdAt
       updatedAt
       owner
@@ -31,13 +38,51 @@ export const listEarnedTimeInfos = /* GraphQL */ `
         id
         userId
         carry_over_et
-        used_et
         current_hol
         hire_date_month
         hire_date_day
         hire_date_year
         total_et_allowed
         total_yearly_paychecks
+        transactions {
+          id
+          date
+          time_used
+          createdAt
+          updatedAt
+          owner
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getTransaction = /* GraphQL */ `
+  query GetTransaction($id: ID!) {
+    getTransaction(id: $id) {
+      id
+      date
+      time_used
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const listTransactions = /* GraphQL */ `
+  query ListTransactions(
+    $filter: ModelTransactionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listTransactions(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        date
+        time_used
         createdAt
         updatedAt
         owner
