@@ -27,7 +27,7 @@ function Transactions({ transactions, summary, setModalShow, setModalType }) {
             size="sm"
             variant="outline-primary"
             block
-            onClick={() => showModal(modalType.transaction)}
+            onClick={() => showModal(modalType.transactions)}
           >
             Add Transaction
           </Button>
