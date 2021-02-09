@@ -1,11 +1,6 @@
-@font-face {
-  font-family: 'rockout';
-  src: url('../fonts/Rockout.ttf');
-}
-
 body {
   color: white;
-  font-family: rockout;
+  font-family: Cambria;
 }
 
 #app-container {
