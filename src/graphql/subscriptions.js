@@ -13,14 +13,6 @@ export const onCreateEarnedTimeInfo = /* GraphQL */ `
       hire_date_year
       total_et_allowed
       total_yearly_paychecks
-      transactions {
-        id
-        date
-        time_used
-        createdAt
-        updatedAt
-        owner
-      }
       createdAt
       updatedAt
       owner
@@ -39,14 +31,6 @@ export const onUpdateEarnedTimeInfo = /* GraphQL */ `
       hire_date_year
       total_et_allowed
       total_yearly_paychecks
-      transactions {
-        id
-        date
-        time_used
-        createdAt
-        updatedAt
-        owner
-      }
       createdAt
       updatedAt
       owner
@@ -65,14 +49,6 @@ export const onDeleteEarnedTimeInfo = /* GraphQL */ `
       hire_date_year
       total_et_allowed
       total_yearly_paychecks
-      transactions {
-        id
-        date
-        time_used
-        createdAt
-        updatedAt
-        owner
-      }
       createdAt
       updatedAt
       owner

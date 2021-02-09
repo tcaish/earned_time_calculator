@@ -135,9 +135,6 @@ function App() {
   // Updates the earned time information for the user in the database
   async function updateEtInfo(theFormData) {
     // If certain form data isn't filled in, do it automatically
-    if (!theFormData.used_et) {
-      theFormData.used_et = 0;
-    }
     if (!theFormData.current_hol) {
       theFormData.current_hol = 0;
     }
@@ -154,17 +151,19 @@ function App() {
     })
       .then(res => {
         setProfile({ ...theFormData });
-        console.log(theFormData);
-        setSummary(getSummaryValues(theFormData));
+        setSummary({ ...getSummaryValues(theFormData, transactions) });
 
         setAlertText('Profile updated successfully!');
         setModalShow(false);
         setShowAlert(true);
+
+        return;
       })
       .catch(err => {
         alert(
           'There was an error updating your profile: ' + JSON.stringify(err)
         );
+        return;
       });
   }
 

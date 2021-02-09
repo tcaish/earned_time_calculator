@@ -8,7 +8,6 @@ type EarnedTimeInfo @model @auth(rules: [{ allow: owner }]) {
   hire_date_year: Int!
   total_et_allowed: Float!
   total_yearly_paychecks: Int!
-  transactions: [Transaction]
 }
 
 type Transaction @model @auth(rules: [{ allow: owner }]) {
