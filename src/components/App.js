@@ -29,7 +29,8 @@ import {
   initialSummaryState,
   initialTransactionsState,
   initialProfileState,
-  modalType as modalFuncType
+  modalType as modalFuncType,
+  getSummaryValues
 } from '../exports/Functions';
 
 // Styles
@@ -102,6 +103,8 @@ function App() {
       .then(res => {
         const etInfo = res.data.getEarnedTimeInfo;
         setProfile({ ...etInfo });
+        console.log(getSummaryValues(etInfo));
+        //setSummary(getSummaryValues(etInfo));
         return;
       })
       .catch(err => {
