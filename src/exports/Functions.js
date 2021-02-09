@@ -150,8 +150,8 @@ export function getSummaryValues(etInfo) {
   // To find this, select the Accrual Balance by Trans Date in the leftside
   // window, and then look at the last paycheck of the year to see your ET
   // balance
-  const carry_over_et           = etInfo.carry_over_et;
-  const used_et                 = etInfo.used_et; // ET used after beginning of year; measured in hours
+  const carry_over_et           = parseFloat(etInfo.carry_over_et);
+  const used_et                 = parseFloat(etInfo.used_et); // ET used after beginning of year; measured in hours
   const current_hol             = etInfo.current_hol; // holiday time; measured in hours
   const hire_date_month         = etInfo.hire_date_month;
   const hire_date_day           = etInfo.hire_date_day;

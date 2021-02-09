@@ -87,6 +87,8 @@ function App() {
     });
 
     setProfile({ ...theFormData });
+    setSummary(getSummaryValues(theFormData));
+
     setShowAlert(false);
     setModalShow(false);
 
@@ -103,8 +105,8 @@ function App() {
       .then(res => {
         const etInfo = res.data.getEarnedTimeInfo;
         setProfile({ ...etInfo });
-        console.log(getSummaryValues(etInfo));
-        //setSummary(getSummaryValues(etInfo));
+        //console.log(getSummaryValues(etInfo));
+        setSummary(getSummaryValues(etInfo));
         return;
       })
       .catch(err => {
@@ -135,6 +137,10 @@ function App() {
       variables: { input: theFormData }
     })
       .then(res => {
+        setProfile({ ...theFormData });
+        console.log(theFormData);
+        setSummary(getSummaryValues(theFormData));
+
         setAlertText('Profile updated successfully!');
         setModalShow(false);
         setShowAlert(true);
@@ -144,8 +150,6 @@ function App() {
           'There was an error updating your profile: ' + JSON.stringify(err)
         );
       });
-
-    setProfile({ ...theFormData });
   }
 
   // Returns the correct modal for the navigation button pressed
