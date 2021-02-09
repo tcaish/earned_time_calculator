@@ -60,6 +60,8 @@ export const onCreateTransaction = /* GraphQL */ `
     onCreateTransaction(owner: $owner) {
       id
       date
+      type
+      debit
       time_used
       createdAt
       updatedAt
@@ -72,6 +74,8 @@ export const onUpdateTransaction = /* GraphQL */ `
     onUpdateTransaction(owner: $owner) {
       id
       date
+      type
+      debit
       time_used
       createdAt
       updatedAt
@@ -84,6 +88,8 @@ export const onDeleteTransaction = /* GraphQL */ `
     onDeleteTransaction(owner: $owner) {
       id
       date
+      type
+      debit
       time_used
       createdAt
       updatedAt

@@ -49,6 +49,8 @@ export const getTransaction = /* GraphQL */ `
     getTransaction(id: $id) {
       id
       date
+      type
+      debit
       time_used
       createdAt
       updatedAt
@@ -66,6 +68,8 @@ export const listTransactions = /* GraphQL */ `
       items {
         id
         date
+        type
+        debit
         time_used
         createdAt
         updatedAt

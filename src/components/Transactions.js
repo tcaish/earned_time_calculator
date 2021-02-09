@@ -11,6 +11,14 @@ import { modalType } from '../exports/Functions';
 import '../styles/Transaction.css';
 
 function Transactions({ transactions, summary, setModalShow, setModalType }) {
+  const row_style = debit => {
+    if (debit) {
+      return 'row-debit';
+    } else {
+      return 'row-credit';
+    }
+  };
+
   // Shows the modal depending on the navigation button clicked
   function showModal(modalType) {
     setModalType(modalType);
@@ -31,18 +39,23 @@ function Transactions({ transactions, summary, setModalShow, setModalType }) {
           >
             Add Transaction
           </Button>
-          <Table striped bordered hover variant="dark" size="sm">
+          <Table bordered hover variant="dark" size="sm">
             <thead>
               <tr>
                 <th className="align-center">Date</th>
-                <th>Time Used (hrs)</th>
+                <th className="align-center">Type</th>
+                <th className="align-center">Time Used (hrs)</th>
               </tr>
             </thead>
             <tbody>
               {transactions.map(transaction => (
-                <tr key={transaction.id}>
+                <tr
+                  key={transaction.id}
+                  className={row_style(transaction.debit)}
+                >
                   <td className="align-center">{transaction.date}</td>
-                  <td>{transaction.time_used}</td>
+                  <td className="align-center">{transaction.type}</td>
+                  <td className="align-center">{transaction.time_used}</td>
                 </tr>
               ))}
             </tbody>

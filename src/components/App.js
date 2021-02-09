@@ -27,7 +27,6 @@ import CustomModal from './modals/CustomModal';
 // Exports
 import {
   initialSummaryState,
-  initialTransactionsState,
   initialProfileState,
   modalType as modalFuncType,
   getSummaryValues

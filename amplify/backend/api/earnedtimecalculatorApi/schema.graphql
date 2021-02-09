@@ -13,5 +13,7 @@ type EarnedTimeInfo @model @auth(rules: [{ allow: owner }]) {
 type Transaction @model @auth(rules: [{ allow: owner }]) {
   id: ID!
   date: String!
+  type: String!
+  debit: Boolean!
   time_used: Float!
 }
