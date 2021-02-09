@@ -13,7 +13,8 @@
     },
     "categories": {
       "auth": {
-        "earnedtimecalculator": {}
+        "earnedtimecalculator": {},
+        "userPoolGroups": {}
       },
       "hosting": {
         "amplifyhosting": {

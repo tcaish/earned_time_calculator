@@ -69,14 +69,16 @@ function App() {
       setAuthState(nextAuthState);
       setUser(authData);
 
-      fetchEtInfo(authData.username);
+      if(authData !== undefined) {
+        fetchEtInfo(authData.username);
+      }
     });
   }, []);
 
   // Creates the initial earned time information for the user if
   // nothing is there for them yet
   async function createInitialEtInfo(theFormData) {
-    theFormData = { ...theFormData, userId: user.username };
+    theFormData = { ...theFormData, userId: user.username, id: user.username };
 
     await API.graphql({
       query: createEarnedTimeInfoMutation,
@@ -84,17 +86,21 @@ function App() {
     });
 
     setProfile({ ...theFormData });
+    setShowAlert(false);
+    setModalShow(false);
+
+    setAlertText("Profile successfully updated!");
+    setShowAlert(true);
   }
 
   // Fetches all the earned time information for the current user
   async function fetchEtInfo(username) {
     await API.graphql({
       query: getEarnedTimeInfo,
-      variables: { userId: username }
+      variables: { id: username }
     })
       .then(res => {
         const etInfo = res.data.getEarnedTimeInfo;
-        console.log(etInfo);
         setProfile({ ...etInfo });
         return;
       })
@@ -115,7 +121,8 @@ function App() {
       theFormData.current_hol = 0;
     }
 
-    if (profile.userId === undefined) {
+    // If user is updating their profile for the first time
+    if (profile.userId === undefined || profile.userId === "") {
       createInitialEtInfo(theFormData);
       return;
     }
@@ -220,7 +227,7 @@ function App() {
       </Container>
 
       {/* Modals for settings, profile, and logout */}
-      {getModal(profile)}
+      {profile.userId !== "" && getModal(profile)}
     </>
   ) : (
     <AmplifyAuthenticator />
