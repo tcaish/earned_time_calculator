@@ -10,13 +10,20 @@ export const createEarnedTimeInfo = /* GraphQL */ `
       id
       userId
       carry_over_et
-      used_et
       current_hol
       hire_date_month
       hire_date_day
       hire_date_year
       total_et_allowed
       total_yearly_paychecks
+      transactions {
+        id
+        date
+        time_used
+        createdAt
+        updatedAt
+        owner
+      }
       createdAt
       updatedAt
       owner
@@ -32,13 +39,20 @@ export const updateEarnedTimeInfo = /* GraphQL */ `
       id
       userId
       carry_over_et
-      used_et
       current_hol
       hire_date_month
       hire_date_day
       hire_date_year
       total_et_allowed
       total_yearly_paychecks
+      transactions {
+        id
+        date
+        time_used
+        createdAt
+        updatedAt
+        owner
+      }
       createdAt
       updatedAt
       owner
@@ -54,13 +68,65 @@ export const deleteEarnedTimeInfo = /* GraphQL */ `
       id
       userId
       carry_over_et
-      used_et
       current_hol
       hire_date_month
       hire_date_day
       hire_date_year
       total_et_allowed
       total_yearly_paychecks
+      transactions {
+        id
+        date
+        time_used
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const createTransaction = /* GraphQL */ `
+  mutation CreateTransaction(
+    $input: CreateTransactionInput!
+    $condition: ModelTransactionConditionInput
+  ) {
+    createTransaction(input: $input, condition: $condition) {
+      id
+      date
+      time_used
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const updateTransaction = /* GraphQL */ `
+  mutation UpdateTransaction(
+    $input: UpdateTransactionInput!
+    $condition: ModelTransactionConditionInput
+  ) {
+    updateTransaction(input: $input, condition: $condition) {
+      id
+      date
+      time_used
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const deleteTransaction = /* GraphQL */ `
+  mutation DeleteTransaction(
+    $input: DeleteTransactionInput!
+    $condition: ModelTransactionConditionInput
+  ) {
+    deleteTransaction(input: $input, condition: $condition) {
+      id
+      date
+      time_used
       createdAt
       updatedAt
       owner

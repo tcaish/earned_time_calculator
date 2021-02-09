@@ -88,19 +88,6 @@ function ProfileModal(props) {
               />
             </Form.Group>
 
-            <Form.Group controlId="formUsedEt">
-              <Form.Label>Used ET</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="0.0"
-                autoComplete="off"
-                value={formData.used_et}
-                onChange={e =>
-                  setFormData({ ...formData, used_et: e.target.value })
-                }
-              />
-            </Form.Group>
-
             <Form.Group controlId="formCurrentHol">
               <Form.Label>Current Unused Holiday</Form.Label>
               <Form.Control

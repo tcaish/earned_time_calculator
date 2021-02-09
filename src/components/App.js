@@ -8,7 +8,7 @@ import { withAuthenticator, AmplifyAuthenticator } from '@aws-amplify/ui-react';
 import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
 
 // GraphQL
-import { getEarnedTimeInfo } from '../graphql/queries';
+import { getEarnedTimeInfo, listTransactions } from '../graphql/queries';
 import {
   updateEarnedTimeInfo as updateEarnedTimeInfoMutation,
   createEarnedTimeInfo as createEarnedTimeInfoMutation
@@ -54,7 +54,7 @@ function App() {
   const [summary, setSummary] = useState(initialSummaryState);
 
   // Props for transactions component
-  const [transactions, setTransactions] = useState(initialTransactionsState);
+  const [transactions, setTransactions] = useState([{}]);
 
   // Props for profile component
   const [profile, setProfile] = useState(initialProfileState);
@@ -70,7 +70,7 @@ function App() {
       setAuthState(nextAuthState);
       setUser(authData);
 
-      if(authData !== undefined) {
+      if (authData !== undefined) {
         fetchEtInfo(authData.username);
       }
     });
@@ -92,28 +92,44 @@ function App() {
     setShowAlert(false);
     setModalShow(false);
 
-    setAlertText("Profile successfully updated!");
+    setAlertText('Profile successfully updated!');
     setShowAlert(true);
   }
 
   // Fetches all the earned time information for the current user
   async function fetchEtInfo(username) {
-    await API.graphql({
+    // Get the earned time information
+    const etInfo = await API.graphql({
       query: getEarnedTimeInfo,
       variables: { id: username }
     })
       .then(res => {
         const etInfo = res.data.getEarnedTimeInfo;
         setProfile({ ...etInfo });
-        //console.log(getSummaryValues(etInfo));
-        setSummary(getSummaryValues(etInfo));
-        return;
+        return etInfo;
       })
       .catch(err => {
-        // console.log('error: ' + JSON.stringify(err));
+        console.log('error getting et info: ' + JSON.stringify(err));
         // nothing to report here, just catching error
-        return;
+        return null;
       });
+
+    // Get the list of transactions for the user
+    const etTransactions = await API.graphql({
+      query: listTransactions
+    })
+      .then(res => {
+        const transactions = res.data.listTransactions.items;
+        setTransactions(transactions);
+        return transactions;
+      })
+      .catch(err => {
+        console.log('error listing transactions: ' + JSON.stringify(err));
+        return null;
+      });
+
+    // Update the summary now that we have all the information
+    setSummary(getSummaryValues(etInfo, etTransactions));
   }
 
   // Updates the earned time information for the user in the database
@@ -127,7 +143,7 @@ function App() {
     }
 
     // If user is updating their profile for the first time
-    if (profile.userId === undefined || profile.userId === "") {
+    if (profile.userId === undefined || profile.userId === '') {
       createInitialEtInfo(theFormData);
       return;
     }
@@ -234,7 +250,7 @@ function App() {
       </Container>
 
       {/* Modals for settings, profile, and logout */}
-      {profile.userId !== "" && getModal(profile)}
+      {profile.userId !== '' && getModal(profile)}
     </>
   ) : (
     <AmplifyAuthenticator />

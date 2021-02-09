@@ -39,7 +39,7 @@ function Transactions({ transactions, summary, setModalShow, setModalType }) {
               </tr>
             </thead>
             <tbody>
-              {transactions.map((transaction) => (
+              {transactions.map(transaction => (
                 <tr key={transaction.id}>
                   <td className="align-center">{transaction.date}</td>
                   <td>{transaction.time_used}</td>

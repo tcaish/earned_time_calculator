@@ -1,18 +1,18 @@
-type EarnedTimeInfo
-  @model
-  @auth(
-    rules: [
-      { allow: owner }
-    ]
-  ) {
+type EarnedTimeInfo @model @auth(rules: [{ allow: owner }]) {
   id: ID!
-  userId: String!,
-  carry_over_et: Float!,
-  used_et: Float,
-  current_hol: Float,
-  hire_date_month: Int!,
-  hire_date_day: Int!,
-  hire_date_year: Int!,
-  total_et_allowed: Float!,
+  userId: String!
+  carry_over_et: Float!
+  current_hol: Float
+  hire_date_month: Int!
+  hire_date_day: Int!
+  hire_date_year: Int!
+  total_et_allowed: Float!
   total_yearly_paychecks: Int!
+  transactions: [Transaction]
+}
+
+type Transaction @model @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  date: String!
+  time_used: Float!
 }

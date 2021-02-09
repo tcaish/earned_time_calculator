@@ -7,13 +7,20 @@ export const onCreateEarnedTimeInfo = /* GraphQL */ `
       id
       userId
       carry_over_et
-      used_et
       current_hol
       hire_date_month
       hire_date_day
       hire_date_year
       total_et_allowed
       total_yearly_paychecks
+      transactions {
+        id
+        date
+        time_used
+        createdAt
+        updatedAt
+        owner
+      }
       createdAt
       updatedAt
       owner
@@ -26,13 +33,20 @@ export const onUpdateEarnedTimeInfo = /* GraphQL */ `
       id
       userId
       carry_over_et
-      used_et
       current_hol
       hire_date_month
       hire_date_day
       hire_date_year
       total_et_allowed
       total_yearly_paychecks
+      transactions {
+        id
+        date
+        time_used
+        createdAt
+        updatedAt
+        owner
+      }
       createdAt
       updatedAt
       owner
@@ -45,13 +59,56 @@ export const onDeleteEarnedTimeInfo = /* GraphQL */ `
       id
       userId
       carry_over_et
-      used_et
       current_hol
       hire_date_month
       hire_date_day
       hire_date_year
       total_et_allowed
       total_yearly_paychecks
+      transactions {
+        id
+        date
+        time_used
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onCreateTransaction = /* GraphQL */ `
+  subscription OnCreateTransaction($owner: String!) {
+    onCreateTransaction(owner: $owner) {
+      id
+      date
+      time_used
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onUpdateTransaction = /* GraphQL */ `
+  subscription OnUpdateTransaction($owner: String!) {
+    onUpdateTransaction(owner: $owner) {
+      id
+      date
+      time_used
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onDeleteTransaction = /* GraphQL */ `
+  subscription OnDeleteTransaction($owner: String!) {
+    onDeleteTransaction(owner: $owner) {
+      id
+      date
+      time_used
       createdAt
       updatedAt
       owner
