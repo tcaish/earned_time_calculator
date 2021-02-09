@@ -1,3 +1,10 @@
 .transaction-btn {
   margin-bottom: 10px;
 }
+
+.row-credit {
+  background-color: rgb(157, 201, 157);
+}
+.row-debit {
+  background-color: rgb(201, 157, 157);
+}

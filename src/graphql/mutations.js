@@ -72,6 +72,8 @@ export const createTransaction = /* GraphQL */ `
     createTransaction(input: $input, condition: $condition) {
       id
       date
+      type
+      debit
       time_used
       createdAt
       updatedAt
@@ -87,6 +89,8 @@ export const updateTransaction = /* GraphQL */ `
     updateTransaction(input: $input, condition: $condition) {
       id
       date
+      type
+      debit
       time_used
       createdAt
       updatedAt
@@ -102,6 +106,8 @@ export const deleteTransaction = /* GraphQL */ `
     deleteTransaction(input: $input, condition: $condition) {
       id
       date
+      type
+      debit
       time_used
       createdAt
       updatedAt

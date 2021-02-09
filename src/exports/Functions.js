@@ -15,19 +15,9 @@ export const initialSummaryState = {
   total_vaca_days: 0.0
 };
 
-// Initial transactions state
-// params: id: Int, date: String, time_used: Int
-export const initialTransactionsState = [
-  {
-    id: 0,
-    date: '1-Jan',
-    time_used: 1.25
-  }
-];
-
 // Initial profile state
 export const initialProfileState = {
-  id: '0',
+  //id: '0',
   userId: '',
   carry_over_et: 0.0,
   current_hol: 0.0,
