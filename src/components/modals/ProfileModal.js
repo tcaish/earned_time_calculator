@@ -89,7 +89,10 @@ function ProfileModal(props) {
                     value={formData.carry_over_et}
                     onClick={e => e.target.select()}
                     onChange={e =>
-                      setFormData({ ...formData, carry_over_et: e.target.value })
+                      setFormData({
+                        ...formData,
+                        carry_over_et: e.target.value
+                      })
                     }
                   />
                   <Form.Text className="text-muted">
@@ -144,10 +147,13 @@ function ProfileModal(props) {
             <Row>
               <Col>
                 <Form.Group controlId="formHireDate">
-                  <Form.Label>*Hire Date</Form.Label><br/>
-                  <DatePicker 
+                  <Form.Label>*Hire Date</Form.Label>
+                  <br />
+                  <DatePicker
                     selected={new Date(formData.hire_date)}
-                    onChange={date => setFormData({ ...formData, hire_date: date })}
+                    onChange={date =>
+                      setFormData({ ...formData, hire_date: date })
+                    }
                   />
                   <Form.Text className="text-muted">
                     The date you were hired.
