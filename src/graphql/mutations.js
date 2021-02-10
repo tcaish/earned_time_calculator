@@ -10,7 +10,6 @@ export const createEarnedTimeInfo = /* GraphQL */ `
       id
       userId
       carry_over_et
-      current_hol
       hire_date_month
       hire_date_day
       hire_date_year
@@ -31,7 +30,6 @@ export const updateEarnedTimeInfo = /* GraphQL */ `
       id
       userId
       carry_over_et
-      current_hol
       hire_date_month
       hire_date_day
       hire_date_year
@@ -52,7 +50,6 @@ export const deleteEarnedTimeInfo = /* GraphQL */ `
       id
       userId
       carry_over_et
-      current_hol
       hire_date_month
       hire_date_day
       hire_date_year
