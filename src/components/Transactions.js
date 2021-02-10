@@ -39,7 +39,7 @@ function Transactions({ transactions, summary, setModalShow, setModalType }) {
           >
             Add Transaction
           </Button>
-          <Table bordered hover variant="dark" size="sm">
+          <Table bordered variant="dark" size="sm">
             <thead>
               <tr>
                 <th className="align-center">Date</th>

@@ -1,3 +1,11 @@
+// DateType object used in functions below
+export const DateType = {
+  DAY_OF_MONTH: 0,
+  MONTH: 1,
+  WEEK_OF_YEAR: 2,
+  YEAR: 3
+};
+
 // Modal type struct for navigation buttons
 export const modalType = {
   profile: 0,
@@ -21,9 +29,9 @@ export const initialProfileState = {
   userId: '',
   carry_over_et: 0.0,
   current_hol: 0.0,
-  hire_date_month: 0,
-  hire_date_day: 0,
-  hire_date_year: 0,
+  hire_date_month: getSpecificDateValue(DateType.MONTH), 
+  hire_date_day: getSpecificDateValue(DateType.DAY_OF_MONTH),
+  hire_date_year: getSpecificDateValue(DateType.YEAR),
   total_et_allowed: 0.0,
   total_yearly_paychecks: 0
 };
@@ -31,14 +39,9 @@ export const initialProfileState = {
 //
 // Functions and constants to support calculating the summary
 //
-
-// DateType object used in functions below
-const DateType = {
-  DAY_OF_MONTH: 0,
-  MONTH: 1,
-  WEEK_OF_YEAR: 2,
-  YEAR: 3
-};
+const starting_et = 17;
+const max_et = 27;
+const paychecks_per_year = 26;
 
 /**
  * Gets either the current week of the year or the year.
@@ -79,21 +82,20 @@ function getSpecificDateValue(value) {
  * the total paychecks before hire date (index 1), the total et earned after
  * hire date (index 2), and the total paychecks after hire date (index 3).
  */
-function getYearlyEarnedTimeValues(hire_month, hire_day, hire_year) {
+function getYearlyEarnedTimeValues(total_yearly_paychecks, hire_month, hire_day, hire_year) {
   let values_arr = [0, 0, 0, 0];
-  const starting_et = 17; // measured in days
   const current_month = getSpecificDateValue(DateType.MONTH);
   const current_day = getSpecificDateValue(DateType.DAY_OF_MONTH);
   const current_year = getSpecificDateValue(DateType.YEAR);
 
   // If you have more than 10 years of service, you earn the same amount of ET/year
   if (current_year - hire_year > 10) {
-    values_arr[0] = 27; // et/year; measured in days
-    values_arr[1] = 26; // total paychecks/year
+    values_arr[0] = max_et; // et/year; measured in days
+    values_arr[1] = total_yearly_paychecks; // total paychecks/year
     values_arr[2] = 0;
     values_arr[3] = 0;
   } else {
-    const total_paychecks_per_month = 2.166666666666667; // 26 paychecks/year divided by 12 months/year
+    const total_paychecks_per_month = paychecks_per_year / 12; // 26 paychecks/year divided by 12 months/year
     const service_years = current_year - hire_year;
     let before_et = 0;
     let after_et = 0;
@@ -138,7 +140,12 @@ function getYearlyEarnedTimeValues(hire_month, hire_day, hire_year) {
  */
 export function getSummaryValues(etInfo, transactions) {
   // Calculate the amount of used_et so far based on transactions
-  const used_et = transactions.reduce((a, b) => a + (b['time_used'] || 0), 0);
+  const used_et = transactions !== undefined ? (
+    transactions.reduce((a, b) => a + (b['time_used'] || 0), 0)
+    )
+    : (
+      0
+    );
 
   const carry_over_et = parseFloat(etInfo.carry_over_et);
   const current_hol = parseFloat(etInfo.current_hol); // holiday time; measured in hours
@@ -149,6 +156,7 @@ export function getSummaryValues(etInfo, transactions) {
   const total_yearly_paychecks = parseFloat(etInfo.total_yearly_paychecks);
 
   const values_arr = getYearlyEarnedTimeValues(
+    total_yearly_paychecks,
     hire_date_month,
     hire_date_day,
     hire_date_year
@@ -175,18 +183,25 @@ export function getSummaryValues(etInfo, transactions) {
   let current_et_rate = 0.0;
 
   // If we're before my hire date (5/21)
-  if (
-    getSpecificDateValue(DateType.MONTH) <= hire_date_month &&
-    getSpecificDateValue(DateType.DAY_OF_MONTH) < hire_date_day
-  ) {
-    current_et_rate =
-      Math.round(((yearly_et_before * 8) / total_yearly_paychecks) * 100.0) /
-      100.0;
+  if (values_arr[0] !== max_et) {
+    if (
+      getSpecificDateValue(DateType.MONTH) <= hire_date_month &&
+      getSpecificDateValue(DateType.DAY_OF_MONTH) < hire_date_day
+    ) {
+      current_et_rate =
+        Math.round(((yearly_et_before * 8) / total_yearly_paychecks) * 100.0) /
+        100.0;
+    }
+    // Else we're on or after my hire date (5/21)
+    else {
+      current_et_rate =
+        Math.round(((yearly_et_after * 8) / total_yearly_paychecks) * 100.0) /
+        100.0;
+    }
   }
-  // Else we're on or after my hire date (5/21)
   else {
     current_et_rate =
-      Math.round(((yearly_et_after * 8) / total_yearly_paychecks) * 100.0) /
+      Math.round(((yearly_et_before * 8) / total_yearly_paychecks) * 100.0) /
       100.0;
   }
 
