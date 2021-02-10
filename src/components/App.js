@@ -139,11 +139,6 @@ function App() {
 
   // Updates the earned time information for the user in the database
   async function updateEtInfo(theFormData) {
-    // If certain form data isn't filled in, do it automatically
-    if (!theFormData.current_hol) {
-      theFormData.current_hol = 0;
-    }
-
     // If user is updating their profile for the first time
     if (profile.userId === undefined || profile.userId === '') {
       createInitialEtInfo(theFormData);

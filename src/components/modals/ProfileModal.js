@@ -75,33 +75,68 @@ function ProfileModal(props) {
             </Alert>
           )}
           <Form>
-            <Form.Group controlId="formCarryOverEt">
-              <Form.Label>*Carry Over ET</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="0.0"
-                autoComplete="off"
-                value={formData.carry_over_et}
-                onClick={e => e.target.select()}
-                onChange={e =>
-                  setFormData({ ...formData, carry_over_et: e.target.value })
-                }
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formCurrentHol">
-              <Form.Label>Current Unused Holiday</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="0.0"
-                autoComplete="off"
-                value={formData.current_hol}
-                onClick={e => e.target.select()}
-                onChange={e =>
-                  setFormData({ ...formData, current_hol: e.target.value })
-                }
-              />
-            </Form.Group>
+          <Row>
+              <Col>
+                <Form.Group controlId="formCarryOverEt">
+                  <Form.Label>*Carry Over ET</Form.Label>
+                  <Form.Control
+                    type="number"
+                    placeholder="0.0"
+                    autoComplete="off"
+                    value={formData.carry_over_et}
+                    onClick={e => e.target.select()}
+                    onChange={e =>
+                      setFormData({ ...formData, carry_over_et: e.target.value })
+                    }
+                  />
+                  <Form.Text className="text-muted">
+                    How much earned time you brought over from last year.
+                  </Form.Text>
+              </Form.Group>
+            </Col>
+              <Col>
+                <Form.Group controlId="formTotalEtAllowed">
+                  <Form.Label>*Total ET Allowed</Form.Label>
+                  <Form.Control
+                    type="number"
+                    placeholder="0.0"
+                    autoComplete="off"
+                    value={formData.total_et_allowed}
+                    onClick={e => e.target.select()}
+                    onChange={e =>
+                      setFormData({
+                        ...formData,
+                        total_et_allowed: e.target.value
+                      })
+                    }
+                  />
+                  <Form.Text className="text-muted">
+                    How much earned time you can carry over into the new year.
+                  </Form.Text>
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group controlId="fromTotalYearlyPaychecks">
+                  <Form.Label>*Total Yearly Paychecks</Form.Label>
+                  <Form.Control
+                    type="number"
+                    placeholder="26"
+                    autoComplete="off"
+                    value={formData.total_yearly_paychecks}
+                    onClick={e => e.target.select()}
+                    onChange={e =>
+                      setFormData({
+                        ...formData,
+                        total_yearly_paychecks: e.target.value
+                      })
+                    }
+                  />
+                  <Form.Text className="text-muted">
+                    How many paychecks per year you receive (most common is 26).
+                  </Form.Text>
+                </Form.Group>
+              </Col>
+            </Row>
 
             <Row>
               <Col>
@@ -161,45 +196,6 @@ function ProfileModal(props) {
                       )
                     )}
                   </Form.Control>
-                </Form.Group>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col>
-                <Form.Group controlId="formTotalEtAllowed">
-                  <Form.Label>*Total ET Allowed</Form.Label>
-                  <Form.Control
-                    type="number"
-                    placeholder="0.0"
-                    autoComplete="off"
-                    value={formData.total_et_allowed}
-                    onClick={e => e.target.select()}
-                    onChange={e =>
-                      setFormData({
-                        ...formData,
-                        total_et_allowed: e.target.value
-                      })
-                    }
-                  />
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group controlId="fromTotalYearlyPaychecks">
-                  <Form.Label>*Total Yearly Paychecks</Form.Label>
-                  <Form.Control
-                    type="number"
-                    placeholder="0"
-                    autoComplete="off"
-                    value={formData.total_yearly_paychecks}
-                    onClick={e => e.target.select()}
-                    onChange={e =>
-                      setFormData({
-                        ...formData,
-                        total_yearly_paychecks: e.target.value
-                      })
-                    }
-                  />
                 </Form.Group>
               </Col>
             </Row>

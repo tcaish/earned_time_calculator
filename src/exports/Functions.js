@@ -28,7 +28,6 @@ export const initialProfileState = {
   //id: '0',
   userId: '',
   carry_over_et: 0.0,
-  current_hol: 0.0,
   hire_date_month: getSpecificDateValue(DateType.MONTH), 
   hire_date_day: getSpecificDateValue(DateType.DAY_OF_MONTH),
   hire_date_year: getSpecificDateValue(DateType.YEAR),
@@ -140,15 +139,20 @@ function getYearlyEarnedTimeValues(total_yearly_paychecks, hire_month, hire_day,
  */
 export function getSummaryValues(etInfo, transactions) {
   // Calculate the amount of used_et so far based on transactions
-  const used_et = transactions !== undefined ? (
-    transactions.reduce((a, b) => a + (b['time_used'] || 0), 0)
-    )
-    : (
-      0
-    );
+  let used_et = 0;
+
+  // Make sure there are transactions present
+  if (transactions !== undefined) {
+    const debit_et = transactions.filter(({debit}) => debit === true)
+      .reduce((a, b) => a + (b['time_used'] || 0), 0);
+
+    const credit_et = transactions.filter(({debit}) => debit === false)
+      .reduce((a, b) => a + (b['time_used'] || 0), 0);
+    
+    used_et = debit_et - credit_et;
+  }
 
   const carry_over_et = parseFloat(etInfo.carry_over_et);
-  const current_hol = parseFloat(etInfo.current_hol); // holiday time; measured in hours
   const hire_date_month = parseFloat(etInfo.hire_date_month);
   const hire_date_day = parseFloat(etInfo.hire_date_day);
   const hire_date_year = parseFloat(etInfo.hire_date_year);
@@ -176,9 +180,8 @@ export function getSummaryValues(etInfo, transactions) {
     Math.round((carry_over_et + total_et_for_year) * 100.0) / 100.0;
   const et_to_burn =
     Math.round((total_et - total_et_allowed - used_et) * 100.0) / 100.0;
-  const et_holiday_to_burn = et_to_burn + current_hol;
-  const vacation_weeks = Math.round((et_holiday_to_burn / 40) * 100.0) / 100.0; // divides ET+HOL by 40 hrs/week
-  const vacation_days = Math.round((et_holiday_to_burn / 8) * 100.0) / 100.0; // divides ET+HOL by 8 hrs/day
+  const vacation_weeks = Math.round((et_to_burn / 40) * 100.0) / 100.0; // divides ET+HOL by 40 hrs/week
+  const vacation_days = Math.round((et_to_burn / 8) * 100.0) / 100.0; // divides ET+HOL by 8 hrs/day
 
   let current_et_rate = 0.0;
 
@@ -214,7 +217,7 @@ export function getSummaryValues(etInfo, transactions) {
   return {
     et_rate: current_et_rate,
     et_end_of_year: total_et,
-    et_hol_to_burn: et_holiday_to_burn,
+    et_hol_to_burn: et_to_burn,
     total_vaca_weeks: vacation_weeks,
     total_vaca_days: vacation_days
   };
