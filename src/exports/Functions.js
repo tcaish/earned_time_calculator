@@ -28,9 +28,7 @@ export const initialProfileState = {
   //id: '0',
   userId: '',
   carry_over_et: 0.0,
-  hire_date_month: getSpecificDateValue(DateType.MONTH), 
-  hire_date_day: getSpecificDateValue(DateType.DAY_OF_MONTH),
-  hire_date_year: getSpecificDateValue(DateType.YEAR),
+  hire_date: new Date(),
   total_et_allowed: 0.0,
   total_yearly_paychecks: 0
 };
@@ -47,8 +45,12 @@ const paychecks_per_year = 26;
  * @param value type of date value to return
  * @return the specific date type specified by the value param
  */
-function getSpecificDateValue(value) {
-  const todaysDate = new Date();
+function getSpecificDateValue(value, date) {
+  let todaysDate = new Date();
+
+  if (date !== null) {
+    todaysDate = date;
+  }
 
   const weekOfYear = date => {
     const oneJan = new Date(date.getFullYear(), 0, 1);
@@ -83,9 +85,9 @@ function getSpecificDateValue(value) {
  */
 function getYearlyEarnedTimeValues(total_yearly_paychecks, hire_month, hire_day, hire_year) {
   let values_arr = [0, 0, 0, 0];
-  const current_month = getSpecificDateValue(DateType.MONTH);
-  const current_day = getSpecificDateValue(DateType.DAY_OF_MONTH);
-  const current_year = getSpecificDateValue(DateType.YEAR);
+  const current_month = getSpecificDateValue(DateType.MONTH, null);
+  const current_day = getSpecificDateValue(DateType.DAY_OF_MONTH, null);
+  const current_year = getSpecificDateValue(DateType.YEAR, null);
 
   // If you have more than 10 years of service, you earn the same amount of ET/year
   if (current_year - hire_year > 10) {
@@ -152,10 +154,13 @@ export function getSummaryValues(etInfo, transactions) {
     used_et = debit_et - credit_et;
   }
 
+  // Get the hire date values based on hire_date
+  const hire_date = new Date(etInfo.hire_date);
+  const hire_date_month = parseFloat(getSpecificDateValue(DateType.MONTH, hire_date));
+  const hire_date_day = parseFloat(getSpecificDateValue(DateType.DAY_OF_MONTH, hire_date));
+  const hire_date_year = parseFloat(getSpecificDateValue(DateType.YEAR, hire_date));
+
   const carry_over_et = parseFloat(etInfo.carry_over_et);
-  const hire_date_month = parseFloat(etInfo.hire_date_month);
-  const hire_date_day = parseFloat(etInfo.hire_date_day);
-  const hire_date_year = parseFloat(etInfo.hire_date_year);
   const total_et_allowed = parseFloat(etInfo.total_et_allowed);
   const total_yearly_paychecks = parseFloat(etInfo.total_yearly_paychecks);
 
@@ -188,8 +193,8 @@ export function getSummaryValues(etInfo, transactions) {
   // If we're before my hire date (5/21)
   if (values_arr[0] !== max_et) {
     if (
-      getSpecificDateValue(DateType.MONTH) <= hire_date_month &&
-      getSpecificDateValue(DateType.DAY_OF_MONTH) < hire_date_day
+      getSpecificDateValue(DateType.MONTH, null) <= hire_date_month &&
+      getSpecificDateValue(DateType.DAY_OF_MONTH, null) < hire_date_day
     ) {
       current_et_rate =
         Math.round(((yearly_et_before * 8) / total_yearly_paychecks) * 100.0) /

@@ -130,7 +130,7 @@ function App() {
         console.log('error listing transactions: ' + JSON.stringify(err));
         return null;
       });
-
+    
     // Update the summary now that we have all the information
     if (etInfo !== null) {
       setSummary(getSummaryValues(etInfo, etTransactions));

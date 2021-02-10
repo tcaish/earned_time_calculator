@@ -4,6 +4,10 @@ import React, { useState, useEffect } from 'react';
 // React bootstrap
 import { Alert, Form, Row, Col, Button, Modal } from 'react-bootstrap';
 
+// Third-party
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
 // Styles
 import '../../styles/CustomModal.css';
 
@@ -28,9 +32,7 @@ function ProfileModal(props) {
     // If all fields aren't filled in
     if (
       !formData.carry_over_et ||
-      !formData.hire_date_month ||
-      !formData.hire_date_day ||
-      !formData.hire_date_year ||
+      !formData.hire_date ||
       !formData.total_et_allowed ||
       !formData.total_yearly_paychecks
     ) {
@@ -74,8 +76,9 @@ function ProfileModal(props) {
               {alertText}
             </Alert>
           )}
+
           <Form>
-          <Row>
+            <Row>
               <Col>
                 <Form.Group controlId="formCarryOverEt">
                   <Form.Label>*Carry Over ET</Form.Label>
@@ -92,8 +95,8 @@ function ProfileModal(props) {
                   <Form.Text className="text-muted">
                     How much earned time you brought over from last year.
                   </Form.Text>
-              </Form.Group>
-            </Col>
+                </Form.Group>
+              </Col>
               <Col>
                 <Form.Group controlId="formTotalEtAllowed">
                   <Form.Label>*Total ET Allowed</Form.Label>
@@ -139,6 +142,21 @@ function ProfileModal(props) {
             </Row>
 
             <Row>
+              <Col>
+                <Form.Group controlId="formHireDate">
+                  <Form.Label>*Hire Date</Form.Label><br/>
+                  <DatePicker 
+                    selected={new Date(formData.hire_date)}
+                    onChange={date => setFormData({ ...formData, hire_date: date })}
+                  />
+                  <Form.Text className="text-muted">
+                    The date you were hired.
+                  </Form.Text>
+                </Form.Group>
+              </Col>
+            </Row>
+
+            {/* <Row>
               <Col>
                 <Form.Group controlId="formHireDateMonth">
                   <Form.Label>*Hire Date Month</Form.Label>
@@ -198,7 +216,7 @@ function ProfileModal(props) {
                   </Form.Control>
                 </Form.Group>
               </Col>
-            </Row>
+            </Row> */}
 
             <Button
               variant="primary"
