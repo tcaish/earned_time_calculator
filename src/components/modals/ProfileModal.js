@@ -82,6 +82,7 @@ function ProfileModal(props) {
                 placeholder="0.0"
                 autoComplete="off"
                 value={formData.carry_over_et}
+                onClick={e => e.target.select()}
                 onChange={e =>
                   setFormData({ ...formData, carry_over_et: e.target.value })
                 }
@@ -95,6 +96,7 @@ function ProfileModal(props) {
                 placeholder="0.0"
                 autoComplete="off"
                 value={formData.current_hol}
+                onClick={e => e.target.select()}
                 onChange={e =>
                   setFormData({ ...formData, current_hol: e.target.value })
                 }
@@ -172,6 +174,7 @@ function ProfileModal(props) {
                     placeholder="0.0"
                     autoComplete="off"
                     value={formData.total_et_allowed}
+                    onClick={e => e.target.select()}
                     onChange={e =>
                       setFormData({
                         ...formData,
@@ -189,6 +192,7 @@ function ProfileModal(props) {
                     placeholder="0"
                     autoComplete="off"
                     value={formData.total_yearly_paychecks}
+                    onClick={e => e.target.select()}
                     onChange={e =>
                       setFormData({
                         ...formData,

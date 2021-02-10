@@ -83,16 +83,20 @@ function App() {
     await API.graphql({
       query: createEarnedTimeInfoMutation,
       variables: { input: theFormData }
-    });
+    })
+      .then(res => {
+        setProfile({ ...theFormData });
+        setSummary(getSummaryValues(theFormData));
 
-    setProfile({ ...theFormData });
-    setSummary(getSummaryValues(theFormData));
+        setShowAlert(false);
+        setModalShow(false);
 
-    setShowAlert(false);
-    setModalShow(false);
-
-    setAlertText('Profile successfully updated!');
-    setShowAlert(true);
+        setAlertText('Profile successfully updated!');
+        setShowAlert(true);
+      })
+      .catch(err => {
+        console.log("error creating initial et info: " + JSON.stringify(err));
+      });
   }
 
   // Fetches all the earned time information for the current user
@@ -128,7 +132,9 @@ function App() {
       });
 
     // Update the summary now that we have all the information
-    setSummary(getSummaryValues(etInfo, etTransactions));
+    if (etInfo !== null) {
+      setSummary(getSummaryValues(etInfo, etTransactions));
+    }
   }
 
   // Updates the earned time information for the user in the database
