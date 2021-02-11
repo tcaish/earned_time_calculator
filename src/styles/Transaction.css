@@ -12,6 +12,9 @@
 .trans-badge {
   cursor: pointer;
 }
-.trans-badge:hover {
+.trans-badge-modify:hover {
+  background-color: #67d681;
+}
+.trans-badge-delete:hover {
   background-color: #eb6371;
 }
