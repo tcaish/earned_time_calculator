@@ -11,7 +11,8 @@ import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
 import { getEarnedTimeInfo, listTransactions } from '../graphql/queries';
 import {
   updateEarnedTimeInfo as updateEarnedTimeInfoMutation,
-  createEarnedTimeInfo as createEarnedTimeInfoMutation
+  createEarnedTimeInfo as createEarnedTimeInfoMutation,
+  deleteTransaction as deleteTransactionMutation
 } from '../graphql/mutations';
 
 // Components
@@ -165,6 +166,11 @@ function App() {
         );
         return;
       });
+  }
+
+  // Deletes a transaction from the table
+  async function deleteTransaction() {
+
   }
 
   // Returns the correct modal for the navigation button pressed

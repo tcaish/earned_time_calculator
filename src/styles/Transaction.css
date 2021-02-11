@@ -8,3 +8,10 @@
 .row-debit {
   background-color: rgb(201, 157, 157);
 }
+
+.trans-badge {
+  cursor: pointer;
+}
+.trans-badge:hover {
+  background-color: #eb6371;
+}
