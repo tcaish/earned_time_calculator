@@ -12,7 +12,9 @@ import { getEarnedTimeInfo, listTransactions } from '../graphql/queries';
 import {
   updateEarnedTimeInfo as updateEarnedTimeInfoMutation,
   createEarnedTimeInfo as createEarnedTimeInfoMutation,
-  deleteTransaction as deleteTransactionMutation
+  deleteTransaction as deleteTransactionMutation,
+  updateTransaction as updateTransactionMutation,
+  createTransaction as createTransactionMutation
 } from '../graphql/mutations';
 
 // Components
@@ -175,6 +177,9 @@ function App() {
       });
   }
 
+  // Adds a transaction to the table
+  async function addTransaction(theTransaction) {}
+
   // Deletes a transaction from the table
   async function deleteTransaction({ id }) {
     if (id !== undefined && id !== null) {
@@ -243,6 +248,7 @@ function App() {
           <TransactionsModal
             show={modalShow}
             onHide={() => setModalShow(false)}
+            addTransaction={addTransaction}
           />
         );
         break;

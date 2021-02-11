@@ -164,68 +164,6 @@ function ProfileModal(props) {
               <Col></Col>
             </Row>
 
-            {/* <Row>
-              <Col>
-                <Form.Group controlId="formHireDateMonth">
-                  <Form.Label>*Hire Date Month</Form.Label>
-                  <Form.Control
-                    as="select"
-                    value={formData.hire_date_month}
-                    onChange={e =>
-                      setFormData({
-                        ...formData,
-                        hire_date_month: e.target.value
-                      })
-                    }
-                  >
-                    {[...Array(12).keys()].map(num => (
-                      <option key={num}>{num + 1}</option>
-                    ))}
-                  </Form.Control>
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group controlId="formHireDateDay">
-                  <Form.Label>*Hire Date Day</Form.Label>
-                  <Form.Control
-                    as="select"
-                    value={formData.hire_date_day}
-                    onChange={e =>
-                      setFormData({
-                        ...formData,
-                        hire_date_day: e.target.value
-                      })
-                    }
-                  >
-                    {[...Array(31).keys()].map(num => (
-                      <option key={num}>{num + 1}</option>
-                    ))}
-                  </Form.Control>
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group controlId="formHireDateYear">
-                  <Form.Label>*Hire Date Year</Form.Label>
-                  <Form.Control
-                    as="select"
-                    value={formData.hire_date_year}
-                    onChange={e =>
-                      setFormData({
-                        ...formData,
-                        hire_date_year: e.target.value
-                      })
-                    }
-                  >
-                    {[...Array(new Date().getFullYear() - 1939).keys()].map(
-                      num => (
-                        <option key={num}>{num + 1940}</option>
-                      )
-                    )}
-                  </Form.Control>
-                </Form.Group>
-              </Col>
-            </Row> */}
-
             <Button
               variant="primary"
               type="submit"
