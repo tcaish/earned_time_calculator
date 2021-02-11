@@ -2,7 +2,7 @@
 import React from 'react';
 
 // React bootstrap
-import { Button, Table } from 'react-bootstrap';
+import { Badge, Button, Table } from 'react-bootstrap';
 
 // Exports
 import { modalType } from '../exports/Functions';
@@ -39,23 +39,32 @@ function Transactions({ transactions, summary, setModalShow, setModalType }) {
           >
             Add Transaction
           </Button>
-          <Table bordered variant="dark" size="sm">
+          <Table bordered striped hover variant="dark" size="sm">
             <thead>
               <tr>
                 <th className="align-center">Date</th>
                 <th className="align-center">Type</th>
                 <th className="align-center">Time Used (hrs)</th>
+                <th className="align-center">Action</th>
               </tr>
             </thead>
             <tbody>
               {transactions.map(transaction => (
                 <tr
                   key={transaction.id}
-                  className={row_style(transaction.debit)}
                 >
                   <td className="align-center">{transaction.date}</td>
                   <td className="align-center">{transaction.type}</td>
-                  <td className="align-center">{transaction.time_used}</td>
+                  <td className="align-center">{transaction.debit ? ("-") : ("+")}{transaction.time_used}</td>
+                  <td className="align-center">
+                    <Badge 
+                      className="trans-badge"
+                      variant="danger"
+                      onClick={() => console.log('clicked')}
+                    >
+                      Delete
+                    </Badge>
+                  </td>
                 </tr>
               ))}
             </tbody>

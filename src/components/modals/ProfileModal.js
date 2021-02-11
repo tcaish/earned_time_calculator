@@ -81,7 +81,7 @@ function ProfileModal(props) {
             <Row>
               <Col>
                 <Form.Group controlId="formCarryOverEt">
-                  <Form.Label>*Carry Over ET</Form.Label>
+                  <Form.Label>Carry Over ET</Form.Label>
                   <Form.Control
                     type="number"
                     placeholder="0.0"
@@ -102,7 +102,7 @@ function ProfileModal(props) {
               </Col>
               <Col>
                 <Form.Group controlId="formTotalEtAllowed">
-                  <Form.Label>*Total ET Allowed</Form.Label>
+                  <Form.Label>Total ET Allowed</Form.Label>
                   <Form.Control
                     type="number"
                     placeholder="0.0"
@@ -123,7 +123,7 @@ function ProfileModal(props) {
               </Col>
               <Col>
                 <Form.Group controlId="fromTotalYearlyPaychecks">
-                  <Form.Label>*Total Yearly Paychecks</Form.Label>
+                  <Form.Label>Total Yearly Paychecks</Form.Label>
                   <Form.Control
                     type="number"
                     placeholder="26"
@@ -145,9 +145,10 @@ function ProfileModal(props) {
             </Row>
 
             <Row>
+              <Col></Col>
               <Col>
                 <Form.Group controlId="formHireDate">
-                  <Form.Label>*Hire Date</Form.Label>
+                  <Form.Label>Hire Date</Form.Label>
                   <br />
                   <DatePicker
                     selected={new Date(formData.hire_date)}
@@ -160,6 +161,7 @@ function ProfileModal(props) {
                   </Form.Text>
                 </Form.Group>
               </Col>
+              <Col></Col>
             </Row>
 
             {/* <Row>
