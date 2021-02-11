@@ -20,6 +20,13 @@ import 'react-datepicker/dist/react-datepicker.css';
 // Styles
 import '../../styles/CustomModal.css';
 
+const initialTransactionState = {
+  date: new Date(),
+  type: 'Earned Time',
+  debit: 'true',
+  time_used: 0.0
+};
+
 /*
 @function TransactionsModal
 @description Sets up the TransactionsModal component that is used 
@@ -28,7 +35,7 @@ import '../../styles/CustomModal.css';
 */
 function TransactionsModal(props) {
   // Form state
-  const [formData, setFormData] = useState({ ...props.profile });
+  const [formData, setFormData] = useState(initialTransactionState);
 
   // Alert state
   const [showAlert, setShowAlert] = useState(false);
@@ -54,24 +61,31 @@ function TransactionsModal(props) {
 
     // If all fields aren't filled in
     if (
-      !formData.date ||
-      !formData.debit ||
-      !formData.time_used ||
-      !formData.type
+      formData.date == undefined ||
+      formData.debit == undefined ||
+      formData.time_used == undefined ||
+      formData.type == undefined
     ) {
       setAlertText('Please fill in the required fields!');
       setShowAlert(true);
       return;
+    } else if (formData.time_used <= 0) {
+      setAlertText('Please enter an Hours value that is greater than 0.');
+      setShowAlert(true);
+      return;
     }
 
-    console.log(formData);
     // Remove these properties because they'll cause the mutation to
     // error out
     delete formData.createdAt;
     delete formData.updatedAt;
     delete formData.owner;
 
-    props.addTransaction({ ...formData });
+    // Update values to be correct data type
+    formData.debit = formData.debit === 'true';
+    formData.time_used = parseFloat(formData.time_used);
+
+    props.addTransaction(formData);
   }
 
   return (

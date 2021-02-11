@@ -5,7 +5,7 @@ import React from 'react';
 import { Badge, Button, Table } from 'react-bootstrap';
 
 // Exports
-import { modalType } from '../exports/Functions';
+import { getTransactionFormatDate, modalType } from '../exports/Functions';
 
 // Styles
 import '../styles/Transaction.css';
@@ -18,14 +18,6 @@ function Transactions({
   deleteTransaction,
   modifyTransaction
 }) {
-  const row_style = debit => {
-    if (debit) {
-      return 'row-debit';
-    } else {
-      return 'row-credit';
-    }
-  };
-
   // Shows the modal depending on the navigation button clicked
   function showModal(modalType) {
     setModalType(modalType);
@@ -60,7 +52,9 @@ function Transactions({
                 .sort((a, b) => new Date(b.date) - new Date(a.date)) // Sort in descending order
                 .map(transaction => (
                   <tr key={transaction.id}>
-                    <td className="align-center">{transaction.date}</td>
+                    <td className="align-center">
+                      {getTransactionFormatDate(transaction.date)}
+                    </td>
                     <td className="align-center">{transaction.type}</td>
                     <td className="align-center">
                       {transaction.debit ? '-' : '+'}
