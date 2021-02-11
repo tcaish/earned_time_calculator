@@ -62,6 +62,7 @@ function App() {
   // Alert state
   const [showAlert, setShowAlert] = useState(false);
   const [alertText, setAlertText] = useState('');
+  const [alertType, setAlertType] = useState('success');
 
   // This updates the authentication information upon load
   // This fetches the earned time information for the user upon load
@@ -93,10 +94,11 @@ function App() {
         setModalShow(false);
 
         setAlertText('Profile successfully updated!');
+        setAlertType('success');
         setShowAlert(true);
       })
       .catch(err => {
-        console.log("error creating initial et info: " + JSON.stringify(err));
+        console.log('error creating initial et info: ' + JSON.stringify(err));
       });
   }
 
@@ -118,7 +120,11 @@ function App() {
         return null;
       });
 
-    // Get the list of transactions for the user
+    fetchTransactions(etInfo);
+  }
+
+  // Fetches all the transactions for the current user
+  async function fetchTransactions(etInfo) {
     const etTransactions = await API.graphql({
       query: listTransactions
     })
@@ -131,7 +137,7 @@ function App() {
         console.log('error listing transactions: ' + JSON.stringify(err));
         return null;
       });
-    
+
     // Update the summary now that we have all the information
     if (etInfo !== null) {
       setSummary(getSummaryValues(etInfo, etTransactions));
@@ -155,6 +161,7 @@ function App() {
         setSummary({ ...getSummaryValues(theFormData, transactions) });
 
         setAlertText('Profile updated successfully!');
+        setAlertType('success');
         setModalShow(false);
         setShowAlert(true);
 
@@ -169,8 +176,41 @@ function App() {
   }
 
   // Deletes a transaction from the table
-  async function deleteTransaction() {
+  async function deleteTransaction({ id }) {
+    if (id !== undefined && id !== null) {
+      // delete theTransaction.date;
+      // delete theTransaction.type;
+      // delete theTransaction.debit;
+      // delete theTransaction.time_used;
 
+      await API.graphql({
+        query: deleteTransactionMutation,
+        variables: { input: { id } }
+      })
+        .then(res => {
+          console.log('deleting transaction: ' + JSON.stringify(res));
+          fetchTransactions(profile);
+
+          setAlertText('Transaction deleted successfully!');
+          setAlertType('success');
+          setShowAlert(true);
+        })
+        .catch(err => {
+          console.log(err);
+          setAlertText(
+            'There was an issue deleting the transaction. Please try again!'
+          );
+          setAlertType('danger');
+          setShowAlert(true);
+        });
+    }
+  }
+
+  // Modifies a transactions from the table
+  async function modifyTransaction(theTransaction) {
+    if (theTransaction.id !== undefined && theTransaction.id !== null) {
+      console.log('Modifying: ' + theTransaction);
+    }
   }
 
   // Returns the correct modal for the navigation button pressed
@@ -229,7 +269,7 @@ function App() {
         {showAlert && modalType === modalFuncType.profile && (
           <Alert
             className="align-center"
-            variant="success"
+            variant={alertType}
             onClose={() => setShowAlert(false)}
             dismissible
           >
@@ -249,6 +289,8 @@ function App() {
               summary={summary}
               setModalShow={setModalShow}
               setModalType={setModalType}
+              deleteTransaction={deleteTransaction}
+              modifyTransaction={modifyTransaction}
             />
           </Col>
         </Row>

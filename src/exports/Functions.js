@@ -83,7 +83,12 @@ function getSpecificDateValue(value, date) {
  * the total paychecks before hire date (index 1), the total et earned after
  * hire date (index 2), and the total paychecks after hire date (index 3).
  */
-function getYearlyEarnedTimeValues(total_yearly_paychecks, hire_month, hire_day, hire_year) {
+function getYearlyEarnedTimeValues(
+  total_yearly_paychecks,
+  hire_month,
+  hire_day,
+  hire_year
+) {
   let values_arr = [0, 0, 0, 0];
   const current_month = getSpecificDateValue(DateType.MONTH, null);
   const current_day = getSpecificDateValue(DateType.DAY_OF_MONTH, null);
@@ -145,20 +150,28 @@ export function getSummaryValues(etInfo, transactions) {
 
   // Make sure there are transactions present
   if (transactions !== undefined) {
-    const debit_et = transactions.filter(({debit}) => debit === true)
+    const debit_et = transactions
+      .filter(({ debit }) => debit === true)
       .reduce((a, b) => a + (b['time_used'] || 0), 0);
 
-    const credit_et = transactions.filter(({debit}) => debit === false)
+    const credit_et = transactions
+      .filter(({ debit }) => debit === false)
       .reduce((a, b) => a + (b['time_used'] || 0), 0);
-    
+
     used_et = debit_et - credit_et;
   }
 
   // Get the hire date values based on hire_date
   const hire_date = new Date(etInfo.hire_date);
-  const hire_date_month = parseFloat(getSpecificDateValue(DateType.MONTH, hire_date));
-  const hire_date_day = parseFloat(getSpecificDateValue(DateType.DAY_OF_MONTH, hire_date));
-  const hire_date_year = parseFloat(getSpecificDateValue(DateType.YEAR, hire_date));
+  const hire_date_month = parseFloat(
+    getSpecificDateValue(DateType.MONTH, hire_date)
+  );
+  const hire_date_day = parseFloat(
+    getSpecificDateValue(DateType.DAY_OF_MONTH, hire_date)
+  );
+  const hire_date_year = parseFloat(
+    getSpecificDateValue(DateType.YEAR, hire_date)
+  );
 
   const carry_over_et = parseFloat(etInfo.carry_over_et);
   const total_et_allowed = parseFloat(etInfo.total_et_allowed);
@@ -206,8 +219,7 @@ export function getSummaryValues(etInfo, transactions) {
         Math.round(((yearly_et_after * 8) / total_yearly_paychecks) * 100.0) /
         100.0;
     }
-  }
-  else {
+  } else {
     current_et_rate =
       Math.round(((yearly_et_before * 8) / total_yearly_paychecks) * 100.0) /
       100.0;
