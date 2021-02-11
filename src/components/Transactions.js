@@ -58,9 +58,17 @@ function Transactions({ transactions, summary, setModalShow, setModalType }) {
                   <td className="align-center">{transaction.debit ? ("-") : ("+")}{transaction.time_used}</td>
                   <td className="align-center">
                     <Badge 
-                      className="trans-badge"
+                      className="trans-badge trans-badge-modify"
+                      variant="success"
+                      onClick={() => console.log('modify')}
+                    >
+                      Modify
+                    </Badge>
+                    {' '}
+                    <Badge 
+                      className="trans-badge trans-badge-delete"
                       variant="danger"
-                      onClick={() => console.log('clicked')}
+                      onClick={() => console.log('delete')}
                     >
                       Delete
                     </Badge>
