@@ -10,7 +10,14 @@ import { modalType } from '../exports/Functions';
 // Styles
 import '../styles/Transaction.css';
 
-function Transactions({ transactions, summary, setModalShow, setModalType }) {
+function Transactions({
+  transactions,
+  summary,
+  setModalShow,
+  setModalType,
+  deleteTransaction,
+  modifyTransaction
+}) {
   const row_style = debit => {
     if (debit) {
       return 'row-debit';
@@ -50,25 +57,25 @@ function Transactions({ transactions, summary, setModalShow, setModalType }) {
             </thead>
             <tbody>
               {transactions.map(transaction => (
-                <tr
-                  key={transaction.id}
-                >
+                <tr key={transaction.id}>
                   <td className="align-center">{transaction.date}</td>
                   <td className="align-center">{transaction.type}</td>
-                  <td className="align-center">{transaction.debit ? ("-") : ("+")}{transaction.time_used}</td>
                   <td className="align-center">
-                    <Badge 
+                    {transaction.debit ? '-' : '+'}
+                    {transaction.time_used}
+                  </td>
+                  <td className="align-center">
+                    <Badge
                       className="trans-badge trans-badge-modify"
                       variant="success"
-                      onClick={() => console.log('modify')}
+                      onClick={() => modifyTransaction(transaction)}
                     >
                       Modify
-                    </Badge>
-                    {' '}
-                    <Badge 
+                    </Badge>{' '}
+                    <Badge
                       className="trans-badge trans-badge-delete"
                       variant="danger"
-                      onClick={() => console.log('delete')}
+                      onClick={() => deleteTransaction(transaction)}
                     >
                       Delete
                     </Badge>
