@@ -56,32 +56,34 @@ function Transactions({
               </tr>
             </thead>
             <tbody>
-              {transactions.map(transaction => (
-                <tr key={transaction.id}>
-                  <td className="align-center">{transaction.date}</td>
-                  <td className="align-center">{transaction.type}</td>
-                  <td className="align-center">
-                    {transaction.debit ? '-' : '+'}
-                    {transaction.time_used}
-                  </td>
-                  <td className="align-center">
-                    <Badge
-                      className="trans-badge trans-badge-modify"
-                      variant="success"
-                      onClick={() => modifyTransaction(transaction)}
-                    >
-                      Modify
-                    </Badge>{' '}
-                    <Badge
-                      className="trans-badge trans-badge-delete"
-                      variant="danger"
-                      onClick={() => deleteTransaction(transaction)}
-                    >
-                      Delete
-                    </Badge>
-                  </td>
-                </tr>
-              ))}
+              {transactions
+                .sort((a, b) => new Date(b.date) - new Date(a.date)) // Sort in decsending order
+                .map(transaction => (
+                  <tr key={transaction.id}>
+                    <td className="align-center">{transaction.date}</td>
+                    <td className="align-center">{transaction.type}</td>
+                    <td className="align-center">
+                      {transaction.debit ? '-' : '+'}
+                      {transaction.time_used}
+                    </td>
+                    <td className="align-center">
+                      <Badge
+                        className="trans-badge trans-badge-modify"
+                        variant="success"
+                        onClick={() => modifyTransaction(transaction)}
+                      >
+                        Modify
+                      </Badge>{' '}
+                      <Badge
+                        className="trans-badge trans-badge-delete"
+                        variant="danger"
+                        onClick={() => deleteTransaction(transaction)}
+                      >
+                        Delete
+                      </Badge>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </Table>
         </>
