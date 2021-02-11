@@ -57,7 +57,7 @@ function Transactions({
             </thead>
             <tbody>
               {transactions
-                .sort((a, b) => new Date(b.date) - new Date(a.date)) // Sort in decsending order
+                .sort((a, b) => new Date(b.date) - new Date(a.date)) // Sort in descending order
                 .map(transaction => (
                   <tr key={transaction.id}>
                     <td className="align-center">{transaction.date}</td>
