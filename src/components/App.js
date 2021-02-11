@@ -166,35 +166,52 @@ function App() {
         setAlertType('success');
         setModalShow(false);
         setShowAlert(true);
-
-        return;
       })
       .catch(err => {
         alert(
           'There was an error updating your profile: ' + JSON.stringify(err)
         );
-        return;
       });
   }
 
   // Adds a transaction to the table
-  async function addTransaction(theTransaction) {}
+  async function addTransaction(theTransaction) {
+    await API.graphql({
+      query: createTransactionMutation,
+      variables: { input: theTransaction }
+    })
+      .then(res => {
+        const theTransactions = [...transactions, res.data.createTransaction];
+
+        setTransactions(theTransactions);
+        setSummary({ ...getSummaryValues(profile, theTransactions) });
+
+        setAlertText('Transaction added successfully!');
+        setAlertType('success');
+        setModalShow(false);
+        setShowAlert(true);
+      })
+      .catch(err => {
+        setAlertText(
+          'There was an issue adding the transaction. Please try again!'
+        );
+        setAlertType('danger');
+        setShowAlert(true);
+      });
+  }
 
   // Deletes a transaction from the table
   async function deleteTransaction({ id }) {
     if (id !== undefined && id !== null) {
-      // delete theTransaction.date;
-      // delete theTransaction.type;
-      // delete theTransaction.debit;
-      // delete theTransaction.time_used;
-
       await API.graphql({
         query: deleteTransactionMutation,
         variables: { input: { id } }
       })
         .then(res => {
-          console.log('deleting transaction: ' + JSON.stringify(res));
-          fetchTransactions(profile);
+          const theTransactions = [...transactions].filter(t => t.id !== id);
+
+          setTransactions(theTransactions);
+          setSummary({ ...getSummaryValues(profile, theTransactions) });
 
           setAlertText('Transaction deleted successfully!');
           setAlertType('success');
@@ -272,7 +289,7 @@ function App() {
       <NavigationBar setModalShow={setModalShow} setModalType={setModalType} />
 
       <Container>
-        {showAlert && modalType === modalFuncType.profile && (
+        {showAlert && (
           <Alert
             className="align-center"
             variant={alertType}

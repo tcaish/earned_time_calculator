@@ -33,6 +33,14 @@ export const initialProfileState = {
   total_yearly_paychecks: 0
 };
 
+// Returns the correct format for a date to be put into the
+// transactions table
+export function getTransactionFormatDate(date) {
+  const dateFormat = require('dateformat');
+  const now = new Date(date);
+  return dateFormat(now, 'd-mmm');
+}
+
 //
 // Functions and constants to support calculating the summary
 //
