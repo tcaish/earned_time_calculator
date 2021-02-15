@@ -225,6 +225,7 @@ function TransactionsModal(props) {
             </Row>
 
             <Button
+              className="custom-btn-blue"
               variant="primary"
               type="submit"
               onClick={e => addTransaction(e)}
@@ -234,11 +235,6 @@ function TransactionsModal(props) {
             </Button>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={props.onHide}>
-            Close
-          </Button>
-        </Modal.Footer>
       </Modal>
     </>
   );

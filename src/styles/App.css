@@ -1,5 +1,6 @@
 body {
   color: white;
+  background-image: url(../img/background.jpg);
   font-family: Cambria;
 }
 
@@ -19,4 +20,26 @@ body {
 }
 .align-middle {
   vertical-align: middle;
+}
+
+.custom-btn-blue {
+  background-color: #3498db;
+}
+.custom-btn-blue-outline {
+  border-color: #3498db;
+  color: #3498db;
+}
+.custom-btn-blue:hover,
+.custom-btn-blue-outline:hover {
+  background-color: #2980b9;
+}
+
+.custom-btn-grey {
+  background-color: #7f8c8d;
+  border-color: #7f8c8d;
+}
+
+.custom-btn-red {
+  background-color: #e74c3c;
+  border-color: #e74c3c;
 }

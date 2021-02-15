@@ -80,8 +80,23 @@ function ProfileModal(props) {
           <Form>
             <Row>
               <Col>
+                <Form.Group controlId="formHireDate">
+                  <Form.Label>Hire Date</Form.Label>
+                  <br />
+                  <DatePicker
+                    selected={new Date(formData.hire_date)}
+                    onChange={date =>
+                      setFormData({ ...formData, hire_date: date })
+                    }
+                  />
+                  <Form.Text className="text-muted">
+                    The date you were hired.
+                  </Form.Text>
+                </Form.Group>
+              </Col>
+              <Col>
                 <Form.Group controlId="formCarryOverEt">
-                  <Form.Label>Carry Over ET</Form.Label>
+                  <Form.Label>Beginning Vacation</Form.Label>
                   <Form.Control
                     type="number"
                     placeholder="0.0"
@@ -96,13 +111,16 @@ function ProfileModal(props) {
                     }
                   />
                   <Form.Text className="text-muted">
-                    How much earned time you brought over from last year.
+                    How much vacation you brought over from last year.
                   </Form.Text>
                 </Form.Group>
               </Col>
+            </Row>
+
+            <Row>
               <Col>
                 <Form.Group controlId="formTotalEtAllowed">
-                  <Form.Label>Total ET Allowed</Form.Label>
+                  <Form.Label>Yearly Carry-Over</Form.Label>
                   <Form.Control
                     type="number"
                     placeholder="0.0"
@@ -117,7 +135,7 @@ function ProfileModal(props) {
                     }
                   />
                   <Form.Text className="text-muted">
-                    How much earned time you can carry over into the new year.
+                    How much vacation you can carry over into the new year.
                   </Form.Text>
                 </Form.Group>
               </Col>
@@ -144,28 +162,8 @@ function ProfileModal(props) {
               </Col>
             </Row>
 
-            <Row>
-              <Col></Col>
-              <Col>
-                <Form.Group controlId="formHireDate">
-                  <Form.Label>Hire Date</Form.Label>
-                  <br />
-                  <DatePicker
-                    selected={new Date(formData.hire_date)}
-                    onChange={date =>
-                      setFormData({ ...formData, hire_date: date })
-                    }
-                  />
-                  <Form.Text className="text-muted">
-                    The date you were hired.
-                  </Form.Text>
-                </Form.Group>
-              </Col>
-              <Col></Col>
-            </Row>
-
             <Button
-              variant="primary"
+              className="custom-btn-blue"
               type="submit"
               onClick={e => updateProfile(e)}
               block
@@ -174,11 +172,6 @@ function ProfileModal(props) {
             </Button>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={props.onHide}>
-            Close
-          </Button>
-        </Modal.Footer>
       </Modal>
     </>
   );

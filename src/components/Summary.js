@@ -1,8 +1,12 @@
 // React
 import React from 'react';
+import { CardDeck, Row, Col } from 'react-bootstrap';
 
 // React bootstrap
 import { Table } from 'react-bootstrap';
+
+// Components
+import SummaryCard from './SummaryCard';
 
 // Styles
 import '../styles/App.css';
@@ -16,7 +20,46 @@ function Summary({ summary }) {
   return (
     <>
       <h3 className="align-center">Summary</h3>
-      <Table variant="dark" size="sm">
+
+      <Row>
+        <Col>
+          <SummaryCard
+            title={summary.et_rate + ' hrs'}
+            body={'ET Rate (per pay period)'}
+          />
+        </Col>
+        <Col>
+          <SummaryCard
+            title={summary.et_end_of_year + ' hrs'}
+            body={'ET at End of Year'}
+          />
+        </Col>
+      </Row>
+
+      <Row>
+        <Col>
+          <SummaryCard
+            title={summary.et_hol_to_burn + ' hrs'}
+            body={'ET/Holiday to Burn'}
+          />
+        </Col>
+      </Row>
+
+      <Row>
+        <Col>
+          <SummaryCard
+            title={summary.total_vaca_weeks}
+            body={'Total Vacation Weeks'}
+          />
+        </Col>
+        <Col>
+          <SummaryCard
+            title={summary.total_vaca_days}
+            body={'Total Vacation Days'}
+          />
+        </Col>
+      </Row>
+      {/* <Table variant="dark" size="sm">
         <tbody>
           <tr key={0} className="align-center">
             <td className="align-center align-middle">
@@ -51,7 +94,7 @@ function Summary({ summary }) {
             </td>
           </tr>
         </tbody>
-      </Table>
+      </Table> */}
     </>
   );
 }
