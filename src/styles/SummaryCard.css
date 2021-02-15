@@ -1,0 +1,21 @@
+.summary-card {
+  background-color: #ffffff9a;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+.summary-card-body {
+  /* padding-top: 5px;
+  padding-bottom: 1px; */
+  padding: 10px;
+}
+.summary-card-body h2,
+p {
+  color: black;
+}
+.summary-card-body h2 {
+  font-weight: bold;
+}
+.summary-card-body p {
+  margin-bottom: 0;
+}

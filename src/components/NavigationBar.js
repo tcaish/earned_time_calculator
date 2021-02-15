@@ -1,10 +1,13 @@
 // React
 import React from 'react';
 import { Container, Image, Nav, Navbar } from 'react-bootstrap';
-// Functions
+
+// Exports
 import { modalType } from '../exports/Functions';
-// CSS
+
+// Styles
 import '../styles/NavigationBar.css';
+
 // Images
 import logo from '../img/logo.png';
 
@@ -17,7 +20,7 @@ function NavigationBar({ setModalShow, setModalType }) {
   }
 
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar collapseOnSelect expand="lg" variant="dark">
       <Container>
         <Navbar.Brand>
           {/* <h2 className="rockout-font">Earned Time Calculator</h2> */}
@@ -29,9 +32,9 @@ function NavigationBar({ setModalShow, setModalType }) {
             <Nav.Link onClick={() => showModal(modalType.profile)}>
               Profile
             </Nav.Link>
-            <Nav.Link onClick={() => showModal(modalType.settings)}>
+            {/* <Nav.Link onClick={() => showModal(modalType.settings)}>
               Settings
-            </Nav.Link>
+            </Nav.Link> */}
             <Nav.Link onClick={() => showModal(modalType.logout)}>
               Logout
             </Nav.Link>

@@ -32,19 +32,20 @@ function LogoutModal(props) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header closeButton>
+      <Modal.Header>
         <Modal.Title id="contained-modal-title-vcenter">
-          Logout
+          Are you sure you want to logout?
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        <p>Are you sure you want to logout?</p>
-      </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={props.onHide}>
+        <Button
+          className="custom-btn-grey"
+          variant="secondary"
+          onClick={props.onHide}
+        >
           Close
         </Button>
-        <Button variant="danger" onClick={signOut}>
+        <Button className="custom-btn-red" variant="danger" onClick={signOut}>
           Logout
         </Button>
       </Modal.Footer>

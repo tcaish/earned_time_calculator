@@ -30,7 +30,7 @@ function Transactions({
         <>
           <h3 className="align-center">Transactions</h3>
           <Button
-            className="transaction-btn"
+            className="transaction-btn custom-btn-blue-outline"
             size="sm"
             variant="outline-primary"
             block
