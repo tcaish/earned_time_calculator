@@ -61,7 +61,7 @@ function App() {
   // Props for profile component
   const [profile, setProfile] = useState(initialProfileState);
 
-  // Alert state
+  // Alert states
   const [showAlert, setShowAlert] = useState(false);
   const [alertText, setAlertText] = useState('');
   const [alertType, setAlertType] = useState('success');
@@ -78,6 +78,10 @@ function App() {
       }
     });
   }, []);
+
+  // ---------------------------------------------------------------------------
+  // AWS Functions to update database
+  // ---------------------------------------------------------------------------
 
   // Creates the initial earned time information for the user if
   // nothing is there for them yet
@@ -98,9 +102,17 @@ function App() {
         setAlertText('Profile successfully updated!');
         setAlertType('success');
         setShowAlert(true);
+
+        startTimer();
       })
       .catch(err => {
-        console.log('error creating initial et info: ' + JSON.stringify(err));
+        console.log(err);
+        setAlertText(
+          'There was an issue updating your profile for the first time. Please' +
+            ' refresh and try again!'
+        );
+        setAlertType('danger');
+        setShowAlert(true);
       });
   }
 
@@ -127,22 +139,31 @@ function App() {
 
   // Fetches all the transactions for the current user
   async function fetchTransactions(etInfo) {
-    const etTransactions = await API.graphql({
-      query: listTransactions
-    })
-      .then(res => {
-        const transactions = res.data.listTransactions.items;
-        setTransactions(transactions);
-        return transactions;
-      })
-      .catch(err => {
-        console.log('error listing transactions: ' + JSON.stringify(err));
-        return null;
-      });
-
-    // Update the summary now that we have all the information
+    // Check if etInfo is coming in null from fetchEtInfo()
     if (etInfo !== null) {
-      setSummary(getSummaryValues(etInfo, etTransactions));
+      const etTransactions = await API.graphql({
+        query: listTransactions
+      })
+        .then(res => {
+          const transactions = res.data.listTransactions.items;
+          setTransactions(transactions);
+          return transactions;
+        })
+        .catch(err => {
+          console.log(err);
+          setAlertText(
+            'There was an issue fetching your transactions. Please refresh the' +
+              ' page!'
+          );
+          setAlertType('danger');
+          setShowAlert(true);
+          return null;
+        });
+
+      // Update the summary now that we have all the information
+      if (etInfo !== null) {
+        setSummary(getSummaryValues(etInfo, etTransactions));
+      }
     }
   }
 
@@ -166,11 +187,17 @@ function App() {
         setAlertType('success');
         setModalShow(false);
         setShowAlert(true);
+
+        startTimer();
       })
       .catch(err => {
-        alert(
-          'There was an error updating your profile: ' + JSON.stringify(err)
+        console.log(err);
+        setAlertText(
+          'There was an issue updating your profile. Please refresh and' +
+            ' try again!'
         );
+        setAlertType('danger');
+        setShowAlert(true);
       });
   }
 
@@ -190,6 +217,8 @@ function App() {
         setAlertType('success');
         setModalShow(false);
         setShowAlert(true);
+
+        startTimer();
       })
       .catch(err => {
         setAlertText(
@@ -216,6 +245,8 @@ function App() {
           setAlertText('Transaction deleted successfully!');
           setAlertType('success');
           setShowAlert(true);
+
+          startTimer();
         })
         .catch(err => {
           console.log(err);
@@ -233,6 +264,15 @@ function App() {
     if (theTransaction.id !== undefined && theTransaction.id !== null) {
       console.log('Modifying: ' + theTransaction);
     }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Custom functions
+  // ---------------------------------------------------------------------------
+
+  // Starts a timer that dismisses the alert after the set time
+  function startTimer() {
+    setTimeout(() => setShowAlert(false), 5000);
   }
 
   // Returns the correct modal for the navigation button pressed
@@ -266,6 +306,7 @@ function App() {
             show={modalShow}
             onHide={() => setModalShow(false)}
             addTransaction={addTransaction}
+            profile={profile}
           />
         );
         break;
@@ -283,6 +324,10 @@ function App() {
 
     return modal;
   }
+
+  // ---------------------------------------------------------------------------
+  // MAIN
+  // ---------------------------------------------------------------------------
 
   return authState === AuthState.SignedIn && user ? (
     <>
@@ -319,7 +364,7 @@ function App() {
         </Row>
       </Container>
 
-      {/* Modals for settings, profile, and logout */}
+      {/* Modals for transactions, settings, profile, and logout */}
       {profile.userId !== '' && getModal(profile)}
     </>
   ) : (
