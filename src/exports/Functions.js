@@ -30,7 +30,7 @@ export const initialProfileState = {
   carry_over_et: 0.0,
   hire_date: new Date(),
   total_et_allowed: 0.0,
-  total_yearly_paychecks: 0
+  total_yearly_paychecks: 26
 };
 
 // Returns the correct format for a date to be put into the
