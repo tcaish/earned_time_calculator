@@ -56,7 +56,7 @@ function App() {
   const [summary, setSummary] = useState(initialSummaryState);
 
   // Props for transactions component
-  const [transactions, setTransactions] = useState([{}]);
+  const [transactions, setTransactions] = useState([]);
 
   // Props for profile component
   const [profile, setProfile] = useState(initialProfileState);
@@ -185,15 +185,15 @@ function App() {
       theFormData.id = profile.id;
     }
 
-    console.log(theFormData);
-
     await API.graphql({
       query: updateEarnedTimeInfoMutation,
       variables: { input: theFormData }
     })
       .then(res => {
-        setProfile({ ...theFormData });
-        setSummary({ ...getSummaryValues(theFormData, transactions) });
+        setProfile(res.data.updateEarnedTimeInfo);
+        setSummary({
+          ...getSummaryValues(res.data.updateEarnedTimeInfo, transactions)
+        });
 
         setAlertText('Profile updated successfully!');
         setAlertType('success');

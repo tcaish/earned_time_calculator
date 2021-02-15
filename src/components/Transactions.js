@@ -55,19 +55,19 @@ function Transactions({
           >
             Add Transaction
           </Button>
-          <Table bordered striped hover variant="dark" size="sm">
-            <thead>
-              <tr>
-                <th className="align-center">Date</th>
-                <th className="align-center">Type</th>
-                <th className="align-center">Time Used (hrs)</th>
-                <th className="align-center">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {transactions.length >= 1 &&
-                transactions.date !== undefined &&
-                transactions
+
+          {transactions.length >= 1 && (
+            <Table bordered striped hover variant="dark" size="sm">
+              <thead>
+                <tr>
+                  <th className="align-center">Date</th>
+                  <th className="align-center">Type</th>
+                  <th className="align-center">Time Used (hrs)</th>
+                  <th className="align-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {transactions
                   .sort((a, b) => new Date(b.date) - new Date(a.date)) // Sort in descending order
                   .map(transaction => (
                     <tr key={transaction.id}>
@@ -103,8 +103,9 @@ function Transactions({
                       </td>
                     </tr>
                   ))}
-            </tbody>
-          </Table>
+              </tbody>
+            </Table>
+          )}
         </>
       );
     } else {
