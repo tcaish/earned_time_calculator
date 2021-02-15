@@ -166,7 +166,7 @@ function TransactionsModal(props) {
                   <Form.Label>Date</Form.Label>
                   <br />
                   <DatePicker
-                    selected={new Date()}
+                    selected={formData.date}
                     onChange={theDate =>
                       setFormData({ ...formData, date: theDate })
                     }
