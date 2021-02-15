@@ -161,6 +161,7 @@ function ProfileModal(props) {
                         total_yearly_paychecks: e.target.value
                       })
                     }
+                    disabled
                   />
                   <Form.Text className="text-muted">
                     How many paychecks per year you receive (most common is 26).
