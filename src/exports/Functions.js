@@ -37,8 +37,13 @@ export const initialProfileState = {
 // transactions table
 export function getTransactionFormatDate(date) {
   const dateFormat = require('dateformat');
-  const now = new Date(date);
-  return dateFormat(now, 'd-mmm');
+  let dateToFormat = new Date();
+
+  if (date !== undefined) {
+    dateToFormat = new Date(date);
+  }
+
+  return dateFormat(dateToFormat, 'd-mmm');
 }
 
 //

@@ -65,42 +65,44 @@ function Transactions({
               </tr>
             </thead>
             <tbody>
-              {transactions
-                .sort((a, b) => new Date(b.date) - new Date(a.date)) // Sort in descending order
-                .map(transaction => (
-                  <tr key={transaction.id}>
-                    <td className="align-center">
-                      {getTransactionFormatDate(transaction.date)}
-                    </td>
-                    <td className="align-center">{transaction.type}</td>
-                    <td className="align-center">
-                      {transaction.debit ? '-' : '+'}
-                      {transaction.time_used}
-                    </td>
-                    <td className="align-center">
-                      <Badge
-                        className="trans-badge trans-badge-modify"
-                        variant="success"
-                        onClick={() => modifyTransaction(transaction)}
-                      >
-                        Modify
-                      </Badge>{' '}
-                      <OverlayTrigger
-                        trigger="click"
-                        placement="auto"
-                        rootClose={true}
-                        overlay={deleteConfirmationPopover(transaction)}
-                      >
+              {transactions.length >= 1 &&
+                transactions.date !== undefined &&
+                transactions
+                  .sort((a, b) => new Date(b.date) - new Date(a.date)) // Sort in descending order
+                  .map(transaction => (
+                    <tr key={transaction.id}>
+                      <td className="align-center">
+                        {getTransactionFormatDate(transaction.date)}
+                      </td>
+                      <td className="align-center">{transaction.type}</td>
+                      <td className="align-center">
+                        {transaction.debit ? '-' : '+'}
+                        {transaction.time_used}
+                      </td>
+                      <td className="align-center">
                         <Badge
-                          className="trans-badge trans-badge-delete"
-                          variant="danger"
+                          className="trans-badge trans-badge-modify"
+                          variant="success"
+                          onClick={() => modifyTransaction(transaction)}
                         >
-                          Delete
-                        </Badge>
-                      </OverlayTrigger>
-                    </td>
-                  </tr>
-                ))}
+                          Modify
+                        </Badge>{' '}
+                        <OverlayTrigger
+                          trigger="click"
+                          placement="auto"
+                          rootClose={true}
+                          overlay={deleteConfirmationPopover(transaction)}
+                        >
+                          <Badge
+                            className="trans-badge trans-badge-delete"
+                            variant="danger"
+                          >
+                            Delete
+                          </Badge>
+                        </OverlayTrigger>
+                      </td>
+                    </tr>
+                  ))}
             </tbody>
           </Table>
         </>

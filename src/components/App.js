@@ -87,6 +87,7 @@ function App() {
   // nothing is there for them yet
   async function createInitialEtInfo(theFormData) {
     theFormData = { ...theFormData, userId: user.username, id: user.username };
+    console.log(theFormData);
 
     await API.graphql({
       query: createEarnedTimeInfoMutation,

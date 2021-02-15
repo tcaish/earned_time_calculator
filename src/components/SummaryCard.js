@@ -9,7 +9,6 @@ function SummaryCard({ title, body }) {
   function getClass(theBody) {
     let theClass = 'summary-card-body-title';
 
-    console.log(theBody);
     if (theBody.includes('Burn')) {
       theClass = 'summary-card-body-et-burn';
     } else if (theBody.includes('Vacation')) {

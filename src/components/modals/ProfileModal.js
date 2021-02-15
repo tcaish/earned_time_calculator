@@ -32,12 +32,18 @@ function ProfileModal(props) {
   function updateProfile(e) {
     e.preventDefault();
 
+    formData.total_yearly_paychecks = 26;
+    formData.hire_date =
+      formData.hire_date !== undefined
+        ? new Date(formData.hire_date).toString()
+        : new Date().toString();
+
     // If all fields aren't filled in
     if (
       !formData.carry_over_et ||
       !formData.hire_date ||
-      !formData.total_et_allowed ||
-      !formData.total_yearly_paychecks
+      !formData.total_et_allowed
+      // !formData.total_yearly_paychecks
     ) {
       setAlertText('Please fill in the required fields!');
       setShowAlert(true);
@@ -91,7 +97,11 @@ function ProfileModal(props) {
                   <Form.Label>Hire Date</Form.Label>
                   <br />
                   <DatePicker
-                    selected={new Date(formData.hire_date)}
+                    selected={
+                      formData.hire_date !== undefined
+                        ? new Date(formData.hire_date)
+                        : new Date()
+                    }
                     onChange={date =>
                       setFormData({ ...formData, hire_date: date })
                     }
