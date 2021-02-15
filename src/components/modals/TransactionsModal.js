@@ -10,6 +10,7 @@ import {
   Form,
   Modal,
   Row,
+  Spinner,
   ToggleButton
 } from 'react-bootstrap';
 
@@ -45,6 +46,9 @@ function TransactionsModal(props) {
   const [typeRadioValue, setTypeRadioValue] = useState('Earned Time');
   const [debitRadioValue, setDebitRadioValue] = useState('true');
 
+  // Loading state
+  const [isLoading, setIsLoading] = useState(false);
+
   const types = [
     { name: 'Earned Time', value: 'Earned Time' },
     { name: 'Holiday', value: 'Holiday' }
@@ -75,6 +79,9 @@ function TransactionsModal(props) {
       return;
     }
 
+    setIsLoading(true);
+    console.log('here');
+
     // Remove these properties because they'll cause the mutation to
     // error out
     delete formData.createdAt;
@@ -91,6 +98,8 @@ function TransactionsModal(props) {
     formData.time_used = parseFloat(formData.time_used);
 
     props.addTransaction(formData);
+
+    setIsLoading(false);
   }
 
   return (
@@ -229,9 +238,23 @@ function TransactionsModal(props) {
               variant="primary"
               type="submit"
               onClick={e => addTransaction(e)}
+              disabled={isLoading}
               block
             >
-              Add Transaction
+              {!isLoading ? (
+                'Add Transaction'
+              ) : (
+                <>
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="md"
+                    role="status"
+                    aria-hidden="true"
+                  />
+                  <span className="sr-only">Loading...</span>
+                </>
+              )}
             </Button>
           </Form>
         </Modal.Body>

@@ -1,5 +1,5 @@
 // React
-import React, { useState } from 'react';
+import React from 'react';
 import { Badge, Button, OverlayTrigger, Popover, Table } from 'react-bootstrap';
 
 // Exports
@@ -88,7 +88,7 @@ function Transactions({
                       <OverlayTrigger
                         trigger="click"
                         placement="auto"
-                        rootClose="true"
+                        rootClose={true}
                         overlay={deleteConfirmationPopover(transaction)}
                       >
                         <Badge

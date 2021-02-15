@@ -1,8 +1,8 @@
 // React
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 // React bootstrap
-import { Alert, Form, Row, Col, Button, Modal } from 'react-bootstrap';
+import { Alert, Button, Col, Form, Modal, Row, Spinner } from 'react-bootstrap';
 
 // Third-party
 import DatePicker from 'react-datepicker';
@@ -25,6 +25,9 @@ function ProfileModal(props) {
   const [showAlert, setShowAlert] = useState(false);
   const [alertText, setAlertText] = useState('');
 
+  // Loading state
+  const [isLoading, setIsLoading] = useState(false);
+
   // Updates the profile information for the user
   function updateProfile(e) {
     e.preventDefault();
@@ -41,6 +44,8 @@ function ProfileModal(props) {
       return;
     }
 
+    setIsLoading(true);
+
     // Remove these properties because they'll cause the mutation to
     // error out
     delete formData.createdAt;
@@ -48,6 +53,8 @@ function ProfileModal(props) {
     delete formData.owner;
 
     props.updateProfile({ ...formData });
+
+    setIsLoading(false);
   }
 
   return (
@@ -166,9 +173,23 @@ function ProfileModal(props) {
               className="custom-btn-blue"
               type="submit"
               onClick={e => updateProfile(e)}
+              disabled={isLoading}
               block
             >
-              Update Profile
+              {!isLoading ? (
+                'Update Profile'
+              ) : (
+                <>
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="md"
+                    role="status"
+                    aria-hidden="true"
+                  />
+                  <span className="sr-only">Loading...</span>
+                </>
+              )}
             </Button>
           </Form>
         </Modal.Body>

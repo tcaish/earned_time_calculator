@@ -1,7 +1,7 @@
 // React
 import React, { useState } from 'react';
 // React bootstrap
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal, Spinner } from 'react-bootstrap';
 // Amplify
 import { Auth } from 'aws-amplify';
 // Styles
@@ -14,14 +14,21 @@ import '../../styles/CustomModal.css';
 @params props The "show" and "onHide" props.
 */
 function LogoutModal(props) {
+  // Loading state
+  const [isLoading, setIsLoading] = useState(false);
+
   // Sign out the user
   async function signOut() {
+    setIsLoading(true);
+
     try {
       await Auth.signOut();
       props.onHide();
     } catch (error) {
       console.log('error signing out: ', error);
     }
+
+    setIsLoading(false);
   }
 
   return (
@@ -45,8 +52,26 @@ function LogoutModal(props) {
         >
           Close
         </Button>
-        <Button className="custom-btn-red" variant="danger" onClick={signOut}>
-          Logout
+        <Button
+          className="custom-btn-red"
+          variant="danger"
+          onClick={signOut}
+          disabled={isLoading}
+        >
+          {!isLoading ? (
+            'Logout'
+          ) : (
+            <>
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+              <span className="sr-only">Loading...</span>
+            </>
+          )}
         </Button>
       </Modal.Footer>
     </Modal>
