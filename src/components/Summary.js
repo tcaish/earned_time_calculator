@@ -21,7 +21,7 @@ function Summary({ summary }) {
     <>
       <h3 className="align-center">Summary</h3>
 
-      <Row>
+      <Row xs={1} lg={2}>
         <Col>
           <SummaryCard
             title={summary.et_rate + ' hrs'}
@@ -45,7 +45,7 @@ function Summary({ summary }) {
         </Col>
       </Row>
 
-      <Row>
+      <Row xs={1} lg={2}>
         <Col>
           <SummaryCard
             title={summary.total_vaca_weeks}
