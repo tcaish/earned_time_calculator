@@ -1,8 +1,6 @@
 // React
-import React from 'react';
-
-// React bootstrap
-import { Badge, Button, Table } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Badge, Button, OverlayTrigger, Popover, Table } from 'react-bootstrap';
 
 // Exports
 import { getTransactionFormatDate, modalType } from '../exports/Functions';
@@ -18,6 +16,25 @@ function Transactions({
   deleteTransaction,
   modifyTransaction
 }) {
+  // Popover confirmation for deleting a transaction
+  const deleteConfirmationPopover = transaction => (
+    <Popover id="popover-basic">
+      <Popover.Title className="text-black" as="h3">
+        Are you sure?
+      </Popover.Title>
+      <Popover.Content className="align-center">
+        <Button
+          className="custom-btn-red"
+          size="sm"
+          variant="danger"
+          onClick={() => deleteTransaction(transaction)}
+        >
+          Delete
+        </Button>
+      </Popover.Content>
+    </Popover>
+  );
+
   // Shows the modal depending on the navigation button clicked
   function showModal(modalType) {
     setModalType(modalType);
@@ -68,13 +85,19 @@ function Transactions({
                       >
                         Modify
                       </Badge>{' '}
-                      <Badge
-                        className="trans-badge trans-badge-delete"
-                        variant="danger"
-                        onClick={() => deleteTransaction(transaction)}
+                      <OverlayTrigger
+                        trigger="click"
+                        placement="auto"
+                        rootClose="true"
+                        overlay={deleteConfirmationPopover(transaction)}
                       >
-                        Delete
-                      </Badge>
+                        <Badge
+                          className="trans-badge trans-badge-delete"
+                          variant="danger"
+                        >
+                          Delete
+                        </Badge>
+                      </OverlayTrigger>
                     </td>
                   </tr>
                 ))}
