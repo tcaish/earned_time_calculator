@@ -62,7 +62,7 @@ function Transactions({
                 <tr>
                   <th className="align-center">Date</th>
                   <th className="align-center">Type</th>
-                  <th className="align-center">Time Used (hrs)</th>
+                  <th className="align-center">Amount (hrs)</th>
                   <th className="align-center">Action</th>
                 </tr>
               </thead>

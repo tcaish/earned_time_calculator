@@ -80,7 +80,6 @@ function TransactionsModal(props) {
     }
 
     setIsLoading(true);
-    console.log('here');
 
     // Remove these properties because they'll cause the mutation to
     // error out
@@ -91,7 +90,6 @@ function TransactionsModal(props) {
     // Update debit value to be boolean
     if (formData.debit === 'true' || formData.debit === 'false') {
       formData.debit = formData.debit === 'true' ? true : false;
-      console.log('debit is now: ' + formData.debit);
     }
 
     // Update time_used value to be a number
