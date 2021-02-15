@@ -81,8 +81,13 @@ function TransactionsModal(props) {
     delete formData.updatedAt;
     delete formData.owner;
 
-    // Update values to be correct data type
-    formData.debit = formData.debit === 'true';
+    // Update debit value to be boolean
+    if (formData.debit === 'true' || formData.debit === 'false') {
+      formData.debit = formData.debit === 'true' ? true : false;
+      console.log('debit is now: ' + formData.debit);
+    }
+
+    // Update time_used value to be a number
     formData.time_used = parseFloat(formData.time_used);
 
     props.addTransaction(formData);
