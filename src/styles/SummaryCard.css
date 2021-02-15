@@ -9,13 +9,21 @@
   padding-bottom: 1px; */
   padding: 10px;
 }
-.summary-card-body h2,
-p {
-  color: black;
-}
 .summary-card-body h2 {
   font-weight: bold;
 }
 .summary-card-body p {
   margin-bottom: 0;
+}
+.summary-card-body-et-burn {
+  color: #3498db;
+}
+.summary-card-body-vaca {
+  color: #2980b9;
+}
+.summary-card-body-title {
+  color: black;
+}
+.summary-card-body p {
+  color: black;
 }
