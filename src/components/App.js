@@ -87,15 +87,14 @@ function App() {
   // nothing is there for them yet
   async function createInitialEtInfo(theFormData) {
     theFormData = { ...theFormData, userId: user.username, id: user.username };
-    console.log(theFormData);
 
     await API.graphql({
       query: createEarnedTimeInfoMutation,
       variables: { input: theFormData }
     })
       .then(res => {
-        setProfile({ ...theFormData });
-        setSummary(getSummaryValues(theFormData));
+        setProfile(res.data.createEarnedTimeInfo);
+        setSummary(getSummaryValues(res.data.createEarnedTimeInfo));
 
         setShowAlert(false);
         setModalShow(false);
@@ -114,6 +113,7 @@ function App() {
         );
         setAlertType('danger');
         setShowAlert(true);
+        setModalShow(false);
       });
   }
 
@@ -158,6 +158,8 @@ function App() {
           );
           setAlertType('danger');
           setShowAlert(true);
+          setModalShow(false);
+
           return null;
         });
 
@@ -175,6 +177,15 @@ function App() {
       createInitialEtInfo(theFormData);
       return;
     }
+
+    // If when a user goes to update their profile for a second time before
+    // reloading, add the userId and id fields from the profile
+    if (theFormData.userId === undefined || theFormData.id === undefined) {
+      theFormData.userId = profile.userId;
+      theFormData.id = profile.id;
+    }
+
+    console.log(theFormData);
 
     await API.graphql({
       query: updateEarnedTimeInfoMutation,
@@ -199,6 +210,7 @@ function App() {
         );
         setAlertType('danger');
         setShowAlert(true);
+        setModalShow(false);
       });
   }
 
@@ -227,6 +239,7 @@ function App() {
         );
         setAlertType('danger');
         setShowAlert(true);
+        setModalShow(false);
       });
   }
 
@@ -256,6 +269,7 @@ function App() {
           );
           setAlertType('danger');
           setShowAlert(true);
+          setModalShow(false);
         });
     }
   }
