@@ -109,7 +109,7 @@ function getYearlyEarnedTimeValues(
     values_arr[2] = 0;
     values_arr[3] = 0;
   } else {
-    const total_paychecks_per_month = paychecks_per_year / 12; // 26 paychecks/year divided by 12 months/year
+    const total_paychecks_per_month = Math.floor(paychecks_per_year / 12); // 26 paychecks/year divided by 12 months/year
     const service_years = current_year - hire_year;
     let before_et = 0;
     let after_et = 0;
@@ -192,9 +192,14 @@ export function getSummaryValues(etInfo, transactions) {
     hire_date_year
   );
   const yearly_et_before = values_arr[0];
-  const total_paychecks_before = values_arr[1];
+  const total_paychecks_before = Math.floor(values_arr[1]);
   const yearly_et_after = values_arr[2];
-  const total_paychecks_after = values_arr[3];
+  const total_paychecks_after = Math.floor(values_arr[3]);
+
+  // console.log('ET before: ' + values_arr[0]);
+  // console.log('Total paychecks before: ' + Math.floor(values_arr[1]));
+  // console.log('ET after: ' + values_arr[2]);
+  // console.log('Total paychecks after: ' + Math.floor(values_arr[3]));
 
   const total_et_before_hire =
     ((yearly_et_before * 8) / total_yearly_paychecks) * total_paychecks_before;
