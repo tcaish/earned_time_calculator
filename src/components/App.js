@@ -4,7 +4,13 @@ import { Alert, Container, Row, Col } from 'react-bootstrap';
 
 // Amplify
 import { API } from 'aws-amplify';
-import { withAuthenticator, AmplifyAuthenticator } from '@aws-amplify/ui-react';
+import {
+  AmplifyAuthenticator,
+  AmplifyConfirmSignUp,
+  AmplifyForgotPassword,
+  AmplifySignIn,
+  AmplifySignUp
+} from '@aws-amplify/ui-react';
 import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
 
 // GraphQL
@@ -130,8 +136,8 @@ function App() {
         return etInfo;
       })
       .catch(err => {
-        console.log('error getting et info: ' + JSON.stringify(err));
         // nothing to report here, just catching error
+        //console.log('error getting et info: ' + JSON.stringify(err));
         return null;
       });
 
@@ -384,8 +390,47 @@ function App() {
       {profile.userId !== '' && getModal(profile, user)}
     </>
   ) : (
-    <AmplifyAuthenticator />
+    <AmplifyAuthenticator>
+      <AmplifySignUp
+        slot="sign-up"
+        headerText="Create a New Account"
+        usernameAlias="email"
+        formFields={[
+          {
+            type: 'email',
+            label: '*Email',
+            placeholder: 'username@domain.com',
+            required: true
+          },
+          {
+            type: 'password',
+            label: '*Password',
+            placeholder: '',
+            required: true
+          }
+        ]}
+      />
+
+      <AmplifyConfirmSignUp
+        headerText="Confirm Your Email Address"
+        slot="confirm-sign-up"
+        usernameAlias="email"
+        user={user}
+      ></AmplifyConfirmSignUp>
+
+      <AmplifySignIn
+        slot="sign-in"
+        headerText="Sign In"
+        usernameAlias="email"
+      />
+
+      <AmplifyForgotPassword
+        headerText="Reset Your Password"
+        slot="forgot-password"
+        usernameAlias="email"
+      ></AmplifyForgotPassword>
+    </AmplifyAuthenticator>
   );
 }
 
-export default withAuthenticator(App);
+export default App;
