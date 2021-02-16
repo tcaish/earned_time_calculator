@@ -20,7 +20,7 @@ function NavigationBar({ setModalShow, setModalType }) {
   }
 
   return (
-    <Navbar collapseOnSelect expand="lg" variant="dark">
+    <Navbar id="navigation-bar" collapseOnSelect expand="lg" variant="dark">
       <Container>
         <Navbar.Brand>
           {/* <h2 className="rockout-font">Earned Time Calculator</h2> */}
