@@ -32,6 +32,7 @@ import LogoutModal from './modals/LogoutModal';
 import SettingsModal from './modals/SettingsModal';
 import TransactionsModal from './modals/TransactionsModal';
 import CustomModal from './modals/CustomModal';
+import AlertToast from './AlertToast';
 
 // Exports
 import {
@@ -69,6 +70,7 @@ function App() {
 
   // Alert states
   const [showAlert, setShowAlert] = useState(false);
+  const [alerts, setAlerts] = useState([]);
   const [alertText, setAlertText] = useState('');
   const [alertType, setAlertType] = useState('success');
 
@@ -102,24 +104,36 @@ function App() {
         setProfile(res.data.createEarnedTimeInfo);
         setSummary(getSummaryValues(res.data.createEarnedTimeInfo));
 
-        setShowAlert(false);
+        // setShowAlert(false);
+
+        setAlerts([
+          ...alerts,
+          {
+            id: alerts.length + 1,
+            title: 'Success',
+            message: 'Profile successfully updated!'
+          }
+        ]);
+
         setModalShow(false);
-
-        setAlertText('Profile successfully updated!');
-        setAlertType('success');
-        setShowAlert(true);
-
-        startTimer();
+        // startTimer();
+        return;
       })
       .catch(err => {
-        console.log(err);
-        setAlertText(
-          'There was an issue updating your profile for the first time. Please' +
-            ' refresh and try again!'
-        );
-        setAlertType('danger');
-        setShowAlert(true);
+        // console.log(err);
+        setAlerts([
+          ...alerts,
+          {
+            id: alerts.length + 1,
+            title: 'Error',
+            message:
+              'There was an issue updating your profile for the first' +
+              ' time. Please refresh and try again!'
+          }
+        ]);
+
         setModalShow(false);
+        return;
       });
   }
 
@@ -152,20 +166,23 @@ function App() {
         query: listTransactions
       })
         .then(res => {
-          const transactions = res.data.listTransactions.items;
-          setTransactions(transactions);
+          setTransactions(res.data.listTransactions.items);
           return transactions;
         })
         .catch(err => {
-          console.log(err);
-          setAlertText(
-            'There was an issue fetching your transactions. Please refresh the' +
-              ' page!'
-          );
-          setAlertType('danger');
-          setShowAlert(true);
-          setModalShow(false);
+          // console.log(err);
+          setAlerts([
+            ...alerts,
+            {
+              id: alerts.length + 1,
+              title: 'Error',
+              message:
+                'There was an issue fetching your transactions. Please' +
+                ' refresh the page!'
+            }
+          ]);
 
+          setModalShow(false);
           return null;
         });
 
@@ -201,22 +218,34 @@ function App() {
           ...getSummaryValues(res.data.updateEarnedTimeInfo, transactions)
         });
 
-        setAlertText('Profile updated successfully!');
-        setAlertType('success');
-        setModalShow(false);
-        setShowAlert(true);
+        setAlerts([
+          ...alerts,
+          {
+            id: alerts.length + 1,
+            title: 'Success',
+            message: 'Profile successfully updated!'
+          }
+        ]);
 
-        startTimer();
+        setModalShow(false);
+        // startTimer();
+        return;
       })
       .catch(err => {
-        console.log(err);
-        setAlertText(
-          'There was an issue updating your profile. Please refresh and' +
-            ' try again!'
-        );
-        setAlertType('danger');
-        setShowAlert(true);
+        // console.log(err);
+        setAlerts([
+          ...alerts,
+          {
+            id: alerts.length + 1,
+            title: 'Error',
+            message:
+              'There was an issue updating your profile. Please' +
+              ' refresh and try again!'
+          }
+        ]);
+
         setModalShow(false);
+        return;
       });
   }
 
@@ -232,20 +261,34 @@ function App() {
         setTransactions(theTransactions);
         setSummary({ ...getSummaryValues(profile, theTransactions) });
 
-        setAlertText('Transaction added successfully!');
-        setAlertType('success');
-        setModalShow(false);
-        setShowAlert(true);
+        setAlerts([
+          ...alerts,
+          {
+            id: alerts.length + 1,
+            title: 'Success',
+            message: 'Transaction added successfully!'
+          }
+        ]);
 
-        startTimer();
+        setModalShow(false);
+        // startTimer();
+        return;
       })
       .catch(err => {
-        setAlertText(
-          'There was an issue adding the transaction. Please try again!'
-        );
-        setAlertType('danger');
-        setShowAlert(true);
+        // console.log(err);
+        setAlerts([
+          ...alerts,
+          {
+            id: alerts.length + 1,
+            title: 'Error',
+            message:
+              'There was an issue adding the transaction. Please try' +
+              ' again!'
+          }
+        ]);
+
         setModalShow(false);
+        return;
       });
   }
 
@@ -262,20 +305,33 @@ function App() {
           setTransactions(theTransactions);
           setSummary({ ...getSummaryValues(profile, theTransactions) });
 
-          setAlertText('Transaction deleted successfully!');
-          setAlertType('success');
-          setShowAlert(true);
+          setAlerts([
+            ...alerts,
+            {
+              id: alerts.length + 1,
+              title: 'Success',
+              message: 'Transaction deleted successfully!'
+            }
+          ]);
 
-          startTimer();
+          // startTimer();
+          return;
         })
         .catch(err => {
-          console.log(err);
-          setAlertText(
-            'There was an issue deleting the transaction. Please try again!'
-          );
-          setAlertType('danger');
-          setShowAlert(true);
+          // console.log(err);
+          setAlerts([
+            ...alerts,
+            {
+              id: alerts.length + 1,
+              title: 'Success',
+              message:
+                'There was an issue deleting the transaction. Please' +
+                ' try again!'
+            }
+          ]);
+
           setModalShow(false);
+          return;
         });
     }
   }
@@ -385,6 +441,14 @@ function App() {
           </Col>
         </Row>
       </Container>
+
+      {/* Setting up the toasts */}
+      <div className="toast-container">
+        {alerts.length > 0 &&
+          alerts.map(alert => (
+            <AlertToast title={alert.title} message={alert.message} />
+          ))}
+      </div>
 
       {/* Modals for transactions, settings, profile, and logout */}
       {profile.userId !== '' && getModal(profile, user)}
