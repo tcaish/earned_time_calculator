@@ -15,8 +15,11 @@
 .summary-card-body p {
   margin-bottom: 0;
 }
-.summary-card-body-et-burn {
-  color: #3498db;
+.summary-card-body-et-burn-green {
+  color: #219b54;
+}
+.summary-card-body-et-burn-red {
+  color: #ad3427;
 }
 .summary-card-body-vaca {
   color: #2980b9;

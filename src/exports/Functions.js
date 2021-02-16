@@ -216,8 +216,12 @@ export function getSummaryValues(etInfo, transactions) {
     Math.round((carry_over_et + total_et_for_year) * 100.0) / 100.0;
   const et_to_burn =
     Math.round((total_et - total_et_allowed - used_et) * 100.0) / 100.0;
-  const vacation_weeks = Math.round((et_to_burn / 40) * 100.0) / 100.0; // divides ET+HOL by 40 hrs/week
-  const vacation_days = Math.round((et_to_burn / 8) * 100.0) / 100.0; // divides ET+HOL by 8 hrs/day
+  let vacation_weeks = Math.round((et_to_burn / 40) * 100.0) / 100.0; // divides ET+HOL by 40 hrs/week
+  let vacation_days = Math.round((et_to_burn / 8) * 100.0) / 100.0; // divides ET+HOL by 8 hrs/day
+
+  // If vacation_weeks or vacation_days are below 0, return 0
+  if (vacation_weeks < 0) vacation_weeks = 0;
+  if (vacation_days < 0) vacation_days = 0;
 
   let current_et_rate = 0.0;
 
