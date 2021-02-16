@@ -1,12 +1,18 @@
+#navigation-bar a {
+  font-size: 1.2rem;
+}
+
 #logo {
   width: 350px;
   height: auto;
 }
+
 @media (max-width: 454px) {
   #logo {
     width: 300px;
   }
 }
+
 @media (max-width: 404px) {
   #logo {
     width: 216px;

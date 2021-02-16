@@ -92,6 +92,15 @@ function ProfileModal(props) {
 
           <Form>
             <Row>
+              <Col></Col>
+              <Col>
+                <p>
+                  <b>Email:</b> {props.user.attributes.email}
+                </p>
+              </Col>
+              <Col></Col>
+            </Row>
+            <Row>
               <Col>
                 <Form.Group controlId="formHireDate">
                   <Form.Label>Hire Date</Form.Label>

@@ -291,7 +291,7 @@ function App() {
   }
 
   // Returns the correct modal for the navigation button pressed
-  function getModal(theProfile) {
+  function getModal(theProfile, theUser) {
     let modal;
 
     switch (modalType) {
@@ -299,6 +299,7 @@ function App() {
         modal = (
           <ProfileModal
             profile={theProfile}
+            user={theUser}
             updateProfile={updateEtInfo}
             show={modalShow}
             onHide={() => setModalShow(false)}
@@ -380,7 +381,7 @@ function App() {
       </Container>
 
       {/* Modals for transactions, settings, profile, and logout */}
-      {profile.userId !== '' && getModal(profile)}
+      {profile.userId !== '' && getModal(profile, user)}
     </>
   ) : (
     <AmplifyAuthenticator />
