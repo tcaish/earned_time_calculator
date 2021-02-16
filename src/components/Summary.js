@@ -1,15 +1,12 @@
 // React
 import React from 'react';
-import { CardDeck, Row, Col } from 'react-bootstrap';
-
-// React bootstrap
-import { Table } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 
 // Components
 import SummaryCard from './SummaryCard';
 
 // Styles
-import '../styles/App.css';
+import '../styles/Summary.css';
 
 /*
 @function Summary
@@ -18,7 +15,7 @@ import '../styles/App.css';
 */
 function Summary({ summary }) {
   return (
-    <>
+    <div id="summary-container">
       <h3 className="align-center">Summary</h3>
 
       <Row xs={1} lg={2}>
@@ -59,43 +56,7 @@ function Summary({ summary }) {
           />
         </Col>
       </Row>
-      {/* <Table variant="dark" size="sm">
-        <tbody>
-          <tr key={0} className="align-center">
-            <td className="align-center align-middle">
-              ET Rate (per pay period)
-            </td>
-            <td className="align-middle">
-              <h4>{summary.et_rate} hrs</h4>
-            </td>
-          </tr>
-          <tr key={1} className="align-center">
-            <td className="align-center align-middle">ET at End of Year</td>
-            <td className="align-middle">
-              <h4>{summary.et_end_of_year} hrs</h4>
-            </td>
-          </tr>
-          <tr key={2} className="align-center">
-            <td className="align-center align-middle">ET/Holiday to Burn</td>
-            <td className="align-middle">
-              <h4>{summary.et_hol_to_burn} hrs</h4>
-            </td>
-          </tr>
-          <tr key={3} className="align-center">
-            <td className="align-center align-middle">Total Vacation Weeks</td>
-            <td className="align-middle">
-              <h4>{summary.total_vaca_weeks}</h4>
-            </td>
-          </tr>
-          <tr key={4} className="align-center">
-            <td className="align-center align-middle">Total Vacation Days</td>
-            <td className="align-middle">
-              <h4>{summary.total_vaca_days}</h4>
-            </td>
-          </tr>
-        </tbody>
-      </Table> */}
-    </>
+    </div>
   );
 }
 
