@@ -71,8 +71,6 @@ function App() {
   // Alert states
   const [showAlert, setShowAlert] = useState(false);
   const [alerts, setAlerts] = useState([]);
-  const [alertText, setAlertText] = useState('');
-  const [alertType, setAlertType] = useState('success');
 
   // This updates the authentication information upon load
   // This fetches the earned time information for the user upon load
@@ -104,16 +102,11 @@ function App() {
         setProfile(res.data.createEarnedTimeInfo);
         setSummary(getSummaryValues(res.data.createEarnedTimeInfo));
 
-        // setShowAlert(false);
-
-        setAlerts([
-          ...alerts,
-          {
-            id: alerts.length + 1,
-            title: 'Success',
-            message: 'Profile successfully updated!'
-          }
-        ]);
+        addAlert({
+          id: alerts.length + 1,
+          title: 'Success',
+          message: 'Profile successfully updated!'
+        });
 
         setModalShow(false);
         // startTimer();
@@ -121,16 +114,13 @@ function App() {
       })
       .catch(err => {
         // console.log(err);
-        setAlerts([
-          ...alerts,
-          {
-            id: alerts.length + 1,
-            title: 'Error',
-            message:
-              'There was an issue updating your profile for the first' +
-              ' time. Please refresh and try again!'
-          }
-        ]);
+        addAlert({
+          id: alerts.length + 1,
+          title: 'Error',
+          message:
+            'There was an issue updating your profile for the first' +
+            ' time. Please refresh and try again!'
+        });
 
         setModalShow(false);
         return;
@@ -171,16 +161,13 @@ function App() {
         })
         .catch(err => {
           // console.log(err);
-          setAlerts([
-            ...alerts,
-            {
-              id: alerts.length + 1,
-              title: 'Error',
-              message:
-                'There was an issue fetching your transactions. Please' +
-                ' refresh the page!'
-            }
-          ]);
+          addAlert({
+            id: alerts.length + 1,
+            title: 'Error',
+            message:
+              'There was an issue fetching your transactions. Please' +
+              ' refresh the page!'
+          });
 
           setModalShow(false);
           return null;
@@ -218,14 +205,11 @@ function App() {
           ...getSummaryValues(res.data.updateEarnedTimeInfo, transactions)
         });
 
-        setAlerts([
-          ...alerts,
-          {
-            id: alerts.length + 1,
-            title: 'Success',
-            message: 'Profile successfully updated!'
-          }
-        ]);
+        addAlert({
+          id: alerts.length + 1,
+          title: 'Success',
+          message: 'Profile successfully updated!'
+        });
 
         setModalShow(false);
         // startTimer();
@@ -233,16 +217,13 @@ function App() {
       })
       .catch(err => {
         // console.log(err);
-        setAlerts([
-          ...alerts,
-          {
-            id: alerts.length + 1,
-            title: 'Error',
-            message:
-              'There was an issue updating your profile. Please' +
-              ' refresh and try again!'
-          }
-        ]);
+        addAlert({
+          id: alerts.length + 1,
+          title: 'Error',
+          message:
+            'There was an issue updating your profile. Please' +
+            ' refresh and try again!'
+        });
 
         setModalShow(false);
         return;
@@ -261,14 +242,11 @@ function App() {
         setTransactions(theTransactions);
         setSummary({ ...getSummaryValues(profile, theTransactions) });
 
-        setAlerts([
-          ...alerts,
-          {
-            id: alerts.length + 1,
-            title: 'Success',
-            message: 'Transaction added successfully!'
-          }
-        ]);
+        addAlert({
+          id: alerts.length + 1,
+          title: 'Success',
+          message: 'Transaction added successfully!'
+        });
 
         setModalShow(false);
         // startTimer();
@@ -276,16 +254,12 @@ function App() {
       })
       .catch(err => {
         // console.log(err);
-        setAlerts([
-          ...alerts,
-          {
-            id: alerts.length + 1,
-            title: 'Error',
-            message:
-              'There was an issue adding the transaction. Please try' +
-              ' again!'
-          }
-        ]);
+        addAlert({
+          id: alerts.length + 1,
+          title: 'Error',
+          message:
+            'There was an issue adding the transaction. Please try' + ' again!'
+        });
 
         setModalShow(false);
         return;
@@ -305,30 +279,24 @@ function App() {
           setTransactions(theTransactions);
           setSummary({ ...getSummaryValues(profile, theTransactions) });
 
-          setAlerts([
-            ...alerts,
-            {
-              id: alerts.length + 1,
-              title: 'Success',
-              message: 'Transaction deleted successfully!'
-            }
-          ]);
+          addAlert({
+            id: alerts.length + 1,
+            title: 'Success',
+            message: 'Transaction deleted successfully!'
+          });
 
           // startTimer();
           return;
         })
         .catch(err => {
           // console.log(err);
-          setAlerts([
-            ...alerts,
-            {
-              id: alerts.length + 1,
-              title: 'Success',
-              message:
-                'There was an issue deleting the transaction. Please' +
-                ' try again!'
-            }
-          ]);
+          addAlert({
+            id: alerts.length + 1,
+            title: 'Success',
+            message:
+              'There was an issue deleting the transaction. Please' +
+              ' try again!'
+          });
 
           setModalShow(false);
           return;
@@ -347,9 +315,9 @@ function App() {
   // Custom functions
   // ---------------------------------------------------------------------------
 
-  // Starts a timer that dismisses the alert after the set time
-  function startTimer() {
-    setTimeout(() => setShowAlert(false), 5000);
+  // Add an alert to the array
+  function addAlert(new_alert) {
+    setAlerts([...alerts, new_alert]);
   }
 
   // Returns the correct modal for the navigation button pressed
@@ -411,19 +379,6 @@ function App() {
     <>
       <NavigationBar setModalShow={setModalShow} setModalType={setModalType} />
 
-      <Container>
-        {showAlert && (
-          <Alert
-            className="align-center"
-            variant={alertType}
-            onClose={() => setShowAlert(false)}
-            dismissible
-          >
-            {alertText}
-          </Alert>
-        )}
-      </Container>
-
       <Container id="app-container">
         <Row>
           <Col>
@@ -446,7 +401,11 @@ function App() {
       <div className="toast-container">
         {alerts.length > 0 &&
           alerts.map(alert => (
-            <AlertToast title={alert.title} message={alert.message} />
+            <AlertToast
+              key={alert.id}
+              title={alert.title}
+              message={alert.message}
+            />
           ))}
       </div>
 
