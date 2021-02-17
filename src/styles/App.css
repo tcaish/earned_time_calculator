@@ -34,6 +34,16 @@ body {
   background-color: #2980b9;
 }
 
+.custom-btn-green-outline {
+  border-color: #219b54;
+  color: #219b54;
+}
+.custom-btn-green:hover,
+.custom-btn-green-outline:hover {
+  background-color: #219b54;
+  border-color: #219b54;
+}
+
 .custom-btn-grey {
   background-color: #7f8c8d;
   border-color: #7f8c8d;

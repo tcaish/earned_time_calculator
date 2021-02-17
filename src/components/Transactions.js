@@ -63,9 +63,9 @@ function Transactions({
         <>
           <h3 className="align-center">Transactions</h3>
           <Row>
-            <Col xs={12} md={8}>
+            <Col xs={12} md={10}>
               <Button
-                className="transaction-btn custom-btn-blue-outline"
+                className="transaction-btn custom-btn-green-outline"
                 size="sm"
                 variant="outline-primary"
                 block
@@ -74,7 +74,7 @@ function Transactions({
                 Add Transaction
               </Button>
             </Col>
-            <Col xs={12} md={4}>
+            <Col xs={12} md={2}>
               <DropdownButton
                 id="year-dropdown"
                 className="align-right"
