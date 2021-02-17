@@ -65,7 +65,7 @@ function Transactions({
           <Row>
             <Col xs={12} md={10}>
               <Button
-                className="transaction-btn custom-btn-green-outline"
+                className="transaction-btn custom-btn-blue-outline"
                 size="sm"
                 variant="outline-primary"
                 block
