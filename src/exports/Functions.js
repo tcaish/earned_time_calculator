@@ -33,6 +33,12 @@ export const initialProfileState = {
   total_yearly_paychecks: 26
 };
 
+// Returns the current time
+export function getTime() {
+  const dateFormat = require('dateformat');
+  return dateFormat(new Date(), 'h:MM TT');
+}
+
 // Returns the correct format for a date to be put into the
 // transactions table
 export function getTransactionFormatDate(date) {

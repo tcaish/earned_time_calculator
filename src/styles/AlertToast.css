@@ -1,0 +1,24 @@
+.toast {
+  background-color: white;
+  color: black;
+}
+
+.alert-toast-header {
+  background-color: #bbbbbb;
+}
+
+.alert-toast-success .alert-toast-header {
+  color: #239653;
+}
+/* .alert-toast-success .alert-toast-body {
+} */
+
+.alert-toast-title {
+  margin-left: 5px;
+}
+
+.alert-toast-error .alert-toast-header {
+  color: #c0392b;
+}
+/* .alert-toast-error .alert-toast-body {
+} */
