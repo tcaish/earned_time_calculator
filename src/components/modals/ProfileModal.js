@@ -2,7 +2,16 @@
 import React, { useState } from 'react';
 
 // React bootstrap
-import { Alert, Button, Col, Form, Modal, Row, Spinner } from 'react-bootstrap';
+import {
+  Alert,
+  Button,
+  Col,
+  Form,
+  InputGroup,
+  Modal,
+  Row,
+  Spinner
+} from 'react-bootstrap';
 
 // Third-party
 import DatePicker from 'react-datepicker';
@@ -121,19 +130,26 @@ function ProfileModal(props) {
               <Col>
                 <Form.Group controlId="formCarryOverEt">
                   <Form.Label>Beginning Vacation</Form.Label>
-                  <Form.Control
-                    type="number"
-                    placeholder="0.0"
-                    autoComplete="off"
-                    value={formData.carry_over_et}
-                    onClick={e => e.target.select()}
-                    onChange={e =>
-                      setFormData({
-                        ...formData,
-                        carry_over_et: e.target.value
-                      })
-                    }
-                  />
+
+                  <InputGroup>
+                    <Form.Control
+                      type="number"
+                      placeholder="0.0"
+                      autoComplete="off"
+                      value={formData.carry_over_et}
+                      onClick={e => e.target.select()}
+                      onChange={e =>
+                        setFormData({
+                          ...formData,
+                          carry_over_et: e.target.value
+                        })
+                      }
+                    />
+                    <InputGroup.Append>
+                      <InputGroup.Text id="basic-addon1">hours</InputGroup.Text>
+                    </InputGroup.Append>
+                  </InputGroup>
+
                   <Form.Text className="text-muted">
                     How much vacation you brought over from last year.
                   </Form.Text>
@@ -145,19 +161,25 @@ function ProfileModal(props) {
               <Col>
                 <Form.Group controlId="formTotalEtAllowed">
                   <Form.Label>Yearly Carry-Over</Form.Label>
-                  <Form.Control
-                    type="number"
-                    placeholder="0.0"
-                    autoComplete="off"
-                    value={formData.total_et_allowed}
-                    onClick={e => e.target.select()}
-                    onChange={e =>
-                      setFormData({
-                        ...formData,
-                        total_et_allowed: e.target.value
-                      })
-                    }
-                  />
+
+                  <InputGroup>
+                    <Form.Control
+                      type="number"
+                      placeholder="0.0"
+                      autoComplete="off"
+                      value={formData.total_et_allowed}
+                      onClick={e => e.target.select()}
+                      onChange={e =>
+                        setFormData({
+                          ...formData,
+                          total_et_allowed: e.target.value
+                        })
+                      }
+                    />
+                    <InputGroup.Append>
+                      <InputGroup.Text id="basic-addon1">hours</InputGroup.Text>
+                    </InputGroup.Append>
+                  </InputGroup>
                   <Form.Text className="text-muted">
                     How much vacation you can carry over into the new year.
                   </Form.Text>

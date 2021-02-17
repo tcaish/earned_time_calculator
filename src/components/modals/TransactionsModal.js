@@ -9,6 +9,7 @@ import {
   Col,
   Container,
   Form,
+  InputGroup,
   Modal,
   Row,
   Spinner,
@@ -212,22 +213,30 @@ function TransactionsModal(props) {
 
                 <Col>
                   <Form.Group controlId="formHours">
-                    <Form.Label>Hours</Form.Label>
-                    <Form.Control
-                      type="number"
-                      placeholder="0.0"
-                      autoComplete="off"
-                      value={formData.time_used}
-                      onClick={e => e.target.select()}
-                      onChange={e =>
-                        setFormData({
-                          ...formData,
-                          time_used: e.target.value
-                        })
-                      }
-                    />
+                    <Form.Label>Amount of Hours</Form.Label>
+
+                    <InputGroup>
+                      <Form.Control
+                        type="number"
+                        placeholder="0.0"
+                        autoComplete="off"
+                        value={formData.time_used}
+                        onClick={e => e.target.select()}
+                        onChange={e =>
+                          setFormData({
+                            ...formData,
+                            time_used: e.target.value
+                          })
+                        }
+                      />
+                      <InputGroup.Append>
+                        <InputGroup.Text id="basic-addon1">
+                          hours
+                        </InputGroup.Text>
+                      </InputGroup.Append>
+                    </InputGroup>
                     <Form.Text className="text-muted">
-                      The amount of hours you used or are adding.
+                      The amount of vacation you used or are adding.
                     </Form.Text>
                   </Form.Group>
                 </Col>
