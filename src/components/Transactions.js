@@ -1,6 +1,16 @@
 // React
-import React from 'react';
-import { Badge, Button, OverlayTrigger, Popover, Table } from 'react-bootstrap';
+import React, { useState } from 'react';
+import {
+  Badge,
+  Button,
+  Col,
+  Dropdown,
+  DropdownButton,
+  OverlayTrigger,
+  Popover,
+  Row,
+  Table
+} from 'react-bootstrap';
 
 // Exports
 import { getTransactionFormatDate, modalType } from '../exports/Functions';
@@ -16,6 +26,12 @@ function Transactions({
   deleteTransaction,
   modifyTransaction
 }) {
+  const [year, setYear] = useState(new Date().getFullYear().toString());
+
+  const years = transactions
+    .map(t => new Date(t.date).getFullYear().toString())
+    .sort((a, b) => parseInt(b) - parseInt(a));
+
   // Popover confirmation for deleting a transaction
   const deleteConfirmationPopover = transaction => (
     <Popover id="popover-basic">
@@ -46,15 +62,33 @@ function Transactions({
       return (
         <>
           <h3 className="align-center">Transactions</h3>
-          <Button
-            className="transaction-btn custom-btn-blue-outline"
-            size="sm"
-            variant="outline-primary"
-            block
-            onClick={() => showModal(modalType.transactions)}
-          >
-            Add Transaction
-          </Button>
+          <Row>
+            <Col xs={12} md={8}>
+              <Button
+                className="transaction-btn custom-btn-blue-outline"
+                size="sm"
+                variant="outline-primary"
+                block
+                onClick={() => showModal(modalType.transactions)}
+              >
+                Add Transaction
+              </Button>
+            </Col>
+            <Col xs={12} md={4}>
+              <DropdownButton
+                id="year-dropdown"
+                className="align-right"
+                title={year}
+                size="sm"
+              >
+                {years.map((theYear, i) => (
+                  <Dropdown.Item key={i} onClick={() => setYear(theYear)}>
+                    {theYear}
+                  </Dropdown.Item>
+                ))}
+              </DropdownButton>
+            </Col>
+          </Row>
 
           {transactions.length >= 1 && (
             <Table bordered striped hover variant="dark" size="sm">

@@ -24,3 +24,10 @@
 .trans-badge-delete:hover {
   background-color: #e74c3c;
 }
+
+#year-dropdown {
+  background-color: #3498db;
+  border-color: #3498db;
+  margin-bottom: 10px;
+  width: 100%;
+}
