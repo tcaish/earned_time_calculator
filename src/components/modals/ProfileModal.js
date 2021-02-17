@@ -92,15 +92,13 @@ function ProfileModal(props) {
 
           <Form>
             <Row>
-              <Col></Col>
-              <Col>
+              <Col className="align-center">
                 <p>
                   <b>Email:</b> {props.user.attributes.email}
                 </p>
               </Col>
-              <Col></Col>
             </Row>
-            <Row>
+            <Row xs={1} lg={2}>
               <Col>
                 <Form.Group controlId="formHireDate">
                   <Form.Label>Hire Date</Form.Label>
@@ -143,7 +141,7 @@ function ProfileModal(props) {
               </Col>
             </Row>
 
-            <Row>
+            <Row xs={1} lg={2}>
               <Col>
                 <Form.Group controlId="formTotalEtAllowed">
                   <Form.Label>Yearly Carry-Over</Form.Label>

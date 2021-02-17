@@ -7,6 +7,7 @@ import {
   Button,
   ButtonGroup,
   Col,
+  Container,
   Form,
   Modal,
   Row,
@@ -23,7 +24,7 @@ import '../../styles/CustomModal.css';
 
 const initialTransactionState = {
   date: new Date(),
-  type: 'Earned Time',
+  type: 'Vacation',
   debit: 'true',
   time_used: 0.0
 };
@@ -43,14 +44,14 @@ function TransactionsModal(props) {
   const [alertText, setAlertText] = useState('');
 
   // Radio button states
-  const [typeRadioValue, setTypeRadioValue] = useState('Earned Time');
+  const [typeRadioValue, setTypeRadioValue] = useState('Vacation');
   const [debitRadioValue, setDebitRadioValue] = useState('true');
 
   // Loading state
   const [isLoading, setIsLoading] = useState(false);
 
   const types = [
-    { name: 'Earned Time', value: 'Earned Time' },
+    { name: 'Vacation', value: 'Vacation' },
     { name: 'Holiday', value: 'Holiday' }
   ];
 
@@ -128,132 +129,134 @@ function TransactionsModal(props) {
           )}
 
           <Form>
-            <Row>
-              <Col>
-                <Form.Group controlId="formTransactionType">
-                  <Form.Label>Type</Form.Label>
-                  <br />
-                  <ButtonGroup toggle>
-                    {types.map((type, idx) => (
-                      <ToggleButton
-                        key={idx}
-                        type="radio"
-                        variant="primary"
-                        name="radio"
-                        value={type.value}
-                        checked={typeRadioValue === type.value}
-                        onChange={e => {
-                          setTypeRadioValue(e.currentTarget.value);
-                          setFormData({
-                            ...formData,
-                            type: e.currentTarget.value
-                          });
-                        }}
-                      >
-                        {type.name}
-                      </ToggleButton>
-                    ))}
-                  </ButtonGroup>
-                  <Form.Text className="text-muted">
-                    The type of transaction to add.
-                  </Form.Text>
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group controlId="formTransactionDate">
-                  <Form.Label>Date</Form.Label>
-                  <br />
-                  <DatePicker
-                    selected={formData.date}
-                    onChange={theDate =>
-                      setFormData({ ...formData, date: theDate })
-                    }
-                  />
-                  <Form.Text className="text-muted">
-                    The date of the transaction.
-                  </Form.Text>
-                </Form.Group>
-              </Col>
-            </Row>
+            <Container>
+              <Row xs={1} lg={2}>
+                <Col>
+                  <Form.Group controlId="formTransactionType">
+                    <Form.Label>Type</Form.Label>
+                    <br />
+                    <ButtonGroup toggle>
+                      {types.map((type, idx) => (
+                        <ToggleButton
+                          key={idx}
+                          type="radio"
+                          variant="primary"
+                          name="radio"
+                          value={type.value}
+                          checked={typeRadioValue === type.value}
+                          onChange={e => {
+                            setTypeRadioValue(e.currentTarget.value);
+                            setFormData({
+                              ...formData,
+                              type: e.currentTarget.value
+                            });
+                          }}
+                        >
+                          {type.name}
+                        </ToggleButton>
+                      ))}
+                    </ButtonGroup>
+                    <Form.Text className="text-muted">
+                      The type of transaction to add.
+                    </Form.Text>
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group controlId="formTransactionDebit">
+                    <Form.Label>Transaction</Form.Label>
+                    <br />
+                    <ButtonGroup toggle>
+                      {debits.map((type, idx) => (
+                        <ToggleButton
+                          key={idx}
+                          type="radio"
+                          variant="info"
+                          name="radio"
+                          value={type.value}
+                          checked={debitRadioValue === type.value}
+                          onChange={e => {
+                            setDebitRadioValue(e.currentTarget.value);
+                            setFormData({
+                              ...formData,
+                              debit: e.currentTarget.value
+                            });
+                          }}
+                        >
+                          {type.name}
+                        </ToggleButton>
+                      ))}
+                    </ButtonGroup>
+                    <Form.Text className="text-muted">
+                      What you're doing with your vacation or holiday hours.
+                    </Form.Text>
+                  </Form.Group>
+                </Col>
+              </Row>
 
-            <Row>
-              <Col>
-                <Form.Group controlId="formTransactionDebit">
-                  <Form.Label>Transaction</Form.Label>
-                  <br />
-                  <ButtonGroup toggle>
-                    {debits.map((type, idx) => (
-                      <ToggleButton
-                        key={idx}
-                        type="radio"
-                        variant="info"
-                        name="radio"
-                        value={type.value}
-                        checked={debitRadioValue === type.value}
-                        onChange={e => {
-                          setDebitRadioValue(e.currentTarget.value);
-                          setFormData({
-                            ...formData,
-                            debit: e.currentTarget.value
-                          });
-                        }}
-                      >
-                        {type.name}
-                      </ToggleButton>
-                    ))}
-                  </ButtonGroup>
-                  <Form.Text className="text-muted">
-                    What you're doing with your earned time or holiday hours.
-                  </Form.Text>
-                </Form.Group>
-              </Col>
+              <Row xs={1} lg={2}>
+                <Col>
+                  <Form.Group controlId="formTransactionDate">
+                    <Form.Label>Date</Form.Label>
+                    <br />
+                    <DatePicker
+                      selected={formData.date}
+                      onChange={theDate =>
+                        setFormData({ ...formData, date: theDate })
+                      }
+                    />
+                    <Form.Text className="text-muted">
+                      The date of the transaction.
+                    </Form.Text>
+                  </Form.Group>
+                </Col>
 
-              <Col>
-                <Form.Group controlId="formHours">
-                  <Form.Label>Hours</Form.Label>
-                  <Form.Control
-                    type="number"
-                    placeholder="0.0"
-                    autoComplete="off"
-                    value={formData.time_used}
-                    onClick={e => e.target.select()}
-                    onChange={e =>
-                      setFormData({
-                        ...formData,
-                        time_used: e.target.value
-                      })
-                    }
-                  />
-                  <Form.Text className="text-muted">
-                    The amount of hours you used or are adding.
-                  </Form.Text>
-                </Form.Group>
-              </Col>
-            </Row>
+                <Col>
+                  <Form.Group controlId="formHours">
+                    <Form.Label>Hours</Form.Label>
+                    <Form.Control
+                      type="number"
+                      placeholder="0.0"
+                      autoComplete="off"
+                      value={formData.time_used}
+                      onClick={e => e.target.select()}
+                      onChange={e =>
+                        setFormData({
+                          ...formData,
+                          time_used: e.target.value
+                        })
+                      }
+                    />
+                    <Form.Text className="text-muted">
+                      The amount of hours you used or are adding.
+                    </Form.Text>
+                  </Form.Group>
+                </Col>
+              </Row>
 
-            <Button
-              className="custom-btn-blue"
-              variant="primary"
-              type="submit"
-              onClick={e => addTransaction(e)}
-              disabled={isLoading}
-              block
-            >
-              {!isLoading ? (
-                'Add Transaction'
-              ) : (
-                <>
-                  <Spinner
-                    as="span"
-                    animation="border"
-                    size="md"
-                    role="status"
-                    aria-hidden="true"
-                  />
-                  <span className="sr-only">Loading...</span>
-                </>
-              )}
-            </Button>
+              <Button
+                className="custom-btn-blue"
+                variant="primary"
+                type="submit"
+                onClick={e => addTransaction(e)}
+                disabled={isLoading}
+                block
+              >
+                {!isLoading ? (
+                  'Add Transaction'
+                ) : (
+                  <>
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="md"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                    <span className="sr-only">Loading...</span>
+                  </>
+                )}
+              </Button>
+            </Container>
           </Form>
         </Modal.Body>
       </Modal>
