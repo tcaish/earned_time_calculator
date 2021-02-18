@@ -67,10 +67,12 @@ function Transactions({
   // Return false if the year should not be disabled based on availability
   // of the year or latestYear variables
   function checkYearDisabled() {
-    if (year) {
-      return false;
-    } else if (latestYear) {
-      return false;
+    if (transactions.length > 0) {
+      if (year) {
+        return false;
+      } else if (latestYear) {
+        return false;
+      }
     }
 
     return true;
