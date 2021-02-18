@@ -9,7 +9,7 @@ import { modalType } from '../exports/Functions';
 import '../styles/NavigationBar.css';
 
 // Images
-import logo from '../img/logo.png';
+import logo from '../img/logo2.png';
 
 // Navigation bar component
 function NavigationBar({ setModalShow, setModalType }) {
@@ -23,7 +23,6 @@ function NavigationBar({ setModalShow, setModalType }) {
     <Navbar id="navigation-bar" collapseOnSelect expand="lg" variant="dark">
       <Container>
         <Navbar.Brand>
-          {/* <h2 className="rockout-font">Earned Time Calculator</h2> */}
           <Image id="logo" src={logo} fluid />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -32,9 +31,6 @@ function NavigationBar({ setModalShow, setModalType }) {
             <Nav.Link onClick={() => showModal(modalType.profile)}>
               Profile
             </Nav.Link>
-            {/* <Nav.Link onClick={() => showModal(modalType.settings)}>
-              Settings
-            </Nav.Link> */}
             <Nav.Link onClick={() => showModal(modalType.logout)}>
               Logout
             </Nav.Link>
