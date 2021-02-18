@@ -21,16 +21,23 @@ import '../styles/Transaction.css';
 function Transactions({
   transactions,
   summary,
+  latestYear,
   setModalShow,
   setModalType,
   deleteTransaction,
   modifyTransaction
 }) {
-  const [year, setYear] = useState(new Date().getFullYear().toString());
+  // Get a unique list of the years based on transactions
+  const years = [
+    ...new Set(
+      transactions
+        .map(t => new Date(t.date).getFullYear().toString())
+        .sort((a, b) => parseInt(b) - parseInt(a))
+    )
+  ];
 
-  const years = transactions
-    .map(t => new Date(t.date).getFullYear().toString())
-    .sort((a, b) => parseInt(b) - parseInt(a));
+  // State for year to filter by
+  const [year, setYear] = useState(latestYear);
 
   // Popover confirmation for deleting a transaction
   const deleteConfirmationPopover = transaction => (
@@ -58,6 +65,7 @@ function Transactions({
   }
 
   function setTransactionComp() {
+    // If the user's profile is populated
     if (summary.et_rate > 0) {
       return (
         <>
@@ -78,8 +86,11 @@ function Transactions({
               <DropdownButton
                 id="year-dropdown"
                 className="align-right"
-                title={year}
+                title={
+                  year || latestYear || new Date().getFullYear().toString()
+                }
                 size="sm"
+                disabled={!year || !latestYear}
               >
                 {years.map((theYear, i) => (
                   <Dropdown.Item key={i} onClick={() => setYear(theYear)}>
@@ -102,6 +113,10 @@ function Transactions({
               </thead>
               <tbody>
                 {transactions
+                  .filter(t => {
+                    const theYear = new Date(t.date).getFullYear().toString();
+                    return year ? theYear === year : theYear === latestYear;
+                  }) // filter transactions by chosen year
                   .sort((a, b) => new Date(b.date) - new Date(a.date)) // Sort in descending order
                   .map(transaction => (
                     <tr key={transaction.id}>

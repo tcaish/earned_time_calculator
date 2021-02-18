@@ -14,7 +14,7 @@ import '../styles/AlertToast.css';
 
 function AlertToast({ title, message }) {
   const [showToast, setShowToast] = useState(true);
-  const toastDelay = 7000;
+  const toastDelay = 5000;
 
   // Set the style for the toast
   function getStyle(theTitle) {
