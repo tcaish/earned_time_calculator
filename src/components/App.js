@@ -64,12 +64,12 @@ function App() {
 
   // Props for transactions component
   const [transactions, setTransactions] = useState([]);
+  const [latestYear, setLatestYear] = useState('');
 
   // Props for profile component
   const [profile, setProfile] = useState(initialProfileState);
 
   // Alert states
-  const [showAlert, setShowAlert] = useState(false);
   const [alerts, setAlerts] = useState([]);
 
   // This updates the authentication information upon load
@@ -156,7 +156,13 @@ function App() {
         query: listTransactions
       })
         .then(res => {
-          setTransactions(res.data.listTransactions.items);
+          const transList = res.data.listTransactions.items;
+          setTransactions(transList);
+          setLatestYear(
+            transList
+              .map(t => new Date(t.date).getFullYear().toString())
+              .sort((a, b) => parseInt(b) - parseInt(a))[0]
+          );
           return transactions;
         })
         .catch(err => {
@@ -240,6 +246,11 @@ function App() {
         const theTransactions = [...transactions, res.data.createTransaction];
 
         setTransactions(theTransactions);
+        setLatestYear(
+          theTransactions
+            .map(t => new Date(t.date).getFullYear().toString())
+            .sort((a, b) => parseInt(b) - parseInt(a))[0]
+        );
         setSummary({ ...getSummaryValues(profile, theTransactions) });
 
         addAlert({
@@ -277,6 +288,17 @@ function App() {
           const theTransactions = [...transactions].filter(t => t.id !== id);
 
           setTransactions(theTransactions);
+          console.log(theTransactions);
+          console.log(
+            theTransactions
+              .map(t => new Date(t.date).getFullYear().toString())
+              .sort((a, b) => parseInt(b) - parseInt(a))[0]
+          );
+          setLatestYear(
+            theTransactions
+              .map(t => new Date(t.date).getFullYear().toString())
+              .sort((a, b) => parseInt(b) - parseInt(a))[0]
+          );
           setSummary({ ...getSummaryValues(profile, theTransactions) });
 
           addAlert({
@@ -388,6 +410,7 @@ function App() {
             <Transactions
               transactions={transactions}
               summary={summary}
+              latestYear={latestYear}
               setModalShow={setModalShow}
               setModalType={setModalType}
               deleteTransaction={deleteTransaction}
