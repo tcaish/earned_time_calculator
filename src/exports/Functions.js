@@ -33,6 +33,14 @@ export const initialProfileState = {
   total_yearly_paychecks: 26
 };
 
+// Initial transaction state
+export const initialTransactionState = {
+  date: new Date(),
+  type: 'Vacation',
+  debit: 'true',
+  time_used: 0.0
+};
+
 // Returns the current time
 export function getTime() {
   const dateFormat = require('dateformat');
@@ -50,6 +58,31 @@ export function getTransactionFormatDate(date) {
   }
 
   return dateFormat(dateToFormat, 'd-mmm');
+}
+
+// Validate that a string is a correct date that looks like this: MM/DD/YYYY
+export function isValidDateFromStr(str) {
+  const dateFormat = require('dateformat');
+  const dateToFormat = new Date(str);
+  const formattedDate = dateFormat(dateToFormat, 'mm/dd/yyyy');
+
+  const parms = formattedDate.split(/[\.\-\/]/);
+  const mm = parseInt(parms[0], 10);
+  const dd = parseInt(parms[1], 10);
+  const yyyy = parseInt(parms[2], 10);
+  const date = new Date(yyyy, mm - 1, dd, 0, 0, 0, 0);
+
+  return (
+    mm === date.getMonth() + 1 &&
+    mm >= 1 &&
+    mm <= 12 &&
+    dd === date.getDate() &&
+    dd >= 1 &&
+    dd <= 31 &&
+    yyyy === date.getFullYear() &&
+    yyyy !== 0 &&
+    yyyy.toString().length === 4
+  );
 }
 
 //

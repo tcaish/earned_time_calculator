@@ -17,6 +17,9 @@ import {
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
+// Exports
+import { isValidDateFromStr } from '../../exports/Functions';
+
 // Styles
 import '../../styles/CustomModal.css';
 
@@ -55,6 +58,14 @@ function ProfileModal(props) {
       // !formData.total_yearly_paychecks
     ) {
       setAlertText('Please fill in the required fields!');
+      setShowAlert(true);
+      return;
+    }
+
+    // Check if hire date is a valid date
+    if (!isValidDateFromStr(formData.hire_date)) {
+      console.log(formData.hire_date);
+      setAlertText('Please enter a valid date!');
       setShowAlert(true);
       return;
     }

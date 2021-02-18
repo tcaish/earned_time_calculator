@@ -64,6 +64,18 @@ function Transactions({
     setModalShow(true);
   }
 
+  // Return false if the year should not be disabled based on availability
+  // of the year or latestYear variables
+  function checkYearDisabled() {
+    if (year) {
+      return false;
+    } else if (latestYear) {
+      return false;
+    }
+
+    return true;
+  }
+
   function setTransactionComp() {
     // If the user's profile is populated
     if (summary.et_rate > 0) {
@@ -90,7 +102,7 @@ function Transactions({
                   year || latestYear || new Date().getFullYear().toString()
                 }
                 size="sm"
-                disabled={!year || !latestYear}
+                disabled={checkYearDisabled()}
               >
                 {years.map((theYear, i) => (
                   <Dropdown.Item key={i} onClick={() => setYear(theYear)}>
