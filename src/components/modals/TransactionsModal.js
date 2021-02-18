@@ -20,15 +20,14 @@ import {
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
+// Exports
+import {
+  initialTransactionState,
+  isValidDateFromStr
+} from '../../exports/Functions';
+
 // Styles
 import '../../styles/CustomModal.css';
-
-const initialTransactionState = {
-  date: new Date(),
-  type: 'Vacation',
-  debit: 'true',
-  time_used: 0.0
-};
 
 /*
 @function TransactionsModal
@@ -67,16 +66,23 @@ function TransactionsModal(props) {
 
     // If all fields aren't filled in
     if (
-      formData.date == undefined ||
-      formData.debit == undefined ||
-      formData.time_used == undefined ||
-      formData.type == undefined
+      formData.date === undefined ||
+      formData.debit === undefined ||
+      formData.time_used === undefined ||
+      formData.type === undefined
     ) {
       setAlertText('Please fill in the required fields!');
       setShowAlert(true);
       return;
     } else if (formData.time_used <= 0) {
       setAlertText('Please enter an Hours value that is greater than 0.');
+      setShowAlert(true);
+      return;
+    }
+
+    // Check if hire date is a valid date
+    if (!isValidDateFromStr(formData.date)) {
+      setAlertText('Please enter a valid date!');
       setShowAlert(true);
       return;
     }

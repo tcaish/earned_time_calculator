@@ -288,12 +288,6 @@ function App() {
           const theTransactions = [...transactions].filter(t => t.id !== id);
 
           setTransactions(theTransactions);
-          console.log(theTransactions);
-          console.log(
-            theTransactions
-              .map(t => new Date(t.date).getFullYear().toString())
-              .sort((a, b) => parseInt(b) - parseInt(a))[0]
-          );
           setLatestYear(
             theTransactions
               .map(t => new Date(t.date).getFullYear().toString())
