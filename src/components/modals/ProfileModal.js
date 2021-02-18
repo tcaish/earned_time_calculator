@@ -124,6 +124,10 @@ function ProfileModal(props) {
                   <Form.Label>Hire Date</Form.Label>
                   <br />
                   <DatePicker
+                    showMonthDropdown={true}
+                    showYearDropdown={true}
+                    dropdownMode="select"
+                    popperPlacement="top-start"
                     selected={
                       formData.hire_date !== undefined
                         ? new Date(formData.hire_date)
