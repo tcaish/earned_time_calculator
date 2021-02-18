@@ -80,6 +80,7 @@ function App() {
       setUser(authData);
 
       if (authData !== undefined) {
+        setAlerts([]);
         fetchEtInfo(authData.username);
       }
     });
