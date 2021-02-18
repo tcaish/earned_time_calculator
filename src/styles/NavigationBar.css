@@ -3,18 +3,22 @@
 }
 
 #logo {
-  width: 350px;
   height: auto;
+  left: 50%;
+  margin-top: -15px;
+  position: absolute;
+  transform: translateX(-50%);
+  width: 200px;
 }
 
 @media (max-width: 454px) {
   #logo {
-    width: 300px;
+    /* width: 200px; */
   }
 }
 
 @media (max-width: 404px) {
   #logo {
-    width: 216px;
+    /* width: 216px; */
   }
 }
