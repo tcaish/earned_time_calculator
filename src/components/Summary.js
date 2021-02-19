@@ -5,6 +5,9 @@ import { Row, Col } from 'react-bootstrap';
 // Components
 import SummaryCard from './SummaryCard';
 
+// Exports
+import { SummaryCardBody } from '../exports/Functions';
+
 // Styles
 import '../styles/Summary.css';
 
@@ -22,13 +25,13 @@ function Summary({ summary }) {
         <Col>
           <SummaryCard
             title={summary.et_rate + ' hrs'}
-            body={'ET Rate (per pay period)'}
+            body={SummaryCardBody.vaca_rate}
           />
         </Col>
         <Col>
           <SummaryCard
             title={summary.et_end_of_year + ' hrs'}
-            body={'ET at End of Year'}
+            body={SummaryCardBody.vaca_end_year}
           />
         </Col>
       </Row>
@@ -37,7 +40,7 @@ function Summary({ summary }) {
         <Col>
           <SummaryCard
             title={summary.et_hol_to_burn + ' hrs'}
-            body={'ET/Holiday to Burn'}
+            body={SummaryCardBody.vaca_to_burn}
           />
         </Col>
       </Row>
@@ -46,13 +49,13 @@ function Summary({ summary }) {
         <Col>
           <SummaryCard
             title={summary.total_vaca_weeks}
-            body={'Total Vacation Weeks'}
+            body={SummaryCardBody.vaca_weeks}
           />
         </Col>
         <Col>
           <SummaryCard
             title={summary.total_vaca_days}
-            body={'Total Vacation Days'}
+            body={SummaryCardBody.vaca_days}
           />
         </Col>
       </Row>

@@ -41,6 +41,29 @@ export const initialTransactionState = {
   time_used: 0.0
 };
 
+// The summary card bodies
+export const SummaryCardBody = {
+  vaca_rate: 'Vacation Rate',
+  vaca_end_year: 'Vacation at End of Year',
+  vaca_to_burn: 'Vacation/Holiday to Burn',
+  vaca_weeks: 'Total Vacation Weeks',
+  vaca_days: 'Total Vacation Days'
+};
+
+export const SummaryCardTooltips = {
+  vaca_rate: 'How many hours per pay period you earn in vacation time.',
+  vaca_end_year: "How much vacation time you'll have at the end of the year.",
+  vaca_to_burn:
+    'How much vacation/holiday time you will need to use to get' +
+    ' down to the max amount of carry over you can bring into the new year.',
+  vaca_weeks:
+    'How many weeks of vacation you have based on the total' +
+    ' vacation time to burn.',
+  vaca_days:
+    'How many days of vacation you have based on the total' +
+    ' vacation time to burn.'
+};
+
 // Returns the current time
 export function getTime() {
   const dateFormat = require('dateformat');
