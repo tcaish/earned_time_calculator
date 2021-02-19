@@ -55,3 +55,13 @@ body {
   right: 20px;
   width: 285px;
 }
+
+@media (max-width: 454px) {
+  #app-container {
+    margin-top: 50px;
+  }
+
+  #trans-col {
+    margin-bottom: 20px;
+  }
+}
