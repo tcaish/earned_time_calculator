@@ -401,7 +401,7 @@ function App() {
           <Col>
             <Summary summary={summary} />
           </Col>
-          <Col className="app-col">
+          <Col id="trans-col">
             <Transactions
               transactions={transactions}
               summary={summary}
