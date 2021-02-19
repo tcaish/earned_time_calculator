@@ -399,7 +399,7 @@ function App() {
       <Container id="app-container">
         <Row>
           <Col>
-            <Summary summary={summary} />
+            <Summary summary={summary} profile={profile} />
           </Col>
           <Col id="trans-col">
             <Transactions

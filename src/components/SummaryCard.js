@@ -8,7 +8,7 @@ import { SummaryCardBody, SummaryCardTooltips } from '../exports/Functions';
 // Styles
 import '../styles/SummaryCard.css';
 
-function SummaryCard({ title, body }) {
+function SummaryCard({ title, body, num_paychecks }) {
   // Returns the style of the title based on the title and body
   function getClass(theTitle, theBody) {
     let theClass = 'summary-card-body-title';
@@ -32,10 +32,21 @@ function SummaryCard({ title, body }) {
   }
 
   // Returns the message for the appropriate summary card based on the body
-  function getTooltipMessage(theBody) {
+  function getTooltipMessage(theTitle, theBody) {
     switch (theBody) {
       case SummaryCardBody.vaca_rate:
-        return SummaryCardTooltips.vaca_rate;
+        const vaca_days_per_year = Math.floor(
+          (parseFloat(theTitle.split(' hrs')[0]) * num_paychecks) / 8
+        );
+        const message = (
+          <>
+            ({vaca_days_per_year} days/year)
+            <br />
+            {SummaryCardTooltips.vaca_rate}
+          </>
+        );
+
+        return message;
       case SummaryCardBody.vaca_end_year:
         return SummaryCardTooltips.vaca_end_year;
       case SummaryCardBody.vaca_to_burn:
@@ -52,7 +63,7 @@ function SummaryCard({ title, body }) {
   return (
     <OverlayTrigger
       placement="bottom"
-      overlay={<Tooltip>{getTooltipMessage(body)}</Tooltip>}
+      overlay={<Tooltip>{getTooltipMessage(title, body)}</Tooltip>}
     >
       <div className="summary-card">
         <div className="summary-card-body align-center">

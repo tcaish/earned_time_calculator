@@ -16,7 +16,7 @@ import '../styles/Summary.css';
 @description Sets up the summary component with earned time details.
 @params summary The summary state object from App.js
 */
-function Summary({ summary }) {
+function Summary({ summary, profile }) {
   return (
     <div id="summary-container">
       <h3 className="align-center">Summary</h3>
@@ -26,6 +26,7 @@ function Summary({ summary }) {
           <SummaryCard
             title={summary.et_rate + ' hrs'}
             body={SummaryCardBody.vaca_rate}
+            num_paychecks={profile.total_yearly_paychecks}
           />
         </Col>
         <Col>
