@@ -3,7 +3,7 @@ import React from 'react';
 // React bootstrap
 import { Button, Modal } from 'react-bootstrap';
 // Styles
-import '../../styles/CustomModal.css';
+import '../../styles/Modal.css';
 
 /*
 @function SettingsModal
@@ -21,9 +21,7 @@ function SettingsModal(props) {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Settings
-        </Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">Settings</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <h4>This is a settings header</h4>

@@ -21,7 +21,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { isValidDateFromStr } from '../../exports/Functions';
 
 // Styles
-import '../../styles/CustomModal.css';
+import '../../styles/Modal.css';
 
 /*
 @function ProfileModal
@@ -52,9 +52,9 @@ function ProfileModal(props) {
 
     // If all fields aren't filled in
     if (
-      !formData.carry_over_et ||
-      !formData.hire_date ||
-      !formData.total_et_allowed
+      formData.carry_over_et === undefined ||
+      formData.hire_date === undefined ||
+      formData.total_et_allowed === undefined
       // !formData.total_yearly_paychecks
     ) {
       setAlertText('Please fill in the required fields!');
@@ -64,7 +64,6 @@ function ProfileModal(props) {
 
     // Check if hire date is a valid date
     if (!isValidDateFromStr(formData.hire_date)) {
-      console.log(formData.hire_date);
       setAlertText('Please enter a valid date!');
       setShowAlert(true);
       return;
@@ -175,7 +174,7 @@ function ProfileModal(props) {
             <Row xs={1} lg={2}>
               <Col>
                 <Form.Group controlId="formTotalEtAllowed">
-                  <Form.Label>Yearly Carry-Over</Form.Label>
+                  <Form.Label>Yearly Carry-Over Limit</Form.Label>
 
                   <InputGroup>
                     <Form.Control
@@ -183,6 +182,7 @@ function ProfileModal(props) {
                       placeholder="0.0"
                       autoComplete="off"
                       value={formData.total_et_allowed}
+                      disabled={formData.total_et_allowed === 0}
                       onClick={e => e.target.select()}
                       onChange={e =>
                         setFormData({
@@ -192,12 +192,38 @@ function ProfileModal(props) {
                       }
                     />
                     <InputGroup.Append>
-                      <InputGroup.Text id="basic-addon1">hours</InputGroup.Text>
+                      <InputGroup.Text>hours</InputGroup.Text>
                     </InputGroup.Append>
                   </InputGroup>
                   <Form.Text className="text-muted">
                     How much vacation you can carry over into the new year.
                   </Form.Text>
+                </Form.Group>
+                <Form.Group id="formCarryOverCheckbox">
+                  <Form.Check
+                    type="checkbox"
+                    label="Infinite/No Carry-Over Limit"
+                    checked={formData.total_et_allowed === 0 ? true : false}
+                    onChange={e => {
+                      const yearlyEtInput = document.getElementById(
+                        'formTotalEtAllowed'
+                      );
+
+                      // If the checkbox is checked
+                      if (e.target.checked) {
+                        setFormData({
+                          ...formData,
+                          total_et_allowed: 0
+                        });
+
+                        yearlyEtInput.value = 0;
+                        yearlyEtInput.disabled = true;
+                      } else {
+                        setFormData({ ...formData, total_et_allowed: 120 });
+                        yearlyEtInput.disabled = false;
+                      }
+                    }}
+                  />
                 </Form.Group>
               </Col>
               <Col>

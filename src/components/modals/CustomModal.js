@@ -3,7 +3,7 @@ import React from 'react';
 // React bootstrap
 import { Button, Modal } from 'react-bootstrap';
 // Styles
-import '../../styles/CustomModal.css';
+import '../../styles/Modal.css';
 
 /*
 @function CustomModal
@@ -25,9 +25,7 @@ function CustomModal(props) {
           {props.title}
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        {props.body}
-      </Modal.Body>
+      <Modal.Body>{props.body}</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={props.onHide}>
           Close

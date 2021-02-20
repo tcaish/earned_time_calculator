@@ -27,7 +27,7 @@ import {
 } from '../../exports/Functions';
 
 // Styles
-import '../../styles/CustomModal.css';
+import '../../styles/Modal.css';
 
 /*
 @function TransactionsModal
