@@ -27,6 +27,7 @@ import {
 import NavigationBar from './NavigationBar';
 import Summary from './Summary';
 import Transactions from './Transactions';
+import Footer from './Footer';
 import ProfileModal from './modals/ProfileModal';
 import LogoutModal from './modals/LogoutModal';
 import SettingsModal from './modals/SettingsModal';
@@ -414,6 +415,8 @@ function App() {
           </Col>
         </Row>
       </Container>
+
+      <Footer />
 
       {/* Setting up the toasts */}
       <div className="toast-container">

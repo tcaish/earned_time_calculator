@@ -1,0 +1,32 @@
+#footer {
+  background-color: rgba(0, 0, 0, 0.582);
+  bottom: 0;
+  color: white;
+  height: 50px;
+  left: 0;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+#contact-support-text {
+  bottom: -14px;
+  color: #3498db;
+  left: 0;
+  position: absolute;
+  right: 0;
+}
+#contact-support-text:hover {
+  cursor: pointer;
+}
+
+#recaptchaPopover {
+  background-color: #222222;
+  height: 140px;
+  width: 157px;
+}
+
+@media (max-width: 427px) {
+  #footer {
+    bottom: auto;
+  }
+}
