@@ -5,7 +5,7 @@ import { Button, Modal, Spinner } from 'react-bootstrap';
 // Amplify
 import { Auth } from 'aws-amplify';
 // Styles
-import '../../styles/CustomModal.css';
+import '../../styles/Modal.css';
 
 /*
 @function LogoutModal
