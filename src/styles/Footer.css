@@ -28,5 +28,11 @@
 @media (max-width: 427px) {
   #footer {
     bottom: auto;
+    height: 65px;
+    width: 100%;
+  }
+
+  #contact-support-text {
+    bottom: 5px;
   }
 }
