@@ -23,7 +23,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 // Exports
 import {
   initialTransactionState,
-  isValidDateFromStr
+  isValidDateFromStr,
+  getTransactionFormatDate
 } from '../../exports/Functions';
 
 // Styles
@@ -60,8 +61,34 @@ function TransactionsModal(props) {
     { name: 'Deposit', value: 'false' }
   ];
 
-  // Adds a transaction to the database for a user
-  function addTransaction(e) {
+  // Resets values in this modal
+  function resetData() {
+    setIsLoading(false);
+    setFormData(initialTransactionState);
+  }
+
+  // When the modal shows, update the values to be that of the transaction
+  // passed in or to the initial transaction state
+  function onShowModal() {
+    setFormData(
+      props.transactionToModify !== null
+        ? props.transactionToModify
+        : initialTransactionState
+    );
+    setTypeRadioValue(
+      props.transactionToModify !== null
+        ? props.transactionToModify.type
+        : types[0].value
+    );
+    setDebitRadioValue(
+      props.transactionToModify !== null
+        ? props.transactionToModify.debit.toString()
+        : debits[0].value
+    );
+  }
+
+  // Adds or updates a transaction to or in the database
+  function addUpdateTransaction(e) {
     e.preventDefault();
 
     // If all fields aren't filled in
@@ -103,9 +130,23 @@ function TransactionsModal(props) {
     // Update time_used value to be a number
     formData.time_used = parseFloat(formData.time_used);
 
-    props.addTransaction(formData);
-
-    setIsLoading(false);
+    // If user is modifying a transaction
+    if (props.transactionToModify !== null) {
+      props
+        .modifyTransaction({
+          ...formData,
+          id: props.transactionToModify.id
+        })
+        .then(res => resetData())
+        .catch(err => console.log(err));
+    } else {
+      // If there is still an id value when adding a new transaction, remove it
+      if (formData.id !== undefined) delete formData.id;
+      props
+        .addTransaction(formData)
+        .then(res => resetData())
+        .catch(err => console.log(err));
+    }
   }
 
   return (
@@ -113,6 +154,7 @@ function TransactionsModal(props) {
       <Modal
         show={props.show}
         onHide={props.onHide}
+        onShow={onShowModal}
         className="custom-modal"
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
@@ -120,7 +162,10 @@ function TransactionsModal(props) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Add New Transaction
+            {props.transactionToModify !== null
+              ? 'Edit Transaction from ' +
+                getTransactionFormatDate(props.transactionToModify.date)
+              : 'Add New Transaction'}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -176,6 +221,7 @@ function TransactionsModal(props) {
                     <ButtonGroup toggle>
                       {debits.map((type, idx) => (
                         <ToggleButton
+                          className="transaction-debit-toggle"
                           key={idx}
                           type="radio"
                           variant="info"
@@ -211,7 +257,7 @@ function TransactionsModal(props) {
                       showYearDropdown={true}
                       dropdownMode="select"
                       popperPlacement="top-start"
-                      selected={formData.date}
+                      selected={new Date(formData.date)}
                       onChange={theDate =>
                         setFormData({ ...formData, date: theDate })
                       }
@@ -257,12 +303,16 @@ function TransactionsModal(props) {
                 className="custom-btn-blue"
                 variant="primary"
                 type="submit"
-                onClick={e => addTransaction(e)}
+                onClick={e => addUpdateTransaction(e)}
                 disabled={isLoading}
                 block
               >
                 {!isLoading ? (
-                  'Add Transaction'
+                  props.transactionToModify !== null ? (
+                    'Update Transaction'
+                  ) : (
+                    'Add Transaction'
+                  )
                 ) : (
                   <>
                     <Spinner

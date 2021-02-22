@@ -9,6 +9,7 @@ import {
   OverlayTrigger,
   Popover,
   Row,
+  Spinner,
   Table
 } from 'react-bootstrap';
 
@@ -25,7 +26,7 @@ function Transactions({
   setModalShow,
   setModalType,
   deleteTransaction,
-  modifyTransaction
+  modifyTransactionSetup
 }) {
   // Get a unique list of the years based on transactions
   const years = [
@@ -39,6 +40,9 @@ function Transactions({
   // State for year to filter by
   const [year, setYear] = useState(latestYear);
 
+  // Loading state
+  const [isLoading, setIsLoading] = useState(false);
+
   // Popover confirmation for deleting a transaction
   const deleteConfirmationPopover = transaction => (
     <Popover id="popover-basic">
@@ -50,9 +54,29 @@ function Transactions({
           className="custom-btn-red"
           size="sm"
           variant="danger"
-          onClick={() => deleteTransaction(transaction)}
+          disabled={isLoading}
+          onClick={() => {
+            setIsLoading(true);
+
+            deleteTransaction(transaction)
+              .then(res => setIsLoading(false))
+              .catch(err => console.log(err));
+          }}
         >
-          Delete
+          {!isLoading ? (
+            'Delete'
+          ) : (
+            <>
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+              <span className="sr-only">Loading...</span>
+            </>
+          )}
         </Button>
       </Popover.Content>
     </Popover>
@@ -146,9 +170,9 @@ function Transactions({
                         <Badge
                           className="trans-badge trans-badge-modify"
                           variant="success"
-                          onClick={() => modifyTransaction(transaction)}
+                          onClick={() => modifyTransactionSetup(transaction)}
                         >
-                          Modify
+                          Edit
                         </Badge>{' '}
                         <OverlayTrigger
                           trigger="click"
