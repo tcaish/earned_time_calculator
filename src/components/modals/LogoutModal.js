@@ -22,13 +22,19 @@ function LogoutModal(props) {
     setIsLoading(true);
 
     try {
-      await Auth.signOut();
-      props.onHide();
+      await Auth.signOut()
+        .then(res => {
+          setIsLoading(false);
+          props.onHide();
+        })
+        .catch(err => {
+          setIsLoading(false);
+          console.log(err);
+        });
     } catch (error) {
-      console.log('error signing out: ', error);
+      setIsLoading(false);
+      console.log(error);
     }
-
-    setIsLoading(false);
   }
 
   return (

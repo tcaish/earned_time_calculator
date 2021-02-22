@@ -18,7 +18,10 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 // Exports
-import { isValidDateFromStr } from '../../exports/Functions';
+import {
+  initialProfileState,
+  isValidDateFromStr
+} from '../../exports/Functions';
 
 // Styles
 import '../../styles/Modal.css';
@@ -31,7 +34,7 @@ import '../../styles/Modal.css';
 */
 function ProfileModal(props) {
   // Form state
-  const [formData, setFormData] = useState({ ...props.profile });
+  const [formData, setFormData] = useState(initialProfileState);
 
   // Alert state
   const [showAlert, setShowAlert] = useState(false);
@@ -39,6 +42,20 @@ function ProfileModal(props) {
 
   // Loading state
   const [isLoading, setIsLoading] = useState(false);
+
+  // Resets values in this modal
+  function resetData() {
+    setIsLoading(false);
+    setFormData(initialProfileState);
+  }
+
+  // When the modal shows, update the values to be that of the profile, if
+  // available, or initial profile state
+  function onShowModal() {
+    props.profile.updatedAt !== undefined
+      ? setFormData(props.profile)
+      : setFormData(initialProfileState);
+  }
 
   // Updates the profile information for the user
   function updateProfile(e) {
@@ -77,9 +94,10 @@ function ProfileModal(props) {
     delete formData.updatedAt;
     delete formData.owner;
 
-    props.updateProfile({ ...formData });
-
-    setIsLoading(false);
+    props
+      .updateProfile(formData)
+      .then(res => resetData())
+      .catch(err => console.log(err));
   }
 
   return (
@@ -87,6 +105,7 @@ function ProfileModal(props) {
       <Modal
         show={props.show}
         onHide={props.onHide}
+        onShow={onShowModal}
         className="custom-modal"
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"

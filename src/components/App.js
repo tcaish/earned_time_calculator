@@ -66,6 +66,7 @@ function App() {
   // Props for transactions component
   const [transactions, setTransactions] = useState([]);
   const [latestYear, setLatestYear] = useState('');
+  const [transToModify, setTransToModify] = useState(null);
 
   // Props for profile component
   const [profile, setProfile] = useState(initialProfileState);
@@ -112,7 +113,7 @@ function App() {
 
         setModalShow(false);
         // startTimer();
-        return;
+        return res.data.createEarnedTimeInfo;
       })
       .catch(err => {
         // console.log(err);
@@ -125,7 +126,7 @@ function App() {
         });
 
         setModalShow(false);
-        return;
+        return err;
       });
   }
 
@@ -221,7 +222,7 @@ function App() {
 
         setModalShow(false);
         // startTimer();
-        return;
+        return res.data.updateEarnedTimeInfo;
       })
       .catch(err => {
         // console.log(err);
@@ -234,7 +235,7 @@ function App() {
         });
 
         setModalShow(false);
-        return;
+        return err;
       });
   }
 
@@ -262,11 +263,10 @@ function App() {
         });
 
         setModalShow(false);
-        // startTimer();
-        return;
+        return res.data.createTransaction;
       })
       .catch(err => {
-        // console.log(err);
+        console.log(err);
         addAlert({
           id: alerts.length + 1,
           title: 'Error',
@@ -275,7 +275,7 @@ function App() {
         });
 
         setModalShow(false);
-        return;
+        return err;
       });
   }
 
@@ -303,7 +303,7 @@ function App() {
             message: 'Transaction deleted successfully!'
           });
 
-          return;
+          return res.data.deleteTransaction;
         })
         .catch(err => {
           // console.log(err);
@@ -316,7 +316,7 @@ function App() {
           });
 
           setModalShow(false);
-          return;
+          return err;
         });
     }
   }
@@ -344,6 +344,7 @@ function App() {
           ];
 
           setTransactions(transUpdatedList);
+          setTransToModify(null);
           setLatestYear(
             transUpdatedList
               .map(t => new Date(t.date).getFullYear().toString())
@@ -357,7 +358,8 @@ function App() {
             message: 'Transaction updated successfully!'
           });
 
-          return;
+          setModalShow(false);
+          return res.data.updateTransaction;
         })
         .catch(err => {
           // console.log(err);
@@ -370,7 +372,7 @@ function App() {
           });
 
           setModalShow(false);
-          return;
+          return err;
         });
     }
   }
@@ -382,6 +384,13 @@ function App() {
   // Add an alert to the array
   function addAlert(new_alert) {
     setAlerts([...alerts, new_alert]);
+  }
+
+  // Sets up the transaction modal for modifying a transaction
+  function modifyTransactionSetup(theTransaction) {
+    setTransToModify(theTransaction);
+    setModalType(modalFuncType.transactions);
+    setModalShow(true);
   }
 
   // Returns the correct modal for the navigation button pressed
@@ -414,8 +423,13 @@ function App() {
         modal = (
           <TransactionsModal
             show={modalShow}
-            onHide={() => setModalShow(false)}
+            onHide={() => {
+              setModalShow(false);
+              setTransToModify(null);
+            }}
             addTransaction={addTransaction}
+            transactionToModify={transToModify}
+            modifyTransaction={modifyTransaction}
             profile={profile}
           />
         );
@@ -456,7 +470,7 @@ function App() {
               setModalShow={setModalShow}
               setModalType={setModalType}
               deleteTransaction={deleteTransaction}
-              modifyTransaction={modifyTransaction}
+              modifyTransactionSetup={modifyTransactionSetup}
             />
           </Col>
         </Row>

@@ -25,11 +25,10 @@ export const initialSummaryState = {
 
 // Initial profile state
 export const initialProfileState = {
-  //id: '0',
   userId: '',
   carry_over_et: 0.0,
   hire_date: new Date(),
-  total_et_allowed: 0.0,
+  total_et_allowed: 120,
   total_yearly_paychecks: 26
 };
 
