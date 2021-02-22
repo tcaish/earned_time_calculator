@@ -70,6 +70,8 @@ function TransactionsModal(props) {
   // When the modal shows, update the values to be that of the transaction
   // passed in or to the initial transaction state
   function onShowModal() {
+    setShowAlert(false);
+
     setFormData(
       props.transactionToModify !== null
         ? props.transactionToModify
