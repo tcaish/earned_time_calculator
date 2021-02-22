@@ -286,18 +286,24 @@ export function getSummaryValues(etInfo, transactions) {
   if (vacation_days < 0) vacation_days = 0;
 
   let current_et_rate = 0.0;
+  let date_to_compare = new Date(
+    hire_date_month +
+      '/' +
+      hire_date_day +
+      '/' +
+      getSpecificDateValue(DateType.YEAR, null)
+  );
+  let today = new Date();
 
-  // If we're before my hire date (5/21)
+  // If the user is not at their max possible earnable ET amount
   if (values_arr[0] !== max_et) {
-    if (
-      getSpecificDateValue(DateType.MONTH, null) <= hire_date_month &&
-      getSpecificDateValue(DateType.DAY_OF_MONTH, null) < hire_date_day
-    ) {
+    // If we're before the user's hire date
+    if (date_to_compare > today) {
       current_et_rate =
         Math.round(((yearly_et_before * 8) / total_yearly_paychecks) * 100.0) /
         100.0;
     }
-    // Else we're on or after my hire date (5/21)
+    // Else we're on or after the user's hire date
     else {
       current_et_rate =
         Math.round(((yearly_et_after * 8) / total_yearly_paychecks) * 100.0) /
@@ -309,7 +315,7 @@ export function getSummaryValues(etInfo, transactions) {
       100.0;
   }
 
-  // console.log("ET Rate:\t\t\t" + current_et_rate + " hrs/pay period");
+  // console.log('ET Rate:\t\t\t' + current_et_rate + ' hrs/pay period');
   // console.log("Total ET at end of " + getSpecificDateValue(DateType.YEAR) + ":\t" + total_et + " hrs");
   // console.log("ET + HOL to burn:\t\t" + et_hol_to_burn + " hrs");
   // console.log("Total vacation weeks:\t\t" + vacation_weeks + " weeks");
