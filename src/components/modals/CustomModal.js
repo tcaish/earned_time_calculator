@@ -1,7 +1,7 @@
 // React
 import React from 'react';
-// React bootstrap
 import { Button, Modal } from 'react-bootstrap';
+
 // Styles
 import '../../styles/Modal.css';
 

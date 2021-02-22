@@ -52,6 +52,8 @@ function ProfileModal(props) {
   // When the modal shows, update the values to be that of the profile, if
   // available, or initial profile state
   function onShowModal() {
+    setShowAlert(false);
+
     props.profile.updatedAt !== undefined
       ? setFormData(props.profile)
       : setFormData(initialProfileState);
