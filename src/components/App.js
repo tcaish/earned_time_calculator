@@ -100,7 +100,7 @@ function App() {
       query: createEarnedTimeInfoMutation,
       variables: { input: theFormData }
     })
-      .then((res) => {
+      .then(res => {
         setProfile(res.data.createEarnedTimeInfo);
         setSummary(getSummaryValues(res.data.createEarnedTimeInfo));
 
@@ -114,7 +114,7 @@ function App() {
         // startTimer();
         return;
       })
-      .catch((err) => {
+      .catch(err => {
         // console.log(err);
         addAlert({
           id: alerts.length + 1,
@@ -136,12 +136,12 @@ function App() {
       query: getEarnedTimeInfo,
       variables: { id: username }
     })
-      .then((res) => {
+      .then(res => {
         const etInfo = res.data.getEarnedTimeInfo;
         setProfile({ ...etInfo });
         return etInfo;
       })
-      .catch((err) => {
+      .catch(err => {
         // nothing to report here, just catching error
         //console.log('error getting et info: ' + JSON.stringify(err));
         return null;
@@ -157,17 +157,17 @@ function App() {
       const etTransactions = await API.graphql({
         query: listTransactions
       })
-        .then((res) => {
+        .then(res => {
           const transList = res.data.listTransactions.items;
           setTransactions(transList);
           setLatestYear(
             transList
-              .map((t) => new Date(t.date).getFullYear().toString())
+              .map(t => new Date(t.date).getFullYear().toString())
               .sort((a, b) => parseInt(b) - parseInt(a))[0]
           );
           return transactions;
         })
-        .catch((err) => {
+        .catch(err => {
           // console.log(err);
           addAlert({
             id: alerts.length + 1,
@@ -207,7 +207,7 @@ function App() {
       query: updateEarnedTimeInfoMutation,
       variables: { input: theFormData }
     })
-      .then((res) => {
+      .then(res => {
         setProfile(res.data.updateEarnedTimeInfo);
         setSummary({
           ...getSummaryValues(res.data.updateEarnedTimeInfo, transactions)
@@ -223,7 +223,7 @@ function App() {
         // startTimer();
         return;
       })
-      .catch((err) => {
+      .catch(err => {
         // console.log(err);
         addAlert({
           id: alerts.length + 1,
@@ -244,13 +244,13 @@ function App() {
       query: createTransactionMutation,
       variables: { input: theTransaction }
     })
-      .then((res) => {
+      .then(res => {
         const theTransactions = [...transactions, res.data.createTransaction];
 
         setTransactions(theTransactions);
         setLatestYear(
           theTransactions
-            .map((t) => new Date(t.date).getFullYear().toString())
+            .map(t => new Date(t.date).getFullYear().toString())
             .sort((a, b) => parseInt(b) - parseInt(a))[0]
         );
         setSummary({ ...getSummaryValues(profile, theTransactions) });
@@ -265,7 +265,7 @@ function App() {
         // startTimer();
         return;
       })
-      .catch((err) => {
+      .catch(err => {
         // console.log(err);
         addAlert({
           id: alerts.length + 1,
@@ -286,13 +286,13 @@ function App() {
         query: deleteTransactionMutation,
         variables: { input: { id } }
       })
-        .then((res) => {
-          const theTransactions = [...transactions].filter((t) => t.id !== id);
+        .then(res => {
+          const theTransactions = [...transactions].filter(t => t.id !== id);
 
           setTransactions(theTransactions);
           setLatestYear(
             theTransactions
-              .map((t) => new Date(t.date).getFullYear().toString())
+              .map(t => new Date(t.date).getFullYear().toString())
               .sort((a, b) => parseInt(b) - parseInt(a))[0]
           );
           setSummary({ ...getSummaryValues(profile, theTransactions) });
@@ -305,7 +305,7 @@ function App() {
 
           return;
         })
-        .catch((err) => {
+        .catch(err => {
           // console.log(err);
           addAlert({
             id: alerts.length + 1,
@@ -332,10 +332,10 @@ function App() {
         query: updateTransactionMutation,
         variables: { input: theTransaction }
       })
-        .then((res) => {
+        .then(res => {
           // Return list of all transactions without the one modified
           const transRemoved = [...transactions].filter(
-            (t) => t.id !== theTransaction.id
+            t => t.id !== theTransaction.id
           );
           // Add updated transaction back to the list
           const transUpdatedList = [
@@ -346,7 +346,7 @@ function App() {
           setTransactions(transUpdatedList);
           setLatestYear(
             transUpdatedList
-              .map((t) => new Date(t.date).getFullYear().toString())
+              .map(t => new Date(t.date).getFullYear().toString())
               .sort((a, b) => parseInt(b) - parseInt(a))[0]
           );
           setSummary({ ...getSummaryValues(profile, transUpdatedList) });
@@ -357,11 +357,10 @@ function App() {
             message: 'Transaction updated successfully!'
           });
 
-          // startTimer();
           return;
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(err => {
+          // console.log(err);
           addAlert({
             id: alerts.length + 1,
             title: 'Error',
@@ -468,7 +467,7 @@ function App() {
       {/* Setting up the toasts */}
       <div className="toast-container">
         {alerts.length > 0 &&
-          alerts.map((alert) => (
+          alerts.map(alert => (
             <AlertToast
               key={alert.id}
               title={alert.title}
