@@ -19,5 +19,20 @@ This project was created with the intent of giving salaried employees receiving 
 - Filter transactions by year
 - Submit a support ticket to the developer
 
+## Technology Stack
+Frontend:
+- React
+    - JavaScript ES6
+- HTML
+- CSS
+
+Backend:
+- Amazon Web Services
+    - AWS Amplify
+    - AWS AppSync
+    - Cognito
+    - DynamoDB
+- GraphQL
+
 ## Contact
 If you have any questions regarding this project, feel free to reach out to me at <timmycaish11@gmail.com>.
