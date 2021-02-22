@@ -145,6 +145,7 @@ function TransactionsModal(props) {
                     <ButtonGroup toggle>
                       {types.map((type, idx) => (
                         <ToggleButton
+                          className="transaction-type-toggle"
                           key={idx}
                           type="radio"
                           variant="primary"
