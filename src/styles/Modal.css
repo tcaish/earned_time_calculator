@@ -5,3 +5,16 @@
 #formCarryOverCheckbox {
   margin-top: -1rem;
 }
+
+.transaction-type-toggle {
+  background-color: #3498db;
+  border-color: #3498db;
+}
+.transaction-type-toggle:not(:disabled):not(.disabled).active {
+  background-color: #226897;
+  border-color: #226897;
+}
+.transaction-type-toggle:not(.active):hover {
+  background-color: #2a7bb1;
+  border-color: #2a7bb1;
+}
