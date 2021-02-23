@@ -27,6 +27,8 @@ Frontend:
     - JavaScript ES6
 - HTML
 - CSS
+- Frameworks:
+    - Bootstrap
 
 Backend:
 - Amazon Web Services
