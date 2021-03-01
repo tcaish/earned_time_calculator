@@ -12,7 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // Components
 import App from './components/App';
 
-// Configure the amplify project
+// Configure the amplify project with config
 Amplify.configure(config);
 
 const rootElement = document.getElementById('root');
