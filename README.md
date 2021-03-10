@@ -43,6 +43,11 @@ Backend:
   - DynamoDB
 - GraphQL
 
+## Demo Pictures
+<img src="/docs/demo_pics/1.png" width="400">
+<img src="/docs/demo_pics/2.png" width="400">
+<img src="/docs/demo_pics/3.png" width="400">
+
 ## Contact
 
 If you have any questions regarding this project, feel free to reach out to me at <timmycaish11@gmail.com>.
