@@ -37,8 +37,9 @@ Frontend:
 Backend:
 
 - Amazon Web Services
-  - AWS Amplify
-  - AWS AppSync
+  - Amplify
+  - AppSync
+  - Cloudformation
   - Cognito
   - DynamoDB
 - GraphQL
