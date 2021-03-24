@@ -2,8 +2,6 @@
 
 This project was created with the intent of giving salaried employees receiving vacation hours every paycheck to calculate how much vacation they will have by the end of the year, as well as how much they will need to use up to get down to the carry-over amount set by their company (if any).
 
-Access the published version of the website [here](https://main.d11iajmckk09l8.amplifyapp.com/).
-
 ## Features
 
 - Update your profile information with your:
